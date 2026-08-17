@@ -1,0 +1,155 @@
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+}
+
+.main-layout {
+  min-height: 100vh;
+  width: 100%;
+  background: #12051f;
+}
+
+/* ================= HEADER ================= */
+
+.main-header {
+  height: 72px;
+  width: 100%;
+  padding: 0 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  box-sizing: border-box;
+
+  background: #12051f;
+  border-bottom: 1px solid #4b2670;
+}
+
+.main-header h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+/* ================= THEME BUTTON ================= */
+
+.theme-button {
+  padding: 10px 16px;
+
+  border: none;
+  border-radius: 9px;
+
+  background: #7040e8;
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.theme-button:hover {
+  background: #8152f0;
+}
+
+/* ================= BODY ================= */
+
+.layout-body {
+  display: flex;
+  min-height: calc(100vh - 72px);
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar {
+  width: 230px;
+  flex-shrink: 0;
+
+  background: #12051f;
+  border-right: 1px solid #4b2670;
+
+  padding: 25px 15px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  height: 100%;
+}
+
+/* Sidebar Links */
+
+.sidebar-nav a {
+  text-decoration: none;
+  color: #d8c9e8;
+
+  padding: 13px 18px;
+
+  border-radius: 10px;
+
+  font-size: 16px;
+  font-weight: 500;
+
+  transition: 0.2s;
+}
+
+.sidebar-nav a:hover {
+  color: #ffffff;
+  background: #281044;
+}
+
+/* ================= LOGOUT ================= */
+
+.logout-button {
+  margin-top: auto;
+
+  padding: 12px 18px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #7040e8;
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  text-align: left;
+
+  transition: 0.2s;
+}
+
+.logout-button:hover {
+  background: #8152f0;
+}
+
+/* ================= MAIN CONTENT ================= */
+
+.main-content {
+  flex: 1;
+
+  min-width: 0;
+
+  box-sizing: border-box;
+
+  padding: 30px 35px;
+
+  background: #12051f;
+}

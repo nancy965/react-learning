@@ -1,4 +1,3 @@
-
 function ConfirmDialog({ message, onConfirm, onCancel }) {
     return (
         <div className="confirm-box">

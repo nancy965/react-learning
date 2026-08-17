@@ -1,0 +1,66 @@
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.65);
+    z-index: 1000;
+    padding: 20px;
+}
+
+.modal-box {
+    width: 100%;
+    max-width: 500px;
+    background: #1b0b2e;
+    border: 1px solid rgba(139, 92, 246, 0.4);
+    border-radius: 16px;
+    box-shadow:0 25px 60px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    animation: modalOpen 0.2s ease;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 22px;
+    background: #281044;
+    border-bottom: 1px solid rgba(196, 181, 253, 0.2);
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.modal-close {
+    padding: 4px 10px !important;
+    margin: 0 !important;
+    background: transparent !important;
+    color: #c4b5fd !important;
+    font-size: 25px !important;
+    box-shadow: none !important;
+}
+
+.modal-close:hover {
+    background: rgba(139, 92, 246, 0.15) !important;
+    transform: none !important;
+}
+
+.modal-body {
+    padding: 24px;
+    color: #ddd6fe;
+}
+
+@keyframes modalOpen {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -1,0 +1,228 @@
+.user-details-page {
+  min-height: calc(100vh - 72px);
+  color: #ffffff;
+}
+
+/* Header */
+
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.details-label {
+  margin: 0 0 6px;
+  color: #9b78e8;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.details-header h1 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.details-subtitle {
+  margin: 8px 0 0;
+  color: #9f91ae;
+  font-size: 14px;
+}
+
+/* Back Button */
+
+.back-button {
+  border: 1px solid #4b2670;
+  background: #1b0b2b;
+  color: #d8c9e8;
+
+  padding: 11px 18px;
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.back-button:hover {
+  background: #281044;
+  color: #ffffff;
+}
+
+/* User Card */
+
+.user-card {
+  background: #180824;
+  border: 1px solid #4b2670;
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+/* Top Section */
+
+.user-card-top {
+  display: flex;
+  align-items: center;
+
+  padding: 28px 30px;
+
+  border-bottom: 1px solid #35204b;
+}
+
+.avatar {
+  width: 58px;
+  height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-right: 16px;
+
+  border-radius: 50%;
+
+  background: linear-gradient(135deg, #7040e8, #9b5cff);
+
+  color: #ffffff;
+
+  font-size: 23px;
+  font-weight: 700;
+}
+
+.user-card-top h2 {
+  margin: 0 0 5px;
+
+  font-size: 20px;
+}
+
+.user-card-top p {
+  margin: 0;
+
+  color: #9f91ae;
+  font-size: 14px;
+}
+
+/* Status */
+
+.status-badge {
+  margin-left: auto;
+
+  padding: 7px 14px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.status-badge.active {
+  background: #163c2a;
+  color: #6ee7a5;
+}
+
+.status-badge.inactive {
+  background: #3b2025;
+  color: #ff8d9a;
+}
+
+/* Details Grid */
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.detail-item {
+  padding: 24px 30px;
+
+  border-bottom: 1px solid #35204b;
+}
+
+.detail-item:nth-child(odd) {
+  border-right: 1px solid #35204b;
+}
+
+.detail-item span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #8e7c9f;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+}
+
+.detail-item strong {
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* Role */
+
+.role-badge {
+  display: inline-block;
+
+  padding: 5px 10px;
+
+  border-radius: 7px;
+
+  background: #281044;
+  color: #b99cff !important;
+
+  font-size: 12px !important;
+  text-transform: capitalize;
+}
+
+/* Loading / Error */
+
+.details-message {
+  padding: 40px;
+
+  color: #d8c9e8;
+  font-size: 16px;
+}
+
+.details-message.error {
+  color: #ff8d9a;
+}
+
+/* Responsive */
+
+@media (max-width: 700px) {
+  .details-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-item:nth-child(odd) {
+    border-right: none;
+  }
+
+  .user-card-top {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .status-badge {
+    margin-left: 0;
+  }
+}

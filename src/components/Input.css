@@ -1,0 +1,39 @@
+.reusable-input {
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+.reusable-input label {
+  display: block;
+  margin-bottom: 7px;
+  color: #d8c9e8;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.reusable-input input {
+  width: 100%;
+  padding: 12px 14px;
+  box-sizing: border-box;
+  border: 1px solid #4b2670;
+  border-radius: 10px;
+  background: #180824;
+  color: #ffffff;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.reusable-input input::placeholder {
+  color: #786a85;
+}
+
+.reusable-input input:focus {
+  border-color: #7040e8;
+  box-shadow: 0 0 0 2px rgba(112, 64, 232, 0.15);
+}
+
+.reusable-input input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

@@ -1,0 +1,50 @@
+.success-toast {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  background: #ffffff;
+  color: #111111;
+  padding: 14px 18px;
+  border-radius: 10px;
+  min-width: 260px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  z-index: 99999;
+}
+
+.success-icon {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #22c55e;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.success-text {
+  flex: 1;
+  color: #111111;
+}
+
+.success-close {
+  background: none;
+  border: none;
+  color: #777777;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+
+.success-close:hover {
+  color: #111111;
+}

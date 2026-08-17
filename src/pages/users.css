@@ -1,119 +1,584 @@
+* {
+    box-sizing: border-box;
+}
+
+/* =========================
+   MAIN PAGE
+========================= */
 
 .users-page {
     min-height: 100vh;
-    padding: 40px;
-    background: #f8fafc;
+    padding: 40px 50px;
+    font-family: Arial, sans-serif;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* main heading */
-.users-page h2 {
-    text-align: center;
-    color: #0f172a;
+/* =========================
+   DARK THEME - YOUR EXISTING UI
+========================= */
+
+.users-page.dark-theme {
+    background: #160b35;
+    color: #ffffff;
+}
+
+.users-page.dark-theme h2 {
+    color: #ffffff;
+}
+
+.users-page.dark-theme input {
+    background: rgba(20, 10, 45, 0.88);
+    color: #ffffff;
+    border-color: rgba(196, 181, 253, 0.30);
+}
+
+.users-page.dark-theme input::placeholder {
+    color: #a78bfa;
+}
+
+.users-page.dark-theme select {
+    background: rgba(20, 10, 45, 0.90);
+    color: #ffffff;
+    border-color: rgba(196, 181, 253, 0.30);
+}
+
+.users-page.dark-theme select option {
+    background: #1c1035;
+    color: #ffffff;
+}
+
+/* =========================
+   LIGHT THEME
+========================= */
+
+.users-page.light-theme {
+    background: #f5f5f5;
+    color: #222222;
+}
+
+.users-page.light-theme h2 {
+    color: #222222;
+}
+
+.users-page.light-theme input {
+    background: #ffffff;
+    color: #222222 !important;
+    border-color: #cccccc;
+}
+
+.users-page.light-theme input::placeholder {
+    color: #777777;
+}
+
+.users-page.light-theme select {
+    background: #ffffff;
+    color: #222222;
+    border-color: #cccccc;
+}
+
+.users-page.light-theme select option {
+    background: #ffffff;
+    color: #222222;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.users-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.users-header h2 {
+    margin: 0 0 8px;
     font-size: 30px;
-    margin-bottom: 35px;
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: -0.5px;
 }
 
-/* form + search */
-.users-page input {
-    padding: 12px 15px;
-    margin: 6px;
-    width: 220px;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
+.user-role {
+    margin: 0;
     font-size: 14px;
-    background: white;
-    color: black !important;
 }
 
-.users-page input::placeholder {
-    color: #64748b;
+.users-page.dark-theme .user-role {
+    color: #c4b5fd;
+}
+
+.users-page.light-theme .user-role {
+    color: #555555;
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+.users-page input {
+    width: 260px;
+    padding: 13px 16px;
+    margin: 0 10px 10px 0;
+    border-radius: 10px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.25s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.20);
 }
 
 .users-page input:focus {
-    outline: none;
-    border-color: #2563eb;
-    box-shadow: 0 0 5px rgba(37, 99, 235, 0.3);
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
 }
 
-/* buttons */
-.users-page button {
-    padding: 10px 18px;
-    background: #2563eb;
-    color: white;
-    border: none;
-    border-radius: 6px;
+/* =========================
+   SELECT
+========================= */
+
+.users-page select {
+    padding: 13px 38px 13px 15px;
+    margin: 0 10px 10px 0;
+    border-radius: 10px;
     font-size: 14px;
+    outline: none;
     cursor: pointer;
-    margin-left: 6px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.20);
+    transition: 0.25s;
+}
+
+.users-page select:focus {
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.users-page button {
+    padding: 11px 18px;
+    margin-left: 5px;
+    background: linear-gradient(135deg, #7c3aed, #4f46e5);
+    color: #ffffff;
+    border: none;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+
+    box-shadow: 0 5px 12px rgba(79, 70, 229, 0.30);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .users-page button:hover {
-    background: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(124, 58, 237, 0.40);
 }
 
-/* user table */
+.users-page button:active {
+    transform: translateY(0);
+}
+
+.users-page button:disabled {
+    background: #4b4560;
+    color: #a8a1b8;
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Keep theme button readable */
+.users-page.light-theme .users-header button {
+    color: #ffffff;
+}
+
+/* =========================
+   TABLE
+========================= */
+
 .user-table {
     width: 100%;
-    margin-top: 35px;
-    background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
+    margin-top: 25px;
+    border-radius: 16px;
     overflow: hidden;
+    transition: background 0.3s ease, border 0.3s ease;
 }
 
-/* table header + rows */
-.user-header,
+/* DARK TABLE */
+
+.users-page.dark-theme .user-table {
+    background: rgba(20, 10, 45, 0.88);
+    border: 1px solid rgba(139, 92, 246, 0.35);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.30);
+}
+
+/* LIGHT TABLE */
+
+.users-page.light-theme .user-table {
+    background: #ffffff;
+    border: 1px solid #dddddd;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================
+   TABLE HEADER
+========================= */
+
+.user-header {
+    display: grid;
+    grid-template-columns: 22% 32% 12% 34%;
+    align-items: center;
+    padding: 18px 24px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+/* DARK HEADER */
+
+.users-page.dark-theme .user-header {
+    background: #281044;
+    color: #ddd6fe;
+}
+
+/* LIGHT HEADER */
+
+.users-page.light-theme .user-header {
+    background: #eeeeee;
+    color: #444444;
+}
+
+/* =========================
+   TABLE ROW
+========================= */
+
 .user-row {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 1.5fr;
+    grid-template-columns: 22% 32% 12% 34%;
     align-items: center;
-    padding: 16px 20px;
-    gap: 15px;
+    padding: 18px 24px;
+    font-size: 14px;
+    min-height: 70px;
+    border-top: 1px solid;
 }
 
-/* header */
-.user-header {
-    background: #0f172a;
-    color: white;
+/* DARK ROW */
+
+.users-page.dark-theme .user-row {
+    background: rgba(20, 10, 45, 0.60);
+    color: #ddd6fe;
+    border-color: rgba(196, 181, 253, 0.12);
+}
+
+/* LIGHT ROW */
+
+.users-page.light-theme .user-row {
+    background: #ffffff;
+    color: #444444;
+    border-color: #eeeeee;
+}
+
+/* =========================
+   TABLE TEXT
+========================= */
+
+.user-name,
+.user-email,
+.user-age,
+.actions {
+    min-width: 0;
+}
+
+.users-page.dark-theme .user-name {
+    color: #ffffff;
+}
+
+.users-page.light-theme .user-name {
+    color: #222222;
+}
+
+.user-name {
     font-weight: 600;
 }
 
-/* user rows */
-.user-row {
-    color: #334155;
-    border-top: 1px solid #e2e8f0;
+.user-email {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.user-row:hover {
-    background: #f8fafc;
+.user-age {
+    text-align: left;
 }
 
-/* action buttons */
+/* =========================
+   ACTIONS
+========================= */
+
 .actions {
     display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 8px;
+    flex-wrap: wrap;
+    width: 100%;
 }
 
 .actions button {
-    margin-left: 0;
+    margin: 0;
     padding: 8px 14px;
+    font-size: 13px;
+    border-radius: 8px;
+    white-space: nowrap;
 }
 
-/* edit form */
+.users-page.dark-theme .actions span {
+    color: #a78bfa;
+}
+
+.users-page.light-theme .actions span {
+    color: #666666;
+}
+
+.actions span {
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+/* =========================
+   ROW HOVER
+========================= */
+
+.users-page.dark-theme .user-row:hover {
+    background: rgba(124, 58, 237, 0.15);
+}
+
+.users-page.light-theme .user-row:hover {
+    background: #f7f7f7;
+}
+
+/* =========================
+   EDIT USER
+========================= */
+
 .edit-user {
-    padding: 20px;
+    padding: 22px 24px;
     display: flex;
     align-items: center;
     gap: 10px;
     flex-wrap: wrap;
-    border-top: 1px solid #e2e8f0;
-    background: white;
 }
 
-/* error message */
+.users-page.dark-theme .edit-user {
+    background: rgba(124, 58, 237, 0.12);
+    border-bottom: 1px solid rgba(196, 181, 253, 0.15);
+}
+
+.users-page.light-theme .edit-user {
+    background: #f5f5f5;
+    border-bottom: 1px solid #dddddd;
+}
+
+.edit-user input {
+    margin: 0;
+}
+
+/* =========================
+   ERROR
+========================= */
+
 .users-page .error {
-    color: red;
+    margin-top: 15px;
+    padding: 13px 16px;
+    border-radius: 9px;
     font-size: 14px;
 }
 
+.users-page.dark-theme .error {
+    background: rgba(190, 18, 60, 0.15);
+    border: 1px solid rgba(251, 113, 133, 0.35);
+    color: #fda4af;
+}
+
+.users-page.light-theme .error {
+    background: #fff1f2;
+    border: 1px solid #fecdd3;
+    color: #be123c;
+}
+
+/* =========================
+   NO USERS
+========================= */
+
+.users-page > p {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 30px;
+}
+
+.users-page.dark-theme > p {
+    color: #c4b5fd;
+}
+
+.users-page.light-theme > p {
+    color: #666666;
+}
+
+/* =========================
+   PAGINATION
+========================= */
+
+.pagination {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.pagination span {
+    padding: 9px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.20);
+}
+
+.users-page.dark-theme .pagination span {
+    background: rgba(20, 10, 45, 0.88);
+    border: 1px solid rgba(196, 181, 253, 0.25);
+    color: #c4b5fd;
+}
+
+.users-page.light-theme .pagination span {
+    background: #ffffff;
+    border: 1px solid #dddddd;
+    color: #555555;
+}
+
+.pagination button {
+    margin: 0;
+}
+
+/* =========================
+   SUCCESS TOAST
+========================= */
+
+.success-toast {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+
+    background: #ffffff;
+    color: #111111;
+
+    padding: 14px 18px;
+    border-radius: 10px;
+
+    min-width: 260px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+
+    z-index: 99999;
+}
+
+.success-icon {
+    width: 25px;
+    height: 25px;
+
+    border-radius: 50%;
+
+    background: #22c55e;
+    color: #ffffff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    flex-shrink: 0;
+}
+
+.success-text {
+    flex: 1;
+    color: #111111;
+}
+
+.success-close {
+    background: none !important;
+    border: none;
+    color: #777777 !important;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+}
+
+.success-close:hover {
+    color: #111111 !important;
+    transform: none !important;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+    .users-page {
+        padding: 30px 25px;
+    }
+
+    .user-table {
+        overflow-x: auto;
+    }
+
+    .user-header,
+    .user-row {
+        min-width: 700px;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .users-page {
+        padding: 25px 18px;
+    }
+
+    .users-header {
+        align-items: flex-start;
+        gap: 15px;
+        flex-direction: column;
+    }
+
+    .users-header h2 {
+        font-size: 25px;
+    }
+
+    .users-page input {
+        width: 100%;
+    }
+
+    .users-page select {
+        width: 100%;
+    }
+
+    .pagination {
+        justify-content: center;
+    }
+}

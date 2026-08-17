@@ -1,0 +1,165 @@
+/* table-wrapper */
+.table-wrapper {
+    width: 100%;
+    margin-top: 25px;
+    overflow-x: auto;
+}
+
+/* main table */
+.reusable-table {
+    width: 100%;
+    min-width: 950px;
+    background: #1b0b2e;
+    border: 1px solid #4b2670;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow:
+        0 20px 45px rgba(0, 0, 0, 0.30);
+}
+
+/* header */
+.table-header {
+    display: grid;
+    grid-template-columns:
+        2fr
+        3fr
+        1fr
+        1.3fr
+        1.3fr
+        3fr;
+
+    column-gap: 20px;
+    align-items: center;
+    min-height: 65px;
+    padding: 18px 24px;
+    background: #281044;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    border-bottom: 1px solid #4b2670;
+}
+
+
+/* user row */
+.user-row {
+    display: grid;
+    grid-template-columns:
+        2fr
+        3fr
+        1fr
+        1.3fr
+        1.3fr
+        3fr;
+
+    column-gap: 20px;
+    align-items: center;
+    min-height: 70px;
+    padding: 16px 24px;
+    background: #1b0b2e;
+    color: #d8c9e8;
+    font-size: 14px;
+    border-bottom: 1px solid #3a2054;
+    transition: background 0.2s ease;
+}
+
+/* hover */
+.user-row:hover {
+    background: #241039;
+}
+
+.user-row:last-child {
+    border-bottom: none;
+}
+
+/* colomn */
+.user-name,
+.user-email,
+.user-age,
+.user-role-cell,
+.user-status,
+.actions {
+    min-width: 0;
+}
+
+.user-name {
+    color: #ffffff;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.user-email {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.user-age {
+    text-align: left;
+}
+
+.user-role-cell {
+    text-transform: capitalize;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.user-status {
+    text-transform: capitalize;
+    white-space: nowrap;
+}
+
+/* action */
+.actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+}
+
+.actions button {
+    margin: 0;
+    padding: 7px 12px;
+    border: none;
+    border-radius: 7px;
+    background: #7040e8;
+    color: white;
+    cursor: pointer;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.actions button:hover {
+    background: #8152f0;
+}
+
+.actions button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/*employee views only*/
+.actions span {
+    color: #a78bfa;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+
+/* table body */
+
+.table-body {
+    width: 100%;
+}
+
+ 
+@media (max-width: 900px) {
+
+    .reusable-table {
+        min-width: 950px;
+    }
+
+}
