@@ -1,0 +1,643 @@
+* {
+  box-sizing: border-box;
+}
+
+.create-user-form {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: #1f2937;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+}
+
+.create-user-form h3 {
+  display: none;
+}
+
+.create-user-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr)
+    minmax(0, 1fr)
+    minmax(0, 1fr);
+  column-gap: 24px;
+  row-gap: 12px;
+  margin-bottom: 18px;
+}
+
+.create-user-row.second-row {
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr)
+    minmax(0, 1fr)
+    minmax(0, 1fr);
+}
+
+.create-user-row.row-three-fields {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}
+
+.create-field {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.create-field label {
+  display: block;
+  margin: 0;
+  color: #47617f;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.required-star {
+  color: #d65f6d;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.create-field input,
+.create-field select {
+  width: 100%;
+  height: 44px;
+  margin: 0 !important;
+  padding: 0 14px;
+  border: 1px solid #dcdfe7;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #203b67;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  outline: none;
+  box-shadow: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.create-field input:hover,
+.create-field select:hover {
+  border-color: #c7d1dd;
+}
+
+.create-field input:focus,
+.create-field select:focus {
+  border-color: #0d1f5c;
+  box-shadow: 0 0 0 3px rgba(13, 31, 92, 0.08);
+}
+
+.create-field input::placeholder {
+  color: #8a98aa;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.create-field input:disabled,
+.create-field select:disabled {
+  background: #f5f7fa;
+  color: #8a98aa;
+  cursor: not-allowed;
+}
+
+.create-user-form .error-message {
+  margin: 20px 0;
+  padding: 12px 20px;
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  color: #ef4444;
+  border-radius: 6px;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  width: 100%;
+}
+
+.create-user-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid #edf0f4;
+}
+
+.create-user-buttons button {
+  width: 110px;
+  height: 42px;
+  min-height: 42px;
+  margin: 0 !important;
+  padding: 0 17px;
+  border-radius: 7px;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: none;
+  transition: all 0.2s ease;
+}
+
+.create-user-buttons button[type="submit"] {
+  background: #ea580c;
+  color: #ffffff;
+  border: 1px solid #ea580c;
+}
+
+.create-user-buttons button[type="submit"]:hover:not(:disabled) {
+  background: #d04b06;
+  border-color: #d04b06;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 14px rgba(234, 88, 12, 0.18);
+}
+
+.create-user-buttons button[type="button"] {
+  background: #ffffff;
+  color: #47617f;
+  border: 1px solid #d5e0ec;
+}
+
+.create-user-buttons button[type="button"]:hover:not(:disabled) {
+  background: #edf5ff;
+  border-color: #b9cee6;
+  color: #203b67;
+  transform: translateY(-1px);
+}
+
+.create-user-buttons button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.create-user-container {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 0;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+  color: #1f2937;
+}
+
+.create-user-form-wrapper {
+  width: 100%;
+  max-width: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.create-user-form-wrapper .create-user-form {
+  width: 100%;
+  max-width: none;
+  margin: 0 auto;
+}
+
+.create-field .searchable-dropdown {
+  position: relative;
+  width: 100%;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+}
+
+.create-field .searchable-dropdown-input-wrapper {
+  width: 100%;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #dcdfe7 !important;
+  border-radius: 7px !important;
+  background: #ffffff !important;
+  overflow: hidden;
+  box-shadow: none !important;
+}
+
+.create-field .searchable-dropdown-input-wrapper:hover {
+  border-color: #c7d1dd !important;
+}
+
+.create-field .searchable-dropdown-input-wrapper:focus-within {
+  border-color: #0d1f5c !important;
+  box-shadow: 0 0 0 3px rgba(13, 31, 92, 0.08) !important;
+}
+
+.create-field .searchable-dropdown-input {
+  flex: 1 !important;
+  width: auto !important;
+  height: 100% !important;
+  padding: 0 13px !important;
+  margin: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  outline: none !important;
+  background: transparent !important;
+  color: #203b67 !important;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  box-shadow: none !important;
+}
+
+.create-field .searchable-dropdown-input::placeholder {
+  color: #8a98aa;
+}
+
+.create-field .searchable-dropdown-input:hover,
+.create-field .searchable-dropdown-input:focus,
+.create-field .searchable-dropdown-input:active {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.create-field .searchable-dropdown-selected {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #203b67;
+  font-size: 13px;
+}
+
+.create-field .searchable-dropdown-placeholder {
+  color: #8a98aa;
+  font-size: 13px;
+}
+
+.create-field .searchable-dropdown-clear {
+  width: 30px !important;
+  height: 100% !important;
+  flex-shrink: 0;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: #8a98aa;
+  font-family: inherit;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: none !important;
+}
+
+.create-field .searchable-dropdown-clear:hover {
+  background: #f3f6fa !important;
+  color: #47617f;
+}
+
+.create-field .searchable-dropdown-arrow-button {
+  width: 42px !important;
+  height: 100% !important;
+  flex-shrink: 0;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: #6b7a90;
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  box-shadow: none !important;
+}
+
+.create-field .searchable-dropdown-arrow-button:hover {
+  background: transparent !important;
+  color: #6b7a90 !important;
+}
+
+.create-field .searchable-dropdown-trigger {
+  width: 100%;
+  height: 44px;
+  padding: 0 13px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: 1px solid #dcdfe7 !important;
+  border-radius: 7px !important;
+  background: #ffffff !important;
+  color: #203b67 !important;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  outline: none;
+  cursor: pointer;
+  box-shadow: none !important;
+}
+
+.create-field .searchable-dropdown-trigger:hover {
+  border-color: #c7d1dd !important;
+}
+
+.create-field .searchable-dropdown-trigger:focus {
+  border-color: #0d1f5c !important;
+  box-shadow: 0 0 0 3px rgba(13, 31, 92, 0.08) !important;
+}
+
+.create-field .searchable-dropdown-trigger:disabled {
+  background: #f5f7fa !important;
+  color: #8a98aa !important;
+  cursor: not-allowed;
+}
+
+.create-field .searchable-dropdown-arrow {
+  flex-shrink: 0;
+  color: #6b7a90;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.create-field .searchable-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  max-height: 210px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #d7e2ef;
+  border-radius: 7px;
+  box-shadow: 0 8px 20px rgba(78, 102, 135, 0.15);
+  z-index: 99999;
+}
+
+.create-field .searchable-dropdown-search {
+  height: 40px;
+  width: 100%;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5ebf2;
+}
+
+.create-field .searchable-dropdown-search span {
+  color: #6b7a90;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.create-field .searchable-dropdown-search input {
+  width: 100% !important;
+  height: 30px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  outline: none !important;
+  background: transparent !important;
+  color: #203b67 !important;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  box-shadow: none !important;
+}
+
+.create-field .searchable-dropdown-search input::placeholder {
+  color: #8a98aa;
+}
+
+.create-field .searchable-dropdown-options {
+  max-height: 166px;
+  overflow-y: auto;
+}
+
+.create-field .searchable-dropdown-options::-webkit-scrollbar {
+  width: 5px;
+}
+
+.create-field .searchable-dropdown-options::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.create-field .searchable-dropdown-options::-webkit-scrollbar-thumb {
+  background: #c5d4e5;
+  border-radius: 10px;
+}
+
+.create-field .searchable-dropdown-option {
+  width: 100% !important;
+  min-height: 38px !important;
+  padding: 9px 12px !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px;
+  border: none !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+  color: #53677f !important;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: none !important;
+  transition: 0.15s ease;
+}
+
+.create-field .searchable-dropdown-option:hover {
+  background: #edf5ff !important;
+  color: #0d1f5c !important;
+}
+
+.create-field .searchable-dropdown-option.selected {
+  background: #edf5ff !important;
+  color: #0d1f5c !important;
+  font-weight: 600;
+}
+
+.create-field .searchable-dropdown-check {
+  color: #0d1f5c;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.create-field .searchable-dropdown-empty {
+  padding: 14px 12px;
+  color: #7a899b;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* Dark theme */
+
+.create-user-container.dark-theme .create-user-form {
+  background: #21133f;
+  border-color: #49386b;
+  color: #ffffff;
+}
+
+.create-user-container.dark-theme .create-user-form h3 {
+  color: #ffffff;
+}
+
+.create-user-container.dark-theme .create-field label {
+  color: #b9a9e8;
+}
+
+.create-user-container.dark-theme .create-field input,
+.create-user-container.dark-theme .create-field select {
+  background: #21133f;
+  color: #ffffff;
+  border-color: #3b2863;
+}
+
+.create-user-container.dark-theme .create-field input::placeholder {
+  color: #9f91c4;
+}
+
+.create-user-container.dark-theme .create-field input:focus,
+.create-user-container.dark-theme .create-field select:focus {
+  border-color: #756198;
+  box-shadow: 0 0 0 3px rgba(117, 97, 152, 0.14);
+}
+
+.create-user-container.dark-theme .create-user-form .error-message {
+  color: #fca5a5;
+}
+
+.create-user-container.dark-theme .create-user-buttons {
+  border-top-color: #49386b;
+}
+
+.create-user-container.dark-theme .create-user-buttons button[type="submit"] {
+  background: #49336d;
+  border-color: #49336d;
+  color: #ffffff;
+}
+
+.create-user-container.dark-theme .create-user-buttons button[type="submit"]:hover:not(:disabled) {
+  background: #5b4382;
+  border-color: #5b4382;
+}
+
+.create-user-container.dark-theme .create-user-buttons button[type="button"] {
+  background: #21133f;
+  border-color: #49386b;
+  color: #cfc3f5;
+}
+
+.create-user-container.dark-theme .create-user-buttons button[type="button"]:hover:not(:disabled) {
+  background: #34205f;
+  border-color: #5b4780;
+  color: #ffffff;
+}
+
+.create-user-container.dark-theme .create-field .searchable-dropdown-input-wrapper {
+  background: #21133f !important;
+  border-color: #3b2863 !important;
+}
+
+.create-user-container.dark-theme .create-field .searchable-dropdown-input {
+  color: #ffffff !important;
+}
+
+.create-user-container.dark-theme .create-field .searchable-dropdown-input::placeholder {
+  color: #9f91c4;
+}
+
+.create-user-container.dark-theme .create-field .searchable-dropdown-selected {
+  color: #ffffff;
+}
+
+.create-user-container.dark-theme .create-field .searchable-dropdown-placeholder {
+  color: #9f91c4;
+}
+
+.create-user-container.dark-theme .create-field .searchable-dropdown-menu {
+  background: #21133f;
+  border-color: #49386b;
+}
+
+.create-user-container.dark-theme .create-field .searchable-dropdown-search {
+  background: #21133f;
+  border-bottom-color: #49386b;
+}
+
+.create-user-container.dark-theme .create-field .searchable-dropdown-search input {
+  color: #ffffff !important;
+}
+
+.create-user-container.dark-theme .create-field .searchable-dropdown-option {
+  background: #21133f !important;
+  color: #d8cff0 !important;
+}
+
+.create-user-container.dark-theme .create-field .searchable-dropdown-option:hover,
+.create-user-container.dark-theme .create-field .searchable-dropdown-option.selected {
+  background: #34205f !important;
+  color: #ffffff !important;
+}
+
+@media (max-width: 1000px) {
+  .create-user-container {
+    padding: 30px 25px;
+  }
+
+  .create-user-row,
+  .create-user-row.second-row,
+  .create-user-row.row-three-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .create-user-container {
+    padding: 25px 18px;
+  }
+
+  .create-user-form {
+    padding: 21px;
+    border-radius: 12px;
+  }
+
+  .create-user-form h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .create-user-row,
+  .create-user-row.second-row,
+  .create-user-row.row-three-fields {
+    grid-template-columns: 1fr !important;
+    row-gap: 15px;
+  }
+
+  .create-user-buttons {
+    justify-content: stretch;
+  }
+
+  .create-user-buttons button {
+    flex: 1;
+    width: auto;
+  }
+}

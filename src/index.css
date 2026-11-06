@@ -50,8 +50,80 @@
   }
 }
 
+html,
 body {
   margin: 0;
+  overflow-x: clip;
+}
+
+/* ==========================================================
+   GLOBAL CUSTOM SCROLLBAR - MODERN APP UI
+   ========================================================== */
+
+/* Firefox */
+html,
+body,
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #94a3b8 transparent;
+}
+
+.dark-theme,
+.dark-theme * {
+  scrollbar-color: #475569 transparent;
+}
+
+/* Chrome, Edge, Safari, Opera */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #94a3b8;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #64748b;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background-color: #475569;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Dark theme scrollbar */
+.dark-theme ::-webkit-scrollbar-track,
+.dark-theme::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dark-theme ::-webkit-scrollbar-thumb,
+.dark-theme::-webkit-scrollbar-thumb {
+  background-color: #334155;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.dark-theme ::-webkit-scrollbar-thumb:hover,
+.dark-theme::-webkit-scrollbar-thumb:hover {
+  background-color: #475569;
+}
+
+.dark-theme ::-webkit-scrollbar-thumb:active,
+.dark-theme::-webkit-scrollbar-thumb:active {
+  background-color: #64748b;
 }
 
 #root {
@@ -77,20 +149,24 @@ h1 {
   font-size: 56px;
   letter-spacing: -1.68px;
   margin: 32px 0;
+
   @media (max-width: 1024px) {
     font-size: 36px;
     margin: 20px 0;
   }
 }
+
 h2 {
   font-size: 24px;
   line-height: 118%;
   letter-spacing: -0.24px;
   margin: 0 0 8px;
+
   @media (max-width: 1024px) {
     font-size: 20px;
   }
 }
+
 p {
   margin: 0;
 }
@@ -108,4 +184,612 @@ code {
   line-height: 135%;
   padding: 4px 8px;
   background: var(--code-bg);
+}
+
+/* ==========================================================================
+   GLOBAL STANDARDIZED PAGE HEADER (Matching Dashboard Screenshot 1:1)
+   - Eyebrow: #3b82f6, 8px, bold (700), uppercase, 1px letter-spacing
+   - Title: #0f172a, 21px, bold (800), line-height 1.2
+   - Subtitle: #64748b, 10px, medium (500), margin-top 4px
+   ========================================================================== */
+
+.standard-page-header,
+.dashboard-header,
+.tasks-header,
+.admins-header,
+.role-permissions-header,
+.countries-header,
+.states-header,
+.cities-header,
+.pincodes-header,
+.ad-platforms-header,
+.ad-campaigns-header,
+.notif-mgmt-header,
+.chat-header,
+.profile-header,
+.view-role-header,
+.admin-details-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 13px;
+}
+
+.standard-page-eyebrow,
+.dashboard-eyebrow,
+.task-breadcrumb-tag,
+.task-create-tag,
+.task-create-breadcrumb,
+.notif-mgmt-category,
+.nf-category,
+.country-breadcrumb-tag,
+.country-create-tag,
+.country-edit-tag,
+.state-breadcrumb-tag,
+.state-create-tag,
+.state-edit-tag,
+.city-breadcrumb-tag,
+.city-create-tag,
+.city-edit-tag,
+.pincode-breadcrumb-tag,
+.pincode-create-tag,
+.pincode-edit-tag,
+.role-breadcrumb-tag,
+.view-role-breadcrumb,
+.admin-user-edit-breadcrumb,
+.chat-breadcrumb-tag,
+.profile-breadcrumb-tag,
+.ad-breadcrumb-tag,
+.ad-platform-create-tag,
+.ad-platform-edit-tag,
+.common-master-tag,
+.ad-campaign-create-header .standard-page-eyebrow,
+.user-import-title span,
+.user-details-breadcrumb,
+.user-details-header-left span {
+  display: block !important;
+  margin-bottom: 5px !important;
+  color: #3b82f6 !important;
+  font-size: 8px !important;
+  font-weight: 700 !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  text-align: left !important;
+  font-family: "Outfit", "Inter", sans-serif !important;
+  line-height: 1.2 !important;
+}
+
+.view-role-breadcrumb span {
+  font-size: 8px !important;
+  color: #94a3b8 !important;
+  margin: 0 3px !important;
+}
+
+.standard-page-title,
+.dashboard-header h1,
+.tasks-title h1,
+.task-create-header h1,
+.task-create-title-group h1,
+.task-edit-header h1,
+.notif-mgmt-title h1,
+.nf-title,
+.nf-title-wrap h1,
+.nf-header h1,
+.create-user-header-row h1,
+.create-role-header h1,
+.view-role-title,
+.view-role-header-top h1,
+.view-role-header h1,
+.admins-header h1,
+.admin-details-header h1,
+.admin-user-edit-title,
+.admin-user-edit-header-row h1,
+.role-permissions-header h1,
+.countries-title h1,
+.country-create-title h1,
+.country-edit-title h1,
+.states-title h1,
+.state-create-title h1,
+.state-edit-title h1,
+.cities-title h1,
+.city-create-title h1,
+.city-edit-title h1,
+.pincodes-title h1,
+.pincode-create-title h1,
+.pincode-edit-title h1,
+.manage-tickets-title h1,
+.my-tickets-title h1,
+.ad-platforms-title h1,
+.ad-platform-create-title h1,
+.ad-platform-edit-title h1,
+.ad-campaigns-title h1,
+.ad-campaigns-header h1,
+.ad-campaign-create-header h1,
+.chat-header h1,
+.profile-header h1,
+.user-import-title h1,
+.common-master-header h1,
+.analytics-page-heading-content h1,
+.user-details-title,
+.user-details-header h1 {
+  margin: 0 !important;
+  color: #0f172a !important;
+  font-family: "Inter", sans-serif !important;
+  font-size: 21px !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0 !important;
+  text-align: left !important;
+}
+
+.standard-page-subtitle,
+.dashboard-header p,
+.task-subtitle,
+.tasks-header p,
+.task-create-subtitle,
+.task-create-header p,
+.task-create-title-group p,
+.task-edit-subtitle,
+.task-edit-header p,
+.notif-mgmt-subtitle,
+.nf-subtitle,
+.nf-title-wrap p,
+.nf-header p,
+.create-user-header-row p,
+.create-role-header p,
+.view-role-subtitle,
+.view-role-header-top p,
+.view-role-header p,
+.admins-header p,
+.admin-details-header p,
+.admin-user-edit-subtitle,
+.admin-user-edit-title-group p,
+.role-permissions-header p,
+.countries-subtitle,
+.country-create-title p,
+.country-create-subtitle,
+.country-edit-title p,
+.country-edit-subtitle,
+.states-subtitle,
+.state-create-title p,
+.state-create-subtitle,
+.state-edit-title p,
+.state-edit-subtitle,
+.cities-subtitle,
+.city-create-title p,
+.city-create-subtitle,
+.city-edit-title p,
+.city-edit-subtitle,
+.pincodes-subtitle,
+.pincode-create-title p,
+.pincode-create-subtitle,
+.pincode-edit-title p,
+.pincode-edit-subtitle,
+.manage-tickets-subtitle,
+.my-tickets-subtitle,
+.ad-platforms-subtitle,
+.ad-platform-create-title p,
+.ad-platform-create-subtitle,
+.ad-platform-edit-title p,
+.ad-platform-edit-subtitle,
+.ad-campaigns-subtitle,
+.ad-campaigns-header p,
+.ad-campaign-create-header p,
+.chat-header p,
+.profile-header p,
+.user-import-title p,
+.common-master-subtitle,
+.analytics-page-heading-content p,
+.user-details-subtitle,
+.user-details-header p {
+  display: block !important;
+  margin: 4px 0 0 !important;
+  color: #64748b !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  text-align: left !important;
+  font-family: "Outfit", "Inter", sans-serif !important;
+  line-height: 1.4 !important;
+}
+
+.dark-theme .standard-page-title,
+.dark-theme .dashboard-header h1,
+.dark-theme .tasks-title h1,
+.dark-theme .task-create-header h1,
+.dark-theme .task-edit-header h1,
+.dark-theme .notif-mgmt-title h1,
+.dark-theme .nf-title,
+.dark-theme .nf-title-wrap h1,
+.dark-theme .nf-header h1,
+.dark-theme .create-user-header-row h1,
+.dark-theme .create-role-header h1,
+.dark-theme .view-role-title,
+.dark-theme .view-role-header-top h1,
+.dark-theme .view-role-header h1,
+.dark-theme .admins-header h1,
+.dark-theme .admin-details-header h1,
+.dark-theme .admin-user-edit-title,
+.dark-theme .admin-user-edit-header-row h1,
+.dark-theme .role-permissions-header h1,
+.dark-theme .countries-title h1,
+.dark-theme .country-create-title h1,
+.dark-theme .country-edit-title h1,
+.dark-theme .states-title h1,
+.dark-theme .state-create-title h1,
+.dark-theme .state-edit-title h1,
+.dark-theme .cities-title h1,
+.dark-theme .city-create-title h1,
+.dark-theme .city-edit-title h1,
+.dark-theme .pincodes-title h1,
+.dark-theme .pincode-create-title h1,
+.dark-theme .pincode-edit-title h1,
+.dark-theme .manage-tickets-title h1,
+.dark-theme .my-tickets-title h1,
+.dark-theme .ad-platforms-title h1,
+.dark-theme .ad-platform-create-title h1,
+.dark-theme .ad-platform-edit-title h1,
+.dark-theme .ad-campaigns-title h1,
+.dark-theme .ad-campaigns-header h1,
+.dark-theme .ad-campaign-create-header h1,
+.dark-theme .task-create-title-group h1,
+.dark-theme .common-master-header h1,
+.dark-theme .chat-header h1,
+.dark-theme .profile-header h1,
+.dark-theme .user-import-title h1,
+.dark-theme .analytics-page-heading-content h1 {
+  color: #f3f4f6 !important;
+}
+
+.dark-theme .standard-page-subtitle,
+.dark-theme .dashboard-header p,
+.dark-theme .task-subtitle,
+.tasks-header p,
+.dark-theme .task-create-subtitle,
+.dark-theme .task-create-header p,
+.dark-theme .task-create-title-group p,
+.dark-theme .task-edit-subtitle,
+.dark-theme .task-edit-header p,
+.dark-theme .notif-mgmt-subtitle,
+.dark-theme .nf-subtitle,
+.dark-theme .nf-title-wrap p,
+.dark-theme .nf-header p,
+.dark-theme .create-user-header-row p,
+.dark-theme .create-role-header p,
+.dark-theme .view-role-subtitle,
+.dark-theme .view-role-header-top p,
+.dark-theme .view-role-header p,
+.dark-theme .admins-header p,
+.dark-theme .admin-details-header p,
+.dark-theme .admin-user-edit-subtitle,
+.dark-theme .admin-user-edit-title-group p,
+.dark-theme .role-permissions-header p,
+.dark-theme .countries-subtitle,
+.dark-theme .country-create-title p,
+.dark-theme .country-create-subtitle,
+.dark-theme .country-edit-title p,
+.dark-theme .country-edit-subtitle,
+.dark-theme .states-subtitle,
+.dark-theme .state-create-title p,
+.dark-theme .state-create-subtitle,
+.dark-theme .state-edit-title p,
+.dark-theme .state-edit-subtitle,
+.dark-theme .cities-subtitle,
+.dark-theme .city-create-title p,
+.dark-theme .city-create-subtitle,
+.dark-theme .city-edit-title p,
+.dark-theme .city-edit-subtitle,
+.dark-theme .pincodes-subtitle,
+.dark-theme .pincode-create-title p,
+.dark-theme .pincode-create-subtitle,
+.dark-theme .pincode-edit-title p,
+.dark-theme .pincode-edit-subtitle,
+.dark-theme .manage-tickets-subtitle,
+.dark-theme .my-tickets-subtitle,
+.dark-theme .ad-platforms-subtitle,
+.dark-theme .ad-platform-create-title p,
+.dark-theme .ad-platform-create-subtitle,
+.dark-theme .ad-platform-edit-title p,
+.dark-theme .ad-platform-edit-subtitle,
+.dark-theme .ad-campaigns-subtitle,
+.dark-theme .ad-campaigns-header p,
+.dark-theme .ad-campaign-create-header p,
+.dark-theme .chat-header p,
+.dark-theme .profile-header p,
+.dark-theme .user-import-title p,
+.dark-theme .common-master-subtitle,
+.dark-theme .analytics-page-heading-content p {
+  color: #94a3b8 !important;
+}
+
+/* ==========================================================================
+   GLOBAL STANDARDIZED PAGINATION (Countries, States, Cities, Pincodes)
+   - Right aligned (justify-content: flex-end)
+   - Compact button size: 28px height, 28px min-width
+   - UI Theme Match: Orange (#ea580c) active color and warm orange hover
+   ========================================================================== */
+
+.cities-pagination {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 4px !important;
+  margin-top: 18px !important;
+  padding: 10px 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  width: 100% !important;
+}
+
+.cities-pagination-controls {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 4px !important;
+}
+
+.cities-pagination-controls button,
+.cities-pagination-controls .pagination-button,
+.cities-pagination-controls .pagination-number,
+.cities-pagination-controls .pagination-arrow {
+  min-width: 28px !important;
+  height: 28px !important;
+  padding: 0 6px !important;
+  border: 1px solid #d5e0ec !important;
+  border-radius: 5px !important;
+  background: #ffffff !important;
+  color: #47617f !important;
+  font-family: inherit !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: 0.2s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+}
+
+.cities-pagination-controls button:hover:not(:disabled),
+.cities-pagination-controls .pagination-button:hover:not(:disabled),
+.cities-pagination-controls .pagination-number:hover:not(:disabled),
+.cities-pagination-controls .pagination-arrow:hover:not(:disabled) {
+  background: #fff7ed !important;
+  border-color: #fdba74 !important;
+  color: #ea580c !important;
+}
+
+.cities-pagination-controls button:disabled,
+.cities-pagination-controls .pagination-button:disabled,
+.cities-pagination-controls .pagination-number:disabled,
+.cities-pagination-controls .pagination-arrow:disabled {
+  opacity: 0.4 !important;
+  cursor: not-allowed !important;
+}
+
+.cities-pagination-controls .pagination-number.active,
+.cities-pagination-controls button.active {
+  background: #ea580c !important;
+  border-color: #ea580c !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+.cities-pagination-controls .pagination-number.active:hover,
+.cities-pagination-controls button.active:hover {
+  background: #d04b06 !important;
+  border-color: #d04b06 !important;
+  color: #ffffff !important;
+}
+
+.cities-pagination-controls .pagination-arrow {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+}
+
+.cities-pagination-controls .pagination-dots {
+  min-width: 20px !important;
+  text-align: center !important;
+  color: #7a899b !important;
+  font-size: 11px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.dark-theme .cities-pagination-controls button {
+  border-color: #4b5563 !important;
+  background: #1f2937 !important;
+  color: #d1d5db !important;
+}
+
+.dark-theme .cities-pagination-controls button:hover:not(:disabled) {
+  background: rgba(234, 88, 12, 0.15) !important;
+  border-color: #ea580c !important;
+  color: #ea580c !important;
+}
+
+.dark-theme .cities-pagination-controls .pagination-number.active,
+.dark-theme .cities-pagination-controls button.active {
+  background: #ea580c !important;
+  border-color: #ea580c !important;
+  color: #ffffff !important;
+}
+
+.dark-theme .cities-pagination-controls .pagination-number.active:hover,
+.dark-theme .cities-pagination-controls button.active:hover {
+  background: #d04b06 !important;
+  border-color: #d04b06 !important;
+  color: #ffffff !important;
+}
+
+.dark-theme .cities-pagination-controls .pagination-dots {
+  color: #9ca3af !important;
+}
+
+/* ========================================================
+   Unified Page Error State (matching Dashboard / Countries UI)
+   ======================================================== */
+.page-error,
+.dashboard-error,
+.users-error,
+.countries-error,
+.states-error,
+.cities-error,
+.pincodes-error,
+.admins-error,
+.admin-details-error,
+.user-details-error,
+.task-details-error,
+.tasks-error,
+.activity-logs-error,
+.ad-platforms-error,
+.ad-campaigns-error,
+.role-permissions-error-state,
+.view-role-error,
+.profile-error,
+.chat-error-state,
+.analytics-error-state {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-direction: column !important;
+  min-height: 60vh !important;
+  text-align: center !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 auto !important;
+  max-width: none !important;
+}
+
+.page-error h2,
+.dashboard-error h2,
+.users-error h2,
+.countries-error h2,
+.states-error h2,
+.cities-error h2,
+.pincodes-error h2,
+.admins-error h2,
+.admin-details-error h2,
+.user-details-error h2,
+.task-details-error h2,
+.tasks-error h2,
+.activity-logs-error h2,
+.ad-platforms-error h2,
+.ad-campaigns-error h2,
+.role-permissions-error-state h2,
+.view-role-error h2,
+.profile-error h2,
+.chat-error-state h2,
+.analytics-error-state h2 {
+  margin: 0 !important;
+  color: #213b60 !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  line-height: 1.4 !important;
+}
+
+.page-error p,
+.dashboard-error p,
+.users-error p,
+.countries-error p,
+.states-error p,
+.cities-error p,
+.pincodes-error p,
+.admins-error p,
+.admin-details-error p,
+.user-details-error p,
+.task-details-error p,
+.tasks-error p,
+.activity-logs-error p,
+.ad-platforms-error p,
+.ad-campaigns-error p,
+.role-permissions-error-state p,
+.view-role-error p,
+.profile-error p,
+.chat-error-state p,
+.analytics-error-state p {
+  margin-top: 5px !important;
+  color: #7d8da2 !important;
+  font-size: 10px !important;
+  font-weight: 400 !important;
+  line-height: 1.4 !important;
+}
+
+.dark-theme .page-error h2,
+.dark-theme .dashboard-error h2,
+.dark-theme .users-error h2,
+.dark-theme .countries-error h2,
+.dark-theme .states-error h2,
+.dark-theme .cities-error h2,
+.dark-theme .pincodes-error h2,
+.dark-theme .admins-error h2,
+.dark-theme .admin-details-error h2,
+.dark-theme .user-details-error h2,
+.dark-theme .task-details-error h2,
+.dark-theme .tasks-error h2,
+.dark-theme .activity-logs-error h2,
+.dark-theme .ad-platforms-error h2,
+.dark-theme .ad-campaigns-error h2,
+.dark-theme .role-permissions-error-state h2,
+.dark-theme .view-role-error h2,
+.dark-theme .profile-error h2,
+.dark-theme .chat-error-state h2,
+.dark-theme .analytics-error-state h2 {
+  color: #f3f4f6 !important;
+}
+
+.dark-theme .page-error p,
+.dark-theme .dashboard-error p,
+.dark-theme .users-error p,
+.dark-theme .countries-error p,
+.dark-theme .states-error p,
+.dark-theme .cities-error p,
+.dark-theme .pincodes-error p,
+.dark-theme .admins-error p,
+.dark-theme .admin-details-error p,
+.dark-theme .user-details-error p,
+.dark-theme .task-details-error p,
+.dark-theme .tasks-error p,
+.dark-theme .activity-logs-error p,
+.dark-theme .ad-platforms-error p,
+.dark-theme .ad-campaigns-error p,
+.dark-theme .role-permissions-error-state p,
+.dark-theme .view-role-error p,
+.dark-theme .profile-error p,
+.dark-theme .chat-error-state p,
+.dark-theme .analytics-error-state p {
+  color: #94a3b8 !important;
+}
+
+/* ==========================================================================
+   Universal Background Blur for All Modals & Popups Across the Website
+   ========================================================================== */
+.modal-overlay,
+.confirm-overlay,
+.binding-modal-overlay,
+.binding-modal-backdrop,
+.review-users-modal-overlay,
+.dashboard-smart-modal-overlay,
+.notif-modal-overlay,
+.admin-edit-overlay,
+.task-modal-overlay,
+.task-view-overlay,
+.task-tracker-modal-overlay,
+.state-modal-overlay,
+.country-modal-overlay,
+.city-modal-overlay,
+.pincode-modal-overlay,
+.ad-platform-modal-overlay,
+.ad-campaign-modal-overlay,
+.logout-task-modal-overlay,
+.user-edit-modal-overlay,
+.user-edit-modal,
+.cm-modal-overlay {
+  backdrop-filter: blur(5px) !important;
+  -webkit-backdrop-filter: blur(5px) !important;
 }

@@ -1,0 +1,1358 @@
+/* Permission Simulator Modal - Premium Pixel-Perfect Theme (Matching Image 1) */
+
+/* Global Scrollbar styling for entire popup: White thumb */
+.sim-modal-container *::-webkit-scrollbar,
+.sim-modal-body::-webkit-scrollbar,
+.sim-select-options-list::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.sim-modal-container *::-webkit-scrollbar-track,
+.sim-modal-body::-webkit-scrollbar-track,
+.sim-select-options-list::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 9999px;
+}
+
+.sim-modal-container *::-webkit-scrollbar-thumb,
+.sim-modal-body::-webkit-scrollbar-thumb,
+.sim-select-options-list::-webkit-scrollbar-thumb {
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 9999px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.sim-modal-container *::-webkit-scrollbar-thumb:hover,
+.sim-modal-body::-webkit-scrollbar-thumb:hover,
+.sim-select-options-list::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+  border-color: #94a3b8;
+}
+
+/* Firefox scrollbar */
+.sim-modal-container,
+.sim-modal-container *,
+.sim-modal-body,
+.sim-select-options-list {
+  scrollbar-width: thin;
+  scrollbar-color: #ffffff #f1f5f9;
+}
+
+/* Modal Overlay */
+.sim-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+  padding: 16px;
+  animation: simFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes simFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal container with locked stable height - Prevents shrinking */
+.sim-modal-container {
+  background: #ffffff;
+  color: #0f172a;
+  width: 96%;
+  max-width: 1180px;
+  height: 88vh;
+  min-height: 640px;
+  max-height: 860px;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  animation: simSlideIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes simSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.985) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Header */
+.sim-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 18px 24px 14px 24px;
+  border-bottom: 1px solid #f1f5f9;
+  background: #ffffff;
+  flex-shrink: 0;
+}
+
+.sim-header-left {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  gap: 14px;
+  flex: 1;
+}
+
+.sim-shield-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.sim-header-info {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  flex: 1;
+}
+
+.sim-tag-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  gap: 8px;
+  margin-bottom: 4px;
+  width: 100%;
+}
+
+.sim-badge-tag {
+  font-size: 11px;
+  font-weight: 600;
+  color: #2563eb;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.sim-badge-mode {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  letter-spacing: 0.4px;
+}
+
+.sim-modal-title {
+  margin: 0 !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  letter-spacing: -0.2px !important;
+  line-height: 1.25 !important;
+  text-align: left !important;
+  align-self: flex-start !important;
+  width: 100%;
+}
+
+.sim-modal-subtitle {
+  margin: 4px 0 0 !important;
+  font-size: 12.5px !important;
+  font-weight: 400 !important;
+  color: #64748b !important;
+  line-height: 1.4 !important;
+  text-align: left !important;
+  align-self: flex-start !important;
+  width: 100%;
+}
+
+.sim-close-btn {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.sim-close-btn:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #dc2626;
+}
+
+/* Mode Switcher Tabs */
+.sim-mode-tabs {
+  display: flex;
+  background: #f8fafc;
+  padding: 8px 24px;
+  border-bottom: 1px solid #e2e8f0;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.sim-mode-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #ffffff;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.sim-mode-tab:hover {
+  border-color: #cbd5e1;
+  background: #f8fafc;
+}
+
+.sim-mode-tab.active {
+  background: #ffffff;
+  border-color: #3b82f6;
+  box-shadow: 0 1px 3px rgba(37, 99, 235, 0.1);
+}
+
+.sim-tab-icon-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #f1f5f9;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+
+.sim-mode-tab.active .sim-tab-icon-circle {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.sim-tab-labels {
+  display: flex;
+  flex-direction: column;
+}
+
+.sim-tab-heading {
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+  line-height: 1.25;
+}
+
+.sim-mode-tab.active .sim-tab-heading {
+  color: #2563eb;
+}
+
+.sim-tab-subtext {
+  font-size: 11px;
+  font-weight: 400;
+  color: #64748b;
+  margin-top: 1px;
+}
+
+/* Modal Body */
+.sim-modal-body {
+  padding: 16px 24px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Form Controls Card */
+.sim-controls-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 14px 18px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  flex-shrink: 0;
+}
+
+.sim-inputs-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+}
+
+.sim-field-col {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: flex-start !important;
+  text-align: left !important;
+}
+
+.sim-col-target {
+  flex: 1.35;
+}
+
+.sim-col-module {
+  flex: 1.25;
+}
+
+.sim-col-operation {
+  flex: 1;
+}
+
+.sim-col-btn {
+  flex-shrink: 0;
+}
+
+/* Left-aligned Labels */
+.sim-field-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #334155;
+  text-align: left !important;
+  align-self: flex-start !important;
+  width: 100%;
+}
+
+.sim-asterisk {
+  color: #ef4444;
+}
+
+/* ========================================================
+   CUSTOM SEARCHABLE DROPDOWN (Replacing native OS blue)
+   ======================================================== */
+.sim-custom-select-container {
+  position: relative;
+  width: 100%;
+  font-family: inherit;
+}
+
+.sim-custom-select-trigger {
+  width: 100%;
+  height: 42px;
+  min-height: 42px;
+  padding: 0 10px 0 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.sim-custom-select-trigger:hover {
+  border-color: #94a3b8;
+}
+
+.sim-custom-select-container.open .sim-custom-select-trigger,
+.sim-custom-select-trigger.is-focused {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.sim-select-left-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.sim-select-display-content {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.sim-selected-badge-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.sim-infield-search-input {
+  width: 100%;
+  height: 100%;
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  color: #0f172a;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 400;
+  padding: 0;
+  margin: 0;
+  box-shadow: none !important;
+  cursor: text;
+}
+
+.sim-infield-search-input::placeholder {
+  color: #94a3b8;
+  font-weight: 400;
+  opacity: 1;
+}
+
+.sim-select-placeholder {
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.sim-select-value-text {
+  color: #0f172a;
+  font-size: 13px;
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Actions on Right: Close (×) mark and Dropdown Arrow side-by-side (matching Pic 2) */
+.sim-select-actions-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  margin-left: 6px;
+}
+
+/* Clear (×) Button */
+.sim-select-clear-btn {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  color: #8a94a6;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 3px;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.sim-select-clear-btn:hover {
+  color: #ea580c !important;
+  transform: scale(1.15);
+}
+
+/* Dropdown Arrow Button matching Show 5 (CustomSelect) */
+.sim-select-arrow-btn {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  color: #6b7a90;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, color 0.15s ease;
+  flex-shrink: 0;
+}
+
+.sim-select-arrow-btn:hover {
+  color: #0f172a;
+}
+
+.sim-select-arrow-btn.open {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Menu Panel */
+.sim-custom-select-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.12), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+  z-index: 1000;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: simMenuFadeIn 0.14s ease;
+}
+
+@keyframes simMenuFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Options List: Exactly 4 items visible before scrolling */
+.sim-select-options-list {
+  max-height: 156px; /* Exactly 4 items height (~39px each) */
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.sim-select-no-options {
+  padding: 14px;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.sim-select-option-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  color: #1e293b;
+  border-bottom: 1px solid #f8fafc;
+  transition: background 0.12s ease;
+  min-height: 38px;
+  box-sizing: border-box;
+}
+
+.sim-select-option-item:hover {
+  background: #f8fafc;
+  color: #2563eb;
+}
+
+.sim-select-option-item.selected {
+  background: #eff6ff !important;
+  color: #2563eb !important;
+  font-weight: 500;
+}
+
+/* ========================================================
+   SPECIFIC ROW DESIGNS REQUESTED BY USER
+   ======================================================== */
+
+/* Target User Row: Name on Left, Role on Right, NO email, NO middle text */
+.sim-user-select-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+}
+
+.sim-user-name-left {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #0f172a;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sim-user-role-right {
+  font-size: 11px;
+  font-weight: 600;
+  color: #2563eb;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  padding: 2px 8px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  text-transform: capitalize;
+}
+
+/* Target Module Row: Module on Left, Submenu on Right, NO '>', NO '(identifier)' */
+.sim-module-select-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+}
+
+.sim-module-name-left {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #0f172a;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sim-module-sub-right {
+  font-size: 11px;
+  font-weight: 500;
+  color: #4338ca;
+  background: #ede9fe;
+  border: 1px solid #ddd6fe;
+  padding: 2px 8px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+/* Operation & Role Simple Left Text */
+.sim-simple-left-text {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #0f172a;
+  text-align: left !important;
+  width: 100%;
+}
+
+/* Run Simulation Button */
+.sim-run-button {
+  height: 40px;
+  padding: 0 20px;
+  border-radius: 8px;
+  border: none;
+  background: #2563eb;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.25);
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.sim-run-button:hover:not(:disabled) {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
+}
+
+.sim-run-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.sim-run-triangle {
+  font-size: 11px;
+}
+
+.sim-btn-spinner-icon {
+  width: 13px;
+  height: 13px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: simSpin 0.7s linear infinite;
+}
+
+@keyframes simSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Testing Context Bar */
+.sim-testing-context-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #f1f5f9;
+  font-size: 12px;
+  color: #64748b;
+  flex-wrap: wrap;
+}
+
+.sim-testing-title {
+  font-weight: 500;
+  color: #64748b;
+}
+
+.sim-test-target-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #f1f5f9;
+  color: #334155;
+  font-weight: 500;
+  padding: 2px 9px;
+  border-radius: 6px;
+  font-size: 11.5px;
+}
+
+.sim-test-arrow-char {
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+.sim-test-module-badge {
+  background: #ede9fe;
+  color: #4338ca;
+  font-weight: 500;
+  padding: 2px 9px;
+  border-radius: 6px;
+  font-size: 11.5px;
+}
+
+.sim-test-op-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #fef3c7;
+  color: #b45309;
+  font-weight: 600;
+  padding: 2px 9px;
+  border-radius: 6px;
+  font-size: 11px;
+}
+
+/* Empty State Card */
+.sim-empty-state-card {
+  flex: 1;
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 28px 24px;
+  text-align: center;
+  animation: simFadeIn 0.2s ease;
+}
+
+.sim-empty-shield-icon-wrapper {
+  margin-bottom: 12px;
+}
+
+.sim-empty-title {
+  margin: 0 0 6px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.sim-empty-subtitle {
+  margin: 0 auto 24px auto;
+  font-size: 12.5px;
+  font-weight: 400;
+  color: #64748b;
+  max-width: 520px;
+  line-height: 1.45;
+}
+
+.sim-empty-features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  max-width: 820px;
+  width: 100%;
+}
+
+.sim-empty-feat-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+}
+
+.sim-feat-emoji {
+  font-size: 20px;
+}
+
+.sim-feat-title {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.sim-feat-desc {
+  font-size: 11px;
+  font-weight: 400;
+  color: #64748b;
+  line-height: 1.35;
+}
+
+/* Results Wrapper */
+.sim-results-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: simFadeIn 0.2s ease;
+}
+
+/* Middle Feedback Row (2 Columns) */
+.sim-feedback-two-columns {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 14px;
+}
+
+/* Verdict Box */
+.sim-verdict-box {
+  border-radius: 10px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  border: 1px solid;
+}
+
+.sim-verdict-box.blocked {
+  background: #fff5f5;
+  border-color: #fed7d7;
+}
+
+.sim-verdict-box.allowed {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+.sim-verdict-circle-icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.sim-verdict-body {
+  flex: 1;
+}
+
+.sim-verdict-pill-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.sim-status-label-pill {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.sim-verdict-box.blocked .sim-status-label-pill {
+  color: #ef4444;
+}
+
+.sim-verdict-box.allowed .sim-status-label-pill {
+  color: #16a34a;
+}
+
+.sim-source-info-pill {
+  font-size: 10.5px;
+  font-weight: 500;
+  padding: 1px 7px;
+  border-radius: 4px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+}
+
+.sim-verdict-main-text {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f172a;
+  line-height: 1.3;
+}
+
+.sim-verdict-detail-text {
+  margin: 3px 0 0;
+  font-size: 12px;
+  font-weight: 400;
+  color: #475569;
+  line-height: 1.4;
+}
+
+/* Remediation Box */
+.sim-remediation-box {
+  background: #fffdf0;
+  border: 1px solid #fef08a;
+  border-radius: 10px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.sim-rem-icon-circle {
+  font-size: 18px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.sim-rem-body {
+  flex: 1;
+}
+
+.sim-rem-title {
+  margin: 0 0 4px 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: #b45309;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sim-rem-description {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 400;
+  color: #78350f;
+  line-height: 1.45;
+}
+
+/* Bottom 2 Columns */
+.sim-bottom-two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: 14px;
+}
+
+/* Module Access Matrix Card */
+.sim-matrix-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sim-card-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.sim-matrix-title-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sim-stack-icon {
+  font-size: 14px;
+}
+
+.sim-matrix-heading {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.sim-active-module-text {
+  color: #2563eb;
+}
+
+.sim-legend-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sim-legend-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 400;
+}
+
+.sim-legend-bullet {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.bullet-allowed {
+  background: #16a34a;
+}
+
+.bullet-denied {
+  background: #ef4444;
+}
+
+.bullet-conditional {
+  background: #3b82f6;
+}
+
+/* Matrix 6-Chips Grid */
+.sim-matrix-grid-layout {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.sim-matrix-action-cell {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #fed7d7;
+  background: #fff5f5;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sim-matrix-action-cell.cell-allowed {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+.sim-matrix-action-cell.cell-denied {
+  background: #fff5f5;
+  border-color: #fed7d7;
+}
+
+.sim-matrix-action-cell.cell-selected {
+  border: 2px solid #2563eb !important;
+  background: #ffffff !important;
+  box-shadow: 0 0 0 1px #2563eb;
+}
+
+.sim-matrix-action-cell:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.sim-cell-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sim-cell-op-name {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.sim-cell-status-badge {
+  font-size: 9.5px;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.badge-denied {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.badge-allowed {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.sim-cell-via-text {
+  font-size: 10px;
+  color: #64748b;
+  font-weight: 400;
+}
+
+/* Diagnostic Evaluation Pipeline Card */
+.sim-pipeline-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sim-pipeline-title-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sim-pipeline-icon {
+  font-size: 14px;
+}
+
+.sim-pipeline-heading {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.sim-steps-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sim-step-item-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  transition: all 0.15s ease;
+}
+
+.sim-step-item-card.step-danger {
+  border-left: 3px solid #ef4444;
+}
+
+.sim-step-item-card.step-success {
+  border-left: 3px solid #16a34a;
+}
+
+.sim-step-indicators-col {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+.sim-step-circle {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+}
+
+.circle-success {
+  background: #16a34a;
+}
+
+.circle-danger {
+  background: #ef4444;
+}
+
+.sim-step-order-number {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 10px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sim-step-info-col {
+  flex: 1;
+}
+
+.sim-step-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sim-step-name-text {
+  font-size: 12px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.sim-step-pill-badge {
+  font-size: 9.5px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+}
+
+.sim-step-pill-badge.step-success {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.sim-step-pill-badge.step-danger {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.sim-step-pill-badge.step-neutral {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.sim-step-description-text {
+  margin: 2px 0 0 0;
+  font-size: 11px;
+  font-weight: 400;
+  color: #64748b;
+  line-height: 1.35;
+}
+
+/* Loading & Error States */
+.sim-loading-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  gap: 10px;
+  color: #64748b;
+  font-size: 12.5px;
+}
+
+.sim-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: simSpin 0.7s linear infinite;
+}
+
+.sim-error-banner {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  flex-shrink: 0;
+}
+
+/* Footer */
+.sim-modal-footer {
+  padding: 12px 24px;
+  background: #ffffff;
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.sim-footer-note {
+  font-size: 11.5px;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 400;
+}
+
+.sim-info-blue-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.sim-footer-close-btn {
+  height: 32px;
+  padding: 0 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #ffffff;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.sim-footer-close-btn:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .sim-inputs-row {
+    flex-wrap: wrap;
+  }
+  .sim-col-target,
+  .sim-col-module,
+  .sim-col-operation {
+    flex: 1 1 100%;
+  }
+  .sim-feedback-two-columns,
+  .sim-bottom-two-columns {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,50 @@
+* {
+  box-sizing: border-box;
+}
+
+/* Create User page */
+.create-user-container {
+  width: 100%;
+  min-height: calc(100vh - 70px);
+  padding: 32px 40px 40px;
+  display: block;
+  background: #e2e8f0;
+  color: #1f2937;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+}
+
+/* Form wrapper */
+.create-user-header-row {
+  width: 100%;
+  margin: 0 0 24px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.create-user-form-wrapper {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+/* Tablet */
+@media (max-width: 1000px) {
+  .create-user-container {
+    padding: 30px 25px;
+  }
+
+  .create-user-form-wrapper {
+    max-width: 100%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .create-user-container {
+    padding: 25px 18px;
+    align-items: flex-start;
+  }
+}

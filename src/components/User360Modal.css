@@ -1,0 +1,1135 @@
+/* =========================================================
+   User360Modal.css - Exact 1:1 Pixel-Perfect Replica of Pic 1
+   Modal: "User 360°"
+   ========================================================= */
+
+.user-360-modal-box {
+  max-width: 1140px !important;
+  width: 95vw !important;
+  height: 88vh !important;
+  max-height: 88vh !important;
+  min-height: 88vh !important;
+  border-radius: 18px !important;
+  overflow: hidden !important;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25), 0 0 0 1px rgba(15, 23, 42, 0.05) !important;
+  background: #ffffff !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.user-360-modal-box,
+.user-360-modal-box * {
+  scrollbar-width: thin;
+  scrollbar-color: #ffffff #ffffff !important;
+}
+
+.user-360-modal-box::-webkit-scrollbar,
+.user-360-modal-box *::-webkit-scrollbar {
+  width: 6px !important;
+  height: 6px !important;
+}
+
+.user-360-modal-box::-webkit-scrollbar-track,
+.user-360-modal-box *::-webkit-scrollbar-track {
+  background: #ffffff !important;
+}
+
+.user-360-modal-box::-webkit-scrollbar-thumb,
+.user-360-modal-box *::-webkit-scrollbar-thumb {
+  background: #ffffff !important;
+  border-radius: 4px !important;
+}
+
+.user-360-modal-box .modal-body {
+  padding: 0 !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 !important;
+  min-height: 0 !important;
+}
+
+.user-360-modal-box .modal-close-floating {
+  display: none !important;
+}
+
+.user360-wrapper {
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  min-height: 0;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #0f172a;
+}
+
+/* ----------------- Top Header Bar ----------------- */
+.u360-top-bar {
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #f1f5f9;
+  background: #ffffff;
+  position: relative;
+}
+
+.u360-back-btn {
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+}
+
+.u360-back-btn:hover {
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.u360-title-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  pointer-events: none;
+}
+
+.u360-title-center h1 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.25;
+}
+
+.u360-title-center p {
+  margin: 2px 0 0;
+  font-size: 11.5px;
+  color: #64748b;
+  font-weight: 400;
+}
+
+.u360-close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.u360-close-btn:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+/* ----------------- User Profile Banner ----------------- */
+.user360-profile-banner {
+  background: linear-gradient(135deg, #ffffff 45%, #fff7ed 82%, #f0fdf4 100%);
+  padding: 20px 28px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.user360-profile-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-width: 0;
+}
+
+.user360-avatar {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #ffedd5;
+  color: #ea580c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.user360-avatar-status {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2.5px solid #ffffff;
+}
+
+.user360-avatar-status.active {
+  background: #22c55e;
+}
+
+.user360-avatar-status.inactive {
+  background: #94a3b8;
+}
+
+.user360-profile-details {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.user360-name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user360-name-row h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+.user360-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.user360-status-badge.active {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.user360-status-badge.inactive {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.user360-status-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.user360-role-subtitle {
+  font-size: 13px;
+  color: #475569;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.user360-role-subtitle span {
+  color: #94a3b8;
+}
+
+.user360-meta-chips {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.user360-meta-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 4px 9px;
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.user360-meta-chip .u360-meta-chip-icon {
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.user360-meta-chip strong {
+  color: #1e293b;
+  font-weight: 600;
+  margin-left: 2px;
+}
+
+.user360-action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.u360-btn {
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.u360-btn.primary {
+  background: #ea580c;
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 1px 2px rgba(234, 88, 12, 0.2);
+}
+
+.u360-btn.primary:hover {
+  background: #c2410c;
+}
+
+.u360-btn.outline {
+  background: #ffffff;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+}
+
+.u360-btn.outline:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+.u360-btn.danger {
+  background: #fff5f5;
+  color: #ef4444;
+  border: 1px solid #fecaca;
+}
+
+.u360-btn.danger:hover {
+  background: #fee2e2;
+  border-color: #f87171;
+  color: #dc2626;
+}
+
+/* ----------------- Tabs Bar ----------------- */
+.user360-tabs-bar {
+  padding: 0 28px;
+  background: #ffffff;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+
+.u360-tab {
+  background: none;
+  border: none;
+  padding: 13px 2px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #64748b;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.15s ease;
+}
+
+.u360-tab:hover {
+  color: #0f172a;
+}
+
+.u360-tab.active {
+  color: #ea580c !important;
+  background: transparent !important;
+  border: none !important;
+  font-weight: 700;
+}
+
+.u360-tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2.5px;
+  background: #ea580c;
+  border-radius: 2px 2px 0 0;
+}
+
+/* ----------------- Body Content ----------------- */
+.user360-body {
+  padding: 20px 28px 24px;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  max-height: none !important;
+  scrollbar-width: thin;
+  scrollbar-color: #ffffff #ffffff !important;
+}
+
+.user360-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.user360-body::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+.user360-body::-webkit-scrollbar-thumb {
+  background: #ffffff;
+  border-radius: 3px;
+}
+
+/* Top Grid */
+.u360-top-grid {
+  display: grid;
+  gap: 16px;
+}
+
+/* Card Common */
+.u360-card {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #f1f5f9;
+  padding: 18px 20px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  display: flex;
+  flex-direction: column;
+}
+
+.u360-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.u360-card-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.u360-card-title h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.25;
+}
+
+.u360-card-title p {
+  margin: 2px 0 0;
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 400;
+}
+
+.u360-title-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.u360-title-icon.orange {
+  background: #fff7ed;
+  border: 1px solid #ffedd5;
+  color: #ea580c;
+}
+
+.u360-title-icon.blue {
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  color: #2563eb;
+}
+
+.u360-title-icon.purple {
+  background: #faf5ff;
+  border: 1px solid #f3e8ff;
+  color: #9333ea;
+}
+
+.u360-dropdown-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.u360-dropdown-pill:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.u360-badge-pill-blue {
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+}
+
+.u360-view-all-perm-btn {
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  padding: 5px 12px;
+  font-size: 11.5px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.u360-view-all-perm-btn:hover {
+  background: #dbeafe;
+  border-color: #93c5fd;
+}
+
+/* ----------------- Task Performance Mini Cards ----------------- */
+.u360-task-stats {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+.u360-stat-box {
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-height: 105px;
+}
+
+.u360-stat-box.blue {
+  background: #eff6ff;
+}
+
+.u360-stat-box.green {
+  background: #f0fdf4;
+}
+
+.u360-stat-box.amber {
+  background: #fffbeb;
+}
+
+.u360-stat-box.red {
+  background: #fef2f2;
+}
+
+.u360-stat-box.purple {
+  background: #faf5ff;
+}
+
+.u360-stat-icon-svg {
+  margin-bottom: 6px;
+}
+
+.u360-stat-box.blue .u360-stat-icon-svg {
+  color: #2563eb;
+}
+
+.u360-stat-box.green .u360-stat-icon-svg {
+  color: #16a34a;
+}
+
+.u360-stat-box.amber .u360-stat-icon-svg {
+  color: #d97706;
+}
+
+.u360-stat-box.red .u360-stat-icon-svg {
+  color: #dc2626;
+}
+
+.u360-stat-box.purple .u360-stat-icon-svg {
+  color: #9333ea;
+}
+
+.u360-stat-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  min-height: 28px;
+  line-height: 1.3;
+  display: flex;
+  align-items: flex-start;
+}
+
+.u360-stat-box.blue .u360-stat-label {
+  color: #1e40af;
+}
+
+.u360-stat-box.green .u360-stat-label {
+  color: #15803d;
+}
+
+.u360-stat-box.amber .u360-stat-label {
+  color: #b45309;
+}
+
+.u360-stat-box.red .u360-stat-label {
+  color: #b91c1c;
+}
+
+.u360-stat-box.purple .u360-stat-label {
+  color: #7e22ce;
+}
+
+.u360-stat-val {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 2px 0 6px;
+}
+
+.u360-stat-line {
+  height: 3px;
+  border-radius: 2px;
+  width: 100%;
+  margin-top: auto;
+}
+
+.u360-stat-line.blue {
+  background: #93c5fd;
+}
+
+.u360-stat-line.green {
+  background: #86efac;
+}
+
+.u360-stat-line.amber {
+  background: #fde68a;
+}
+
+.u360-stat-line.red {
+  background: #fca5a5;
+}
+
+.u360-stat-line.purple {
+  background: #d8b4fe;
+}
+
+/* Empty Task Box */
+.u360-empty-task-box {
+  margin-top: 14px;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 26px 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+.u360-empty-icon-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #eff6ff;
+  color: #3b82f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 6px;
+}
+
+.u360-empty-task-box strong {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.u360-empty-task-box p {
+  margin: 2px 0 0;
+  font-size: 11px;
+  color: #64748b;
+}
+
+/* ----------------- Account Info 10 Tiles ----------------- */
+.u360-account-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.u360-info-tile {
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 10px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.u360-tile-icon-box {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.u360-tile-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.u360-tile-content span {
+  font-size: 10px;
+  color: #64748b;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.u360-tile-content strong {
+  font-size: 11.5px;
+  color: #0f172a;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.35;
+}
+
+.u360-status-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #16a34a !important;
+  font-weight: 600;
+}
+
+.u360-status-dot-inline {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #16a34a;
+}
+
+/* ----------------- Permission Access Empty Box ----------------- */
+.u360-empty-perm-box {
+  margin-top: 10px;
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  padding: 34px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+.u360-empty-perm-box strong {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.u360-empty-perm-box p {
+  margin: 2px 0 0;
+  font-size: 11px;
+  color: #64748b;
+}
+
+/* ----------------- Permission List (Accordion) ----------------- */
+.user360-permission-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.user360-permission-group {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.user360-permission-group-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.user360-permission-group-header:hover {
+  background: #f8fafc;
+}
+
+.user360-permission-group-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user360-permission-group-title strong {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.user360-permission-identifier {
+  font-size: 10px;
+  color: #94a3b8;
+}
+
+.user360-permission-summary {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 600;
+  background: #f1f5f9;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.user360-permission-operations {
+  padding: 8px 14px 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 8px;
+  border-top: 1px solid #f1f5f9;
+  background: #f8fafc;
+}
+
+.user360-operation {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #334155;
+}
+
+.user360-operation-badge {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.user360-operation-badge.allowed {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.user360-operation-badge.denied {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+/* ----------------- Activity Log Split View ----------------- */
+.u360-activity-view-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.u360-activity-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.u360-activity-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.u360-activity-header-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #fff7ed;
+  color: #ea580c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.u360-activity-header-left h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.u360-activity-header-left p {
+  margin: 2px 0 0;
+  font-size: 11px;
+  color: #64748b;
+}
+
+.u360-activity-header-filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.u360-filter-dropdown {
+  height: 32px;
+  padding: 0 10px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 11px;
+  color: #334155;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+}
+
+.u360-filter-reset-btn {
+  height: 32px;
+  padding: 0 14px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 11px;
+  color: #475569;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.u360-filter-reset-btn:hover {
+  background: #f1f5f9;
+}
+
+.u360-activity-split-container {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.u360-activity-timeline-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 520px;
+  overflow-y: auto;
+}
+
+.u360-timeline-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.u360-timeline-card:hover {
+  border-color: #cbd5e1;
+  background: #f8fafc;
+}
+
+.u360-timeline-card.selected {
+  border-color: #3b82f6;
+  background: #ffffff;
+  box-shadow: 0 0 0 1px #3b82f6;
+}
+
+.u360-timeline-card.selected::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #2563eb;
+  border-radius: 10px 0 0 10px;
+}
+
+.u360-timeline-icon-wrap {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.u360-timeline-icon-wrap.blue {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.u360-timeline-icon-wrap.green {
+  background: #f0fdf4;
+  color: #16a34a;
+}
+
+.u360-timeline-icon-wrap.orange {
+  background: #fff7ed;
+  color: #ea580c;
+}
+
+.u360-timeline-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.u360-timeline-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+
+.u360-timeline-action {
+  font-size: 11px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.u360-timeline-time {
+  font-size: 9.5px;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+.u360-timeline-sub {
+  margin: 0 0 4px 0;
+  font-size: 10.5px;
+  color: #64748b;
+  line-height: 1.3;
+}
+
+.u360-timeline-author {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.u360-author-avatar {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: #475569;
+  font-size: 8.5px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.u360-author-name {
+  font-size: 10px;
+  color: #64748b;
+}
+
+.u360-activity-details-pane {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  max-height: 520px;
+  overflow-y: auto;
+}
+
+@media (max-width: 900px) {
+  .u360-top-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .user360-profile-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .u360-title-center {
+    position: static;
+    transform: none;
+  }
+}

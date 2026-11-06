@@ -1,0 +1,207 @@
+* {
+  box-sizing: border-box;
+}
+
+.admin-user-edit-page {
+  width: 100%;
+  min-height: calc(100vh - 72px);
+  padding: 32px 40px 48px;
+  background: #e2e8f0;
+  color: #1f2937;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+}
+
+.admin-user-edit-header-row {
+  width: 100%;
+  margin: 0 0 28px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.admin-user-edit-title-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-user-edit-breadcrumb {
+  display: block;
+  margin-bottom: 5px;
+  color: #3b82f6;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: left;
+  font-family: "Outfit", "Inter", sans-serif;
+  line-height: 1.2;
+}
+
+.admin-user-edit-title {
+  margin: 0;
+  color: #0f172a;
+  font-family: "Inter", sans-serif;
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: 0;
+  text-align: left;
+}
+
+.admin-user-edit-subtitle {
+  display: block;
+  margin: 4px 0 0;
+  color: #64748b;
+  font-size: 10px;
+  font-weight: 500;
+  text-align: left;
+  font-family: "Outfit", "Inter", sans-serif;
+  line-height: 1.4;
+}
+
+.admin-user-edit-back-btn {
+  flex-shrink: 0;
+  height: 40px;
+  padding: 0 22px;
+  border: none;
+  border-radius: 6px;
+  background: #ea580c;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-user-edit-back-btn:hover {
+  background: #d04b06;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);
+}
+
+.admin-user-edit-content-wrapper {
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Bytebase Database Change Approval Banner */
+.bytebase-approval-banner {
+  background: #f0f7ff;
+  border: 1px solid #dbeafe;
+  border-radius: 10px;
+  padding: 14px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.bytebase-approval-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.bytebase-shield-icon-box {
+  width: 40px;
+  height: 40px;
+  background: #e0edff;
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563eb;
+  flex-shrink: 0;
+}
+
+.bytebase-approval-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 3px;
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+.bytebase-approval-subtitle {
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.4;
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+/* Modern Toggle Switch matching UI theme (#ea580c) */
+.bytebase-toggle-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.bytebase-toggle-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.bytebase-toggle-track {
+  width: 42px;
+  height: 24px;
+  background-color: #cbd5e1;
+  border-radius: 24px;
+  position: relative;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+  flex-shrink: 0;
+}
+
+.bytebase-toggle-track.checked {
+  background-color: #ea580c;
+  box-shadow: 0 2px 6px rgba(234, 88, 12, 0.3);
+}
+
+.bytebase-toggle-thumb {
+  width: 18px;
+  height: 18px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.bytebase-toggle-track.checked .bytebase-toggle-thumb {
+  transform: translateX(18px);
+}
+
+.bytebase-toggle-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e293b;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .admin-user-edit-page {
+    padding: 20px 16px;
+  }
+
+  .admin-user-edit-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+}

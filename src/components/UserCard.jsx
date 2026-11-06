@@ -1,139 +1,159 @@
-
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 
-import Modal from "./Modal";
 import ConfirmDialog from "./ConfirmDialog";
-import Button from "./Button";
 
 import {
-  updateUser,
   deleteUser,
+  getUserPermissions,
+  saveUserPermissions,
 } from "../services/userService";
+
+import "./UserCard.css";
 
 function UserCard({
   user,
+  index,
+  gridTemplate,
   refreshUsers,
   isAdmin,
+  userRole,
+  canViewUsers = true,
+  canEditUsers,
+  canDeleteUsers,
   onSuccess,
+  onView,
+  openUserMenuId,
+  setOpenUserMenuId,
+  openMenuUp,
 }) {
   const navigate = useNavigate();
 
-  const [showModal, setShowModal] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
-  const [formData, setFormData] = useState({
-    name: user.name,
-    email: user.email,
-    age: user.age,
-    role: user.role || "employee",
-    is_active: user.is_active ?? true,
-  });
-
-  const [error, setError] = useState("");
-  const [updateLoading, setUpdateLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
- //handle input changes
+  const [showPermissions, setShowPermissions] = useState(false);
+  const [permissions, setPermissions] = useState([]);
+  const [permissionsLoading, setPermissionsLoading] = useState(false);
+  const [permissionsSaving, setPermissionsSaving] = useState(false);
+  const [permissionsError, setPermissionsError] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const showActions = openUserMenuId === user.id;
+  const actionButtonRef = useRef(null);
 
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+  const handleActionMenuToggle = () => {
+    if (showActions) {
+      setOpenUserMenuId(null);
+      return;
+    }
+
+    setOpenUserMenuId(user.id);
   };
-
- //edit
 
   const handleEdit = () => {
-    setFormData({
-      name: user.name,
-      email: user.email,
-      age: user.age,
-      role: user.role || "employee",
-      is_active: user.is_active ?? true,
-    });
-
-    setError("");
-    setShowModal(true);
+    setOpenUserMenuId(null);
+    navigate(`/${user.id}/users/edit`);
   };
 
-  //update user
-  const handleUpdate = async () => {
-    setError("");
+  const handleView = () => {
+    setOpenUserMenuId(null);
 
-    if (updateLoading) {
+    if (onView) {
+      onView(user.id);
       return;
     }
 
-    // NAME
-    if (!formData.name.trim()) {
-      setError("Name is required");
-      return;
-    }
+    navigate(`/${user.id}/users`);
+  };
 
-    if (!/^[A-Za-z ]+$/.test(formData.name.trim())) {
-      setError("Name should contain only letters");
-      return;
-    }
-
-    // EMAIL
-    if (!formData.email.trim()) {
-      setError("Email is required");
-      return;
-    }
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      setError("Enter valid email");
-      return;
-    }
-
-    // AGE
-    if (!formData.age) {
-      setError("Age is required");
-      return;
-    }
-
-    if (formData.age < 1 || formData.age > 100) {
-      setError("Age must be between 1 and 100");
-      return;
-    }
+  const handlePermissions = async () => {
+    setOpenUserMenuId(null);
+    setShowPermissions(true);
+    setPermissionsLoading(true);
+    setPermissionsError("");
 
     try {
-      setUpdateLoading(true);
+      const response = await getUserPermissions(user.id);
 
-      await updateUser(user.id, {
-        name: formData.name.trim(),
-        email: formData.email.trim(),
-        age: Number(formData.age),
-        role: formData.role,
-        is_active: formData.is_active,
-      });
-
-      setShowModal(false);
-
-      onSuccess("User updated successfully!");
-
-      refreshUsers();
-
+      setPermissions(response?.data || []);
     } catch (error) {
-      console.log("UPDATE ERROR:", error);
+      console.log("PERMISSIONS ERROR:", error);
 
-      setError(
-        error.response?.data?.message ||
-        "Something went wrong"
+      setPermissionsError(
+        error.response?.data?.message || "Failed to load permissions",
       );
-
     } finally {
-      setUpdateLoading(false);
+      setPermissionsLoading(false);
     }
   };
 
-  //delete user
+  const handlePermissionToggle = (permissionIdentifier) => {
+    setPermissions((prev) =>
+      prev.map((permission) => {
+        if (permission.permission_identifier !== permissionIdentifier) {
+          return permission;
+        }
+
+        const newValue = !permission.is_allowed;
+
+        return {
+          ...permission,
+          is_allowed: newValue,
+          is_overridden: newValue !== permission.role_allowed,
+        };
+      }),
+    );
+  };
+
+  const handleResetPermission = (permissionIdentifier) => {
+    setPermissions((prev) =>
+      prev.map((permission) =>
+        permission.permission_identifier === permissionIdentifier
+          ? {
+            ...permission,
+            is_allowed: permission.role_allowed,
+            is_overridden: false,
+          }
+          : permission,
+      ),
+    );
+  };
+
+  const handleSavePermissions = async () => {
+    if (permissionsSaving) return;
+
+    try {
+      setPermissionsSaving(true);
+      setPermissionsError("");
+
+      const selectedPermissions = permissions
+        .filter((permission) => permission.is_allowed)
+        .map((permission) => permission.permission_identifier);
+
+      await saveUserPermissions(user.id, selectedPermissions);
+
+      setShowPermissions(false);
+
+      onSuccess("User permissions updated successfully!");
+    } catch (error) {
+      console.log("SAVE PERMISSIONS ERROR:", error);
+
+      setPermissionsError(
+        error.response?.data?.message || "Failed to save permissions",
+      );
+    } finally {
+      setPermissionsSaving(false);
+    }
+  };
+
   const handleDelete = async () => {
-    if (deleteLoading) {
+    if (deleteLoading) return;
+
+    if (!canDeleteUsers) {
+      setShowConfirm(false);
+      onSuccess("Access Denied: You do not have permission to delete users.");
       return;
     }
 
@@ -143,236 +163,324 @@ function UserCard({
       await deleteUser(user.id);
 
       setShowConfirm(false);
+      setOpenUserMenuId(null);
 
       onSuccess("User deleted successfully!");
 
       refreshUsers();
-
     } catch (error) {
       console.log("DELETE ERROR:", error);
 
       setShowConfirm(false);
 
-      setError(
-        error.response?.data?.message ||
-        "Something went wrong"
+      alert(
+        error.response?.data?.message || "Failed to delete user",
       );
-
     } finally {
       setDeleteLoading(false);
     }
   };
 
-  //table form
-
   return (
     <>
-      <div className="user-row">
+      <div
+        className="user-table-row"
+        style={{
+          gridTemplateColumns: gridTemplate,
+          cursor: "pointer",
+        }}
+        onClick={handleView}
+      >
+        <div className="user-index">{index}</div>
 
-        {/* NAME */}
         <div className="user-name">
-          {user.name}
+          <span className="user-name-title">{user.name || "-"}</span>
+          {user.age ? (
+            <span className="user-name-age">{user.age} years</span>
+          ) : null}
         </div>
 
-        {/* EMAIL */}
-        <div className="user-email">
-          {user.email}
-        </div>
+        <div className="user-email">{user.email || "-"}</div>
 
-        {/* AGE */}
-        <div className="user-age">
-          {user.age}
-        </div>
+        <div className="user-country">{user.country_name || "-"}</div>
 
-        {/* ROLE */}
+        <div className="user-state">{user.state_name || "-"}</div>
+
+        <div className="user-city">{user.city_name || "-"}</div>
+
+        <div className="user-pincode">{user.pincode || "-"}</div>
+
         <div className="user-role-cell">
-          {user.role || "employee"}
+          <span className="role-badge">
+            {user.role
+              ? user.role.charAt(0).toUpperCase() + user.role.slice(1)
+              : "Employee"}
+          </span>
         </div>
 
-        {/* STATUS */}
-        <div className="user-status">
-          {user.is_active ? "Active" : "Inactive"}
+        <div className="user-permission-role-cell">
+          <span
+            className={
+              !user.permission_role ||
+              user.permission_role === "No Permission Role"
+                ? "role-badge empty"
+                : "role-badge permission"
+            }
+          >
+            {user.permission_role || "Employee"}
+          </span>
         </div>
 
-        {/* ACTION */}
-        <div className="actions">
+        <div className="user-status-cell">
+          <span
+            className={`user-status-pill ${
+              user.is_active === false || user.status === "Inactive"
+                ? "inactive"
+                : "active"
+            }`}
+          >
+            {user.is_active === false || user.status === "Inactive"
+              ? "Inactive"
+              : "Active"}
+          </span>
+        </div>
 
-          {/* ADMIN ONLY */}
-          {isAdmin && (
-            <>
-              <Button
-                onClick={() =>
-                  navigate(`/users/${user.id}`)
-                }
-              >
-                View
-              </Button>
+        <div className="user-created-cell">
+          {(() => {
+            const raw = user.created_at || user.createdAt;
+            if (!raw) return "10/7/2026";
+            try {
+              const d = new Date(raw);
+              if (isNaN(d.getTime())) return "10/7/2026";
+              return `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`;
+            } catch {
+              return "10/7/2026";
+            }
+          })()}
+        </div>
 
-              <Button onClick={handleEdit}>
-                Edit
-              </Button>
+        <div
+          className="user-action-cell"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="action-menu-wrapper">
+            <button
+              ref={actionButtonRef}
+              type="button"
+              className="action-menu-btn"
+              onClick={handleActionMenuToggle}
+              title="Actions"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="5" r="1.5" />
+                <circle cx="12" cy="12" r="1.5" />
+                <circle cx="12" cy="19" r="1.5" />
+              </svg>
+            </button>
 
-              <Button
-                onClick={() =>
-                  setShowConfirm(true)
-                }
-                disabled={deleteLoading}
-              >
-                {deleteLoading
-                  ? "Deleting..."
-                  : "Delete"}
-              </Button>
-            </>
-          )}
+            {showActions &&
+              actionButtonRef.current &&
+              (() => {
+                const btnRect = actionButtonRef.current.getBoundingClientRect();
+                const spaceBelow = window.innerHeight - btnRect.bottom;
+                const shouldOpenUp = openMenuUp || spaceBelow < 160;
+                return createPortal(
+                  <div
+                    className="action-dropdown"
+                    style={{
+                      position: "fixed",
+                      right: `${Math.max(
+                        10,
+                        window.innerWidth - btnRect.right
+                      )}px`,
+                      top: shouldOpenUp
+                        ? "auto"
+                        : `${btnRect.bottom + 4}px`,
+                      bottom: shouldOpenUp
+                        ? `${
+                            window.innerHeight - btnRect.top + 4
+                          }px`
+                        : "auto",
+                      maxHeight: "calc(100vh - 20px)",
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {onView && (
+                      <button
+                        type="button"
+                        className="action-dropdown-item view-task-btn"
+                        onClick={handleView}
+                      >
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                          <circle cx="12" cy="3" r="3" />
+                        </svg>
+                        <span>View</span>
+                      </button>
+                    )}
 
-          {/* EMPLOYEE / USER */}
-          {!isAdmin && (
-            <span>
-              View Only
-            </span>
-          )}
+                    <button
+                      type="button"
+                      className="action-dropdown-item edit-task-btn"
+                      onClick={handleEdit}
+                    >
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                      </svg>
+                      <span>Edit</span>
+                    </button>
 
+                    <div className="action-dropdown-divider" />
+
+                    <button
+                      type="button"
+                      className="action-dropdown-item delete-task-btn"
+                      onClick={() => {
+                        setOpenUserMenuId(null);
+                        setShowConfirm(true);
+                      }}
+                    >
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="3 6 5 6 21 6" />
+                        <path d="M19 6l-1 14H6L5 6" />
+                        <path d="M10 11v6" />
+                        <path d="M14 11v6" />
+                        <path d="M9 6V4h6v2" />
+                      </svg>
+                      <span>Delete</span>
+                    </button>
+                  </div>,
+                  document.body,
+                );
+              })()}
+          </div>
         </div>
       </div>
 
-    
-      {/* EDIT MODAL */}
-    
-      <Modal
-        isOpen={showModal}
-        onClose={() => {
-          setShowModal(false);
-          setError("");
-        }}
-        title="Edit User"
-      >
-        {error && (
-          <p className="error">
-            {error}
-          </p>
-        )}
-
-        {/* NAME */}
-        <div className="input-group">
-          <label>Name</label>
-
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-          />
-        </div>
-
-        {/* EMAIL */}
-        <div className="input-group">
-          <label>Email</label>
-
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </div>
-
-        {/* AGE */}
-        <div className="input-group">
-          <label>Age</label>
-
-          <input
-            type="number"
-            name="age"
-            value={formData.age}
-            onChange={handleChange}
-          />
-        </div>
-
-        {/* ROLE */}
-        <div className="input-group">
-          <label>Role</label>
-
-          <select
-            name="role"
-            value={formData.role}
-            onChange={handleChange}
-          >
-            <option value="employee">
-              Employee
-            </option>
-
-            <option value="admin">
-              Admin
-            </option>
-          </select>
-        </div>
-
-        {/* STATUS */}
-        <div className="input-group">
-          <label>Status</label>
-
-          <select
-            value={
-              formData.is_active
-                ? "active"
-                : "inactive"
-            }
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                is_active:
-                  e.target.value === "active",
-              })
-            }
-          >
-            <option value="active">
-              Active
-            </option>
-
-            <option value="inactive">
-              Inactive
-            </option>
-          </select>
-        </div>
-
-        {/* MODAL BUTTONS */}
-        <div className="actions">
-
-          <Button
-            onClick={handleUpdate}
-            disabled={updateLoading}
-          >
-            {updateLoading
-              ? "Updating..."
-              : "Update"}
-          </Button>
-
-          <Button
-            onClick={() => {
-              setShowModal(false);
-              setError("");
-            }}
-            disabled={updateLoading}
-          >
-            Cancel
-          </Button>
-
-        </div>
-      </Modal>
-
-      {/* DELETE CONFIRMATION */}
       {showConfirm && (
         <ConfirmDialog
           message="Are you sure you want to delete this user?"
           onConfirm={handleDelete}
-          onCancel={() =>
-            setShowConfirm(false)
-          }
+          onCancel={() => setShowConfirm(false)}
         />
+      )}
+
+      {showPermissions && (
+        <div
+          className="user-edit-modal"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowPermissions(false);
+            }
+          }}
+        >
+          <div className="user-edit-modal-content permissions-modal-content">
+            <h2>User Permissions</h2>
+
+            <p className="permissions-user-name">
+              Manage permissions for <strong>{user.name}</strong>
+            </p>
+
+            {permissionsError && (
+              <p className="user-edit-error">{permissionsError}</p>
+            )}
+
+            {permissionsLoading ? (
+              <div className="user-edit-loading">
+                Loading permissions...
+              </div>
+            ) : (
+              <div className="permissions-list">
+                {permissions.map((permission) => (
+                  <div
+                    key={permission.permission_identifier}
+                    className="permission-row"
+                  >
+                    <div className="permission-info">
+                      <div className="permission-name">
+                        {permission.operation
+                          ? permission.operation
+                            .replace(/_/g, " ")
+                            .replace(/\b\w/g, (character) =>
+                              character.toUpperCase(),
+                            )
+                          : permission.name}
+                      </div>
+
+                      <div className="permission-identifier">
+                        {permission.permission_identifier}
+                      </div>
+                    </div>
+
+                    <div className="permission-actions">
+                      <span
+                        className={`permission-status ${permission.is_overridden
+                            ? "custom"
+                            : "inherited"
+                          }`}
+                      >
+                        {permission.is_overridden
+                          ? "Custom"
+                          : "Role Default"}
+                      </span>
+
+                      <button
+                        type="button"
+                        className={`permission-toggle ${permission.is_allowed ? "active" : ""
+                          }`}
+                        onClick={() =>
+                          handlePermissionToggle(
+                            permission.permission_identifier,
+                          )
+                        }
+                      >
+                        <span className="permission-toggle-circle"></span>
+                      </button>
+
+                      {permission.is_overridden && (
+                        <button
+                          type="button"
+                          className="permission-reset-button"
+                          onClick={() =>
+                            handleResetPermission(
+                              permission.permission_identifier,
+                            )
+                          }
+                        >
+                          Reset
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className="user-edit-form-buttons">
+              <button
+                type="button"
+                onClick={() => setShowPermissions(false)}
+                disabled={permissionsSaving}
+              >
+                Cancel
+              </button>
+
+              <button
+                type="button"
+                onClick={handleSavePermissions}
+                disabled={permissionsSaving || permissionsLoading}
+              >
+                {permissionsSaving
+                  ? "Saving..."
+                  : "Save Permissions"}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </>
   );
 }
 
 export default UserCard;
-

@@ -1,44 +1,83 @@
-import { useState } from "react";
-import { createUser as createUserApi } from "../services/userService";
+import { useAuth } from "../context/AuthContext";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import "./createUser.css";
+import { useTheme } from "../context/ThemeContext";
+import {
+  createUser as createUserApi,
+  getAdmins,
+} from "../services/userService";
 import UserForm from "./UserForm";
 
-function CreateUser({ refreshUsers, onSuccess }) {
+function CreateUser() {
+  const navigate = useNavigate();
+  const { user: loggedInUser } = useAuth();
+  const { theme } = useTheme();
+
+  const userRole = loggedInUser?.role;
+
   const [user, setUser] = useState({
     name: "",
     email: "",
+    password: "",
     age: "",
     role: "employee",
     is_active: true,
+    adminId: "",
+    countryId: "",
+    stateId: "",
+    cityId: "",
+    pincodeId: "",
+    pincode: "",
+    roleId: "",
   });
 
+  const [admins, setAdmins] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  //reset form
+  useEffect(() => {
+    const fetchAdmins = async () => {
+      if (userRole !== "general_admin") return;
+
+      try {
+        const response = await getAdmins();
+        setAdmins(response.data);
+      } catch (error) {
+        console.log("FETCH ADMINS ERROR:", error);
+        setError("Failed to fetch admins");
+      }
+    };
+
+    fetchAdmins();
+  }, [userRole]);
+
   const resetForm = () => {
     setUser({
       name: "",
       email: "",
+      password: "",
       age: "",
       role: "employee",
       is_active: true,
+      adminId: "",
+      countryId: "",
+      stateId: "",
+      cityId: "",
+      pincodeId: "",
+      pincode: "",
+      roleId: "",
     });
 
     setError("");
   };
 
-  //submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setError("");
 
-    //Prevent duplicate submission
-    if (loading) {
-      return;
-    }
+    if (loading) return;
 
-    //validation
     if (!user.name.trim()) {
       setError("Name is required");
       return;
@@ -54,8 +93,18 @@ function CreateUser({ refreshUsers, onSuccess }) {
       return;
     }
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(user.email)) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(user.email.trim())) {
       setError("Enter valid email");
+      return;
+    }
+
+    if (!user.password) {
+      setError("Password is required");
+      return;
+    }
+
+    if (user.password.length < 6) {
+      setError("Password must be at least 6 characters");
       return;
     }
 
@@ -69,6 +118,40 @@ function CreateUser({ refreshUsers, onSuccess }) {
       return;
     }
 
+    if (userRole === "admin" && user.role !== "employee") {
+      setError("Admin can create employees only");
+      return;
+    }
+
+    if (
+      userRole === "general_admin" &&
+      user.role === "employee" &&
+      !user.adminId
+    ) {
+      setError("Please select an admin");
+      return;
+    }
+
+    if (user.role === "employee" && !user.countryId) {
+      setError("Please select a country");
+      return;
+    }
+
+    if (user.role === "employee" && !user.stateId) {
+      setError("Please select a state");
+      return;
+    }
+
+    if (user.role === "employee" && !user.cityId) {
+      setError("Please select a city");
+      return;
+    }
+
+    if (user.role === "employee" && !user.pincodeId) {
+      setError("Please select a valid pincode");
+      return;
+    }
+
     try {
       setLoading(true);
 
@@ -77,22 +160,25 @@ function CreateUser({ refreshUsers, onSuccess }) {
         email: user.email.trim(),
         age: Number(user.age),
         role: user.role,
+        password: user.password,
         is_active: user.is_active,
+        adminId: user.adminId || undefined,
+        countryId: user.countryId,
+        stateId: user.stateId,
+        cityId: user.cityId,
+        pincodeId: user.pincodeId,
+        roleId: user.roleId || undefined,
       });
 
-      //success message
-      onSuccess("User added successfully!");
-
-      //reset form
       resetForm();
-
-      //refresh users table
-      refreshUsers();
+      navigate("/users");
     } catch (error) {
       console.log("CREATE USER ERROR:", error);
 
       if (error.response) {
-        setError(error.response.data.message || "Something went wrong");
+        setError(
+          error.response.data?.message || "Something went wrong"
+        );
       } else {
         setError("Something went wrong");
       }
@@ -101,18 +187,37 @@ function CreateUser({ refreshUsers, onSuccess }) {
     }
   };
 
-  return (
-    <div>
-      <h3>Add User</h3>
+  const handleClose = () => {
+    if (loading) return;
+    navigate("/users");
+  };
 
-      <UserForm
-        formData={user}
-        setFormData={setUser}
-        onSubmit={handleSubmit}
-        loading={loading}
-        error={error}
-        mode="create"
-      />
+  return (
+    <div className={`create-user-container ${theme}-theme`}>
+      <div className="create-user-header-row">
+        <div>
+          <span className="standard-page-eyebrow">USER MANAGEMENT</span>
+          <h1 className="standard-page-title">Create User</h1>
+          <p className="standard-page-subtitle">
+            Fill in the details to create a new user.
+          </p>
+        </div>
+      </div>
+
+      <div className="create-user-form-wrapper">
+        <UserForm
+          formData={user}
+          setFormData={setUser}
+          setError={setError}
+          onSubmit={handleSubmit}
+          loading={loading}
+          error={error}
+          mode="create"
+          userRole={userRole}
+          admins={admins}
+          onClose={handleClose}
+        />
+      </div>
     </div>
   );
 }

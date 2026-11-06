@@ -4,54 +4,95 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0, 0, 0, 0.65);
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
     z-index: 1000;
     padding: 20px;
 }
 
 .modal-box {
     width: 100%;
-    max-width: 500px;
-    background: #1b0b2e;
-    border: 1px solid rgba(139, 92, 246, 0.4);
-    border-radius: 16px;
-    box-shadow:0 25px 60px rgba(0, 0, 0, 0.5);
+    max-width: 900px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     overflow: hidden;
-    animation: modalOpen 0.2s ease;
+    animation: modalOpen 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
 }
 
 .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 18px 22px;
-    background: #281044;
-    border-bottom: 1px solid rgba(196, 181, 253, 0.2);
+    padding: 20px 24px;
+    background: #ffffff;
+    border-bottom: 1px solid #f1f5f9;
 }
 
 .modal-header h2 {
     margin: 0;
-    color: #ffffff;
-    font-size: 20px;
+    color: #0f172a;
+    font-size: 18px;
+    font-weight: 700;
+    font-family: "Outfit", "Inter", sans-serif;
 }
 
 .modal-close {
-    padding: 4px 10px !important;
+    padding: 6px !important;
     margin: 0 !important;
     background: transparent !important;
-    color: #c4b5fd !important;
-    font-size: 25px !important;
+    color: #94a3b8 !important;
+    font-size: 24px !important;
+    line-height: 1 !important;
     box-shadow: none !important;
+    border-radius: 6px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    transition: all 0.2s ease;
 }
 
 .modal-close:hover {
-    background: rgba(139, 92, 246, 0.15) !important;
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
     transform: none !important;
+}
+
+.modal-close-floating {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0;
+    z-index: 10;
+}
+
+.modal-close-floating:hover {
+    background: #e2e8f0 !important;
 }
 
 .modal-body {
     padding: 24px;
-    color: #ddd6fe;
+    color: #334155;
+    background: #ffffff;
+}
+
+.user-360-modal-box {
+  width: 90vw;
+  max-width: 1200px;
+  height: 85vh;
+  max-height: 85vh;
+}
+
+.user-360-modal-box .modal-body {
+  height: calc(85vh - 70px);
+  max-height: calc(85vh - 70px);
+  overflow: hidden;
+  padding: 24px;
 }
 
 @keyframes modalOpen {

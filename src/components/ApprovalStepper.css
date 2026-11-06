@@ -1,0 +1,358 @@
+/* ==========================================================================
+   Approval Stepper Styles
+   ========================================================================== */
+
+.approval-stepper-container {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 9px;
+  padding: 10px 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  margin-top: 8px;
+}
+
+.approval-stepper-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 7px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.stepper-header-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #0f172a;
+}
+
+.stepper-header-title h4 {
+  margin: 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.stepper-header-title svg {
+  color: #ea580c;
+}
+
+.stepper-overall-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 20px;
+  text-transform: capitalize;
+}
+
+.stepper-overall-badge.status-pending,
+.stepper-overall-badge.status-in-review {
+  background: #fef3c7;
+  color: #d97706;
+  border: 1px solid #fde68a;
+}
+
+.stepper-overall-badge.status-approved {
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
+}
+
+.stepper-overall-badge.status-rejected {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+.stepper-overall-badge.status-cancelled {
+  background: #f1f5f9;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+}
+
+/* Stepper Track */
+.stepper-track-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.stepper-node-row {
+  display: flex;
+  gap: 12px;
+  position: relative;
+}
+
+/* Left Indicator Column */
+.stepper-indicator-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 22px;
+  flex-shrink: 0;
+}
+
+.stepper-circle {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  z-index: 2;
+  flex-shrink: 0;
+}
+
+/* Circle Status Variants */
+.node-approved .stepper-circle {
+  background: #10b981;
+  color: #ffffff;
+  box-shadow: 0 0 0 3px #d1fae5;
+}
+
+.node-rejected .stepper-circle {
+  background: #ef4444;
+  color: #ffffff;
+  box-shadow: 0 0 0 3px #fee2e2;
+}
+
+.node-active .stepper-circle {
+  background: #ffffff;
+  border: 3.5px solid #ea580c;
+  color: #ea580c;
+  box-shadow: 0 0 0 2px #fff7ed;
+}
+
+.stepper-pulse-dot {
+  width: 6.5px;
+  height: 6.5px;
+  border-radius: 50%;
+  background: #ea580c;
+}
+
+.node-waiting .stepper-circle {
+  background: #f1f5f9;
+  color: #94a3b8;
+  border: 1.5px solid #cbd5e1;
+}
+
+.node-skipped .stepper-circle {
+  background: #f8fafc;
+  color: #cbd5e1;
+  border: 1.5px dashed #cbd5e1;
+}
+
+/* Connecting Line */
+.stepper-connecting-line {
+  width: 2px;
+  flex: 1;
+  min-height: 16px;
+  margin: 2px 0;
+}
+
+.stepper-connecting-line.line-complete {
+  background: #10b981;
+}
+
+.stepper-connecting-line.line-current {
+  background: linear-gradient(to bottom, #f59e0b, #cbd5e1);
+}
+
+.stepper-connecting-line.line-upcoming {
+  background: #e2e8f0;
+}
+
+/* Right Content Card */
+.stepper-content-card {
+  flex: 1;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 7px;
+  padding: 6px 11px;
+  margin-bottom: 6px;
+  transition: all 0.2s ease;
+}
+
+.node-active .stepper-content-card {
+  background: #ffffff;
+  border: 1px solid #fed7aa;
+  box-shadow: 0 1px 4px rgba(234, 88, 12, 0.04);
+}
+
+.node-approved .stepper-content-card {
+  background: #ffffff;
+  border-color: #a7f3d0;
+}
+
+.node-rejected .stepper-content-card {
+  background: #ffffff;
+  border-color: #fecaca;
+}
+
+.stepper-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.stepper-title-area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.stepper-step-count {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #ea580c;
+  letter-spacing: 0.5px;
+  background: #fff7ed;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid #fed7aa;
+}
+
+.stepper-step-name {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.stepper-role-pill {
+  font-size: 10px;
+  font-weight: 500;
+  padding: 1px 7px;
+  border-radius: 4px;
+}
+
+.stepper-role-pill.role-general_admin {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+}
+
+.stepper-role-pill.role-admin {
+  background: #f5f3ff;
+  color: #6d28d9;
+  border: 1px solid #ddd6fe;
+}
+
+/* Status Chip */
+.stepper-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.stepper-status-chip .chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.stepper-status-chip.chip-approved {
+  background: #ecfdf5;
+  color: #059669;
+}
+.stepper-status-chip.chip-approved .chip-dot {
+  background: #10b981;
+}
+
+.stepper-status-chip.chip-rejected {
+  background: #fef2f2;
+  color: #dc2626;
+}
+.stepper-status-chip.chip-rejected .chip-dot {
+  background: #ef4444;
+}
+
+.stepper-status-chip.chip-pending {
+  background: #fff7ed;
+  color: #ea580c;
+  border: 1px solid #fed7aa;
+}
+.stepper-status-chip.chip-pending .chip-dot {
+  background: #ea580c;
+}
+
+.stepper-status-chip.chip-waiting,
+.stepper-status-chip.chip-skipped {
+  background: #f1f5f9;
+  color: #64748b;
+}
+.stepper-status-chip.chip-waiting .chip-dot,
+.stepper-status-chip.chip-skipped .chip-dot {
+  background: #94a3b8;
+}
+
+/* Meta & Comments */
+.stepper-decision-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: #64748b;
+  margin-top: 6px;
+}
+
+.stepper-decision-meta strong {
+  color: #1e293b;
+  font-weight: 600;
+}
+
+.stepper-comment-box {
+  margin-top: 8px;
+  padding: 7px 11px;
+  border-radius: 6px;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.stepper-comment-box.comment-approved {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+}
+
+.stepper-comment-box.comment-rejected {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+}
+
+.comment-quote-icon {
+  margin-top: 2px;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.comment-text {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.4;
+  font-style: italic;
+}
+
+.stepper-awaiting-notice {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #ea580c;
+  font-weight: 500;
+}

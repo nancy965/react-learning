@@ -2,10 +2,7 @@
     box-sizing: border-box;
 }
 
-/* =========================
-   MAIN PAGE
-========================= */
-
+/* Main page */
 .users-page {
     min-height: 100vh;
     padding: 40px 50px;
@@ -13,10 +10,7 @@
     transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* =========================
-   DARK THEME - YOUR EXISTING UI
-========================= */
-
+/* Dark theme */
 .users-page.dark-theme {
     background: #160b35;
     color: #ffffff;
@@ -47,12 +41,9 @@
     color: #ffffff;
 }
 
-/* =========================
-   LIGHT THEME
-========================= */
-
+/* Light theme */
 .users-page.light-theme {
-    background: #f5f5f5;
+    background: #e2e8f0;
     color: #222222;
 }
 
@@ -81,10 +72,7 @@
     color: #222222;
 }
 
-/* =========================
-   HEADER
-========================= */
-
+/* Header */
 .users-header {
     display: flex;
     justify-content: space-between;
@@ -112,10 +100,7 @@
     color: #555555;
 }
 
-/* =========================
-   INPUTS
-========================= */
-
+/* Inputs */
 .users-page input {
     width: 260px;
     padding: 13px 16px;
@@ -132,10 +117,7 @@
     box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
 }
 
-/* =========================
-   SELECT
-========================= */
-
+/* Select */
 .users-page select {
     padding: 13px 38px 13px 15px;
     margin: 0 10px 10px 0;
@@ -152,10 +134,7 @@
     box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
 }
 
-/* =========================
-   BUTTONS
-========================= */
-
+/* Buttons */
 .users-page button {
     padding: 11px 18px;
     margin-left: 5px;
@@ -166,12 +145,8 @@
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-
     box-shadow: 0 5px 12px rgba(79, 70, 229, 0.30);
-
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .users-page button:hover {
@@ -191,15 +166,11 @@
     transform: none;
 }
 
-/* Keep theme button readable */
 .users-page.light-theme .users-header button {
     color: #ffffff;
 }
 
-/* =========================
-   TABLE
-========================= */
-
+/* Table */
 .user-table {
     width: 100%;
     margin-top: 25px;
@@ -208,15 +179,11 @@
     transition: background 0.3s ease, border 0.3s ease;
 }
 
-/* DARK TABLE */
-
 .users-page.dark-theme .user-table {
     background: rgba(20, 10, 45, 0.88);
     border: 1px solid rgba(139, 92, 246, 0.35);
     box-shadow: 0 20px 45px rgba(0, 0, 0, 0.30);
 }
-
-/* LIGHT TABLE */
 
 .users-page.light-theme .user-table {
     background: #ffffff;
@@ -224,69 +191,7 @@
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
-/* =========================
-   TABLE HEADER
-========================= */
-
-.user-header {
-    display: grid;
-    grid-template-columns: 22% 32% 12% 34%;
-    align-items: center;
-    padding: 18px 24px;
-    font-size: 13px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-}
-
-/* DARK HEADER */
-
-.users-page.dark-theme .user-header {
-    background: #281044;
-    color: #ddd6fe;
-}
-
-/* LIGHT HEADER */
-
-.users-page.light-theme .user-header {
-    background: #eeeeee;
-    color: #444444;
-}
-
-/* =========================
-   TABLE ROW
-========================= */
-
-.user-row {
-    display: grid;
-    grid-template-columns: 22% 32% 12% 34%;
-    align-items: center;
-    padding: 18px 24px;
-    font-size: 14px;
-    min-height: 70px;
-    border-top: 1px solid;
-}
-
-/* DARK ROW */
-
-.users-page.dark-theme .user-row {
-    background: rgba(20, 10, 45, 0.60);
-    color: #ddd6fe;
-    border-color: rgba(196, 181, 253, 0.12);
-}
-
-/* LIGHT ROW */
-
-.users-page.light-theme .user-row {
-    background: #ffffff;
-    color: #444444;
-    border-color: #eeeeee;
-}
-
-/* =========================
-   TABLE TEXT
-========================= */
-
+/* Table text */
 .user-name,
 .user-email,
 .user-age,
@@ -316,10 +221,7 @@
     text-align: left;
 }
 
-/* =========================
-   ACTIONS
-========================= */
-
+/* Actions */
 .actions {
     display: flex;
     align-items: center;
@@ -350,10 +252,7 @@
     white-space: nowrap;
 }
 
-/* =========================
-   ROW HOVER
-========================= */
-
+/* Row hover */
 .users-page.dark-theme .user-row:hover {
     background: rgba(124, 58, 237, 0.15);
 }
@@ -362,10 +261,7 @@
     background: #f7f7f7;
 }
 
-/* =========================
-   EDIT USER
-========================= */
-
+/* Edit user */
 .edit-user {
     padding: 22px 24px;
     display: flex;
@@ -388,9 +284,41 @@
     margin: 0;
 }
 
-/* =========================
-   ERROR
-========================= */
+/* Error */
+.users-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 60vh;
+    text-align: center;
+}
+
+.users-page .users-error h2,
+.users-page.light-theme .users-error h2 {
+    margin: 0;
+    color: #213b60;
+    font-size: 17px;
+}
+
+.users-page .users-error p,
+.users-page.light-theme .users-error p {
+    margin-top: 5px;
+    color: #7d8da2;
+    font-size: 10px;
+}
+
+.users-page.dark-theme .users-error h2 {
+    margin: 0;
+    color: #f3f4f6;
+    font-size: 17px;
+}
+
+.users-page.dark-theme .users-error p {
+    margin-top: 5px;
+    color: #94a3b8;
+    font-size: 10px;
+}
 
 .users-page .error {
     margin-top: 15px;
@@ -411,10 +339,7 @@
     color: #be123c;
 }
 
-/* =========================
-   NO USERS
-========================= */
-
+/* No users */
 .users-page > p {
     text-align: center;
     font-size: 14px;
@@ -429,10 +354,7 @@
     color: #666666;
 }
 
-/* =========================
-   PAGINATION
-========================= */
-
+/* Pagination */
 .pagination {
     display: flex;
     justify-content: flex-end;
@@ -464,51 +386,36 @@
     margin: 0;
 }
 
-/* =========================
-   SUCCESS TOAST
-========================= */
-
+/* Success toast */
 .success-toast {
     position: fixed;
     top: 25px;
     right: 25px;
-
     background: #ffffff;
     color: #111111;
-
     padding: 14px 18px;
     border-radius: 10px;
-
     min-width: 260px;
-
     display: flex;
     align-items: center;
     gap: 12px;
-
     font-size: 15px;
     font-weight: 500;
-
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-
     z-index: 99999;
 }
 
 .success-icon {
     width: 25px;
     height: 25px;
-
     border-radius: 50%;
-
     background: #22c55e;
     color: #ffffff;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     font-size: 15px;
     font-weight: bold;
-
     flex-shrink: 0;
 }
 
@@ -534,12 +441,8 @@
     transform: none !important;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
-
+/* Responsive */
 @media (max-width: 900px) {
-
     .users-page {
         padding: 30px 25px;
     }
@@ -547,15 +450,9 @@
     .user-table {
         overflow-x: auto;
     }
-
-    .user-header,
-    .user-row {
-        min-width: 700px;
-    }
 }
 
 @media (max-width: 600px) {
-
     .users-page {
         padding: 25px 18px;
     }

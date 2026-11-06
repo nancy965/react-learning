@@ -1,0 +1,244 @@
+/* ==========================================================================
+   Rich Emoji Picker (Exact Gmail / Google Design matching Pic 2)
+   ========================================================================== */
+
+.rich-emoji-picker-container {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  left: auto;
+  width: 348px;
+  max-width: calc(100vw - 32px);
+  height: 320px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  z-index: 10005;
+  box-sizing: border-box;
+  animation: repFadeIn 0.15s ease-out;
+  overflow: hidden;
+  user-select: none;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+@keyframes repFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 1. Top Search Bar Wrap */
+.rep-search-bar-wrap {
+  padding: 12px 14px 8px;
+  background: #ffffff;
+}
+
+.rep-search-input-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #dadce0;
+  border-radius: 24px;
+  height: 36px;
+  padding: 0 12px 0 34px;
+  transition: all 0.15s ease;
+}
+
+.rep-search-input-box:focus-within {
+  border-color: #1a73e8;
+  box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.15);
+}
+
+.rep-search-icon {
+  position: absolute;
+  left: 11px;
+  pointer-events: none;
+}
+
+.rep-search-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 13.5px;
+  color: #202124;
+  font-family: inherit;
+}
+
+.rep-search-input::placeholder {
+  color: #80868b;
+}
+
+.rep-search-clear {
+  border: none;
+  background: transparent;
+  color: #5f6368;
+  cursor: pointer;
+  padding: 2px 4px;
+  font-size: 12px;
+}
+
+/* 2. Category Tabs Row */
+.rep-category-tabs-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  border-bottom: 1px solid #e8eaed;
+  background: #ffffff;
+  flex-shrink: 0;
+}
+
+.rep-category-tab-btn {
+  position: relative;
+  border: none;
+  background: transparent;
+  color: #5f6368;
+  width: 32px;
+  height: 34px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.12s ease;
+}
+
+.rep-category-tab-btn:hover {
+  color: #202124;
+}
+
+.rep-category-tab-btn.active {
+  color: #1a73e8;
+}
+
+.rep-tab-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.rep-tab-active-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 5px;
+  right: 5px;
+  height: 2.5px;
+  background: #1a73e8;
+  border-radius: 2px 2px 0 0;
+}
+
+/* 3. Scrollable Emojis Body */
+.rep-scroll-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 6px 12px 20px;
+  scrollbar-width: thin;
+  scrollbar-color: #dadce0 transparent;
+}
+
+.rep-scroll-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.rep-scroll-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.rep-scroll-body::-webkit-scrollbar-thumb {
+  background: #dadce0;
+  border-radius: 3px;
+}
+
+.rep-section {
+  margin-bottom: 12px;
+}
+
+.rep-section-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #5f6368;
+  letter-spacing: 0.5px;
+  margin: 10px 0 6px 4px;
+  text-transform: uppercase;
+}
+
+.rep-empty-message {
+  font-size: 13px;
+  color: #5f6368;
+  padding: 8px 4px 12px;
+  font-style: normal;
+}
+
+/* 4. 9-Column Emoji Grid matching Pic 2 */
+.rep-emoji-grid {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 2px;
+}
+
+.rep-emoji-btn {
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background-color 0.12s ease;
+  outline: none;
+}
+
+.rep-emoji-btn:hover {
+  background-color: #f1f3f4;
+}
+
+.rep-emoji-char {
+  font-size: 21px;
+  line-height: 1;
+  display: inline-block;
+  transform: translateY(1px);
+}
+
+/* 5. Tooltip Pill on Hover matching Pic 2 (e.g. :laughing:) */
+.rep-floating-tooltip {
+  position: absolute;
+  transform: translateX(-50%);
+  background: #3c4043;
+  color: #ffffff;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  pointer-events: none;
+  z-index: 10010;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  animation: repTooltipFade 0.08s ease;
+}
+
+@keyframes repTooltipFade {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 2px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}

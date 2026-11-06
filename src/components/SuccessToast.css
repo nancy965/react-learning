@@ -1,50 +1,202 @@
-.success-toast {
+/* ==========================================================================
+   Professional Premium Success Toast
+   ========================================================================== */
+
+.premium-toast-wrapper {
   position: fixed;
-  top: 25px;
-  right: 25px;
-  background: #ffffff;
-  color: #111111;
-  padding: 14px 18px;
-  border-radius: 10px;
-  min-width: 260px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 15px;
-  font-weight: 500;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-  z-index: 99999;
+  top: 20px;
+  right: 24px;
+  z-index: 999999;
+  pointer-events: auto;
+  max-width: 380px;
+  min-width: 280px;
 }
 
-.success-icon {
-  width: 25px;
-  height: 25px;
+/* Animations */
+.premium-toast-wrapper.toast-enter {
+  animation: toastSlideInRight 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.premium-toast-wrapper.toast-exit {
+  animation: toastSlideOutRight 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Toast Card Surface */
+.premium-toast-card {
+  position: relative;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #d1fae5;
+  box-shadow: 
+    0 12px 28px -6px rgba(16, 185, 129, 0.14),
+    0 6px 14px -4px rgba(15, 23, 42, 0.06),
+    0 0 0 1px rgba(16, 185, 129, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 13px 11px 11px;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+}
+
+/* Left Icon Circle */
+.premium-toast-icon-box {
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
-  background: #22c55e;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
-  font-weight: bold;
   flex-shrink: 0;
+  box-shadow: 0 3px 8px rgba(16, 185, 129, 0.28);
 }
 
-.success-text {
+.premium-toast-check-svg {
+  color: #ffffff;
+}
+
+/* Content Body */
+.premium-toast-content {
   flex: 1;
-  color: #111111;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
 }
 
-.success-close {
-  background: none;
+.premium-toast-title-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.premium-toast-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #065f46;
+  letter-spacing: -0.15px;
+  line-height: 1.2;
+}
+
+.premium-toast-msg {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: #1e293b;
+  line-height: 1.35;
+  margin: 0;
+  word-break: break-word;
+}
+
+/* Close Button */
+.premium-toast-close-btn {
+  background: transparent;
   border: none;
-  color: #777777;
-  font-size: 20px;
-  line-height: 1;
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
   cursor: pointer;
   padding: 0;
+  flex-shrink: 0;
+  transition: all 0.18s ease;
 }
 
-.success-close:hover {
-  color: #111111;
+.premium-toast-close-btn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+  transform: scale(1.06);
+}
+
+/* Bottom Progress Timer Bar */
+.premium-toast-progress-track {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(16, 185, 129, 0.12);
+  overflow: hidden;
+}
+
+.premium-toast-progress-bar {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+  transform-origin: left;
+  animation: toastProgressShrink 4.5s linear forwards;
+}
+
+/* Animation Keyframes */
+@keyframes toastSlideInRight {
+  0% {
+    transform: translateX(110%) scale(0.96);
+    opacity: 0;
+  }
+  60% {
+    transform: translateX(-3%) scale(1.01);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes toastSlideOutRight {
+  0% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(115%) scale(0.95);
+    opacity: 0;
+  }
+}
+
+@keyframes toastProgressShrink {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+/* Dark Theme Compatibility */
+.dark-theme .premium-toast-card {
+  background: #0f172a;
+  border-color: rgba(16, 185, 129, 0.35);
+  box-shadow: 
+    0 16px 36px -6px rgba(0, 0, 0, 0.45),
+    0 8px 18px -4px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(16, 185, 129, 0.2);
+}
+
+.dark-theme .premium-toast-title {
+  color: #34d399;
+}
+
+.dark-theme .premium-toast-msg {
+  color: #f1f5f9;
+}
+
+.dark-theme .premium-toast-close-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f8fafc;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 640px) {
+  .premium-toast-wrapper {
+    top: 14px;
+    right: 14px;
+    left: 14px;
+    min-width: unset;
+    max-width: unset;
+  }
 }

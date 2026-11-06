@@ -1,20 +1,50 @@
+/* =========================
+   REUSABLE BUTTON
+========================= */
+
 .reusable-button {
-  padding: 11px 20px;
-  border: none;
-  border-radius: 10px;
-  background: #7040e8;
+  min-height: 42px;
+  padding: 10px 20px;
+  border: 1px solid #111827;
+  border-radius: 4px;
+  background: #111827;
   color: #ffffff;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.2s;
+  transition: all 0.2s ease;
+  box-shadow: 0 3px 10px rgba(15, 39, 71, 0.15);
 }
 
-.reusable-button:hover {
-  background: #8152f0;
+.reusable-button:hover:not(:disabled) {
+  background: #17365d;
+  border-color: #17365d;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.reusable-button:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .reusable-button:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: not-allowed;
+  transform: none;
+}
+
+/* =========================
+   DARK THEME
+========================= */
+
+.dark-theme .reusable-button {
+  background: #111827;
+  color: #ffffff;
+  border-color: #17365d;
+  box-shadow: none;
+}
+
+.dark-theme .reusable-button:hover:not(:disabled) {
+  background: #17365d;
+  border-color: #214a78;
 }

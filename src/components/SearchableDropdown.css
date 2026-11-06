@@ -1,0 +1,295 @@
+* {
+  box-sizing: border-box;
+}
+
+.searchable-dropdown {
+  position: relative;
+  width: 100%;
+}
+
+.searchable-dropdown-input-wrapper {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #e1e7ef;
+  border-radius: 12px;
+  background: #ffffff;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.02);
+}
+
+.searchable-dropdown-input-wrapper:hover {
+  border-color: #b9c5d4;
+}
+
+.searchable-dropdown-input-wrapper:focus-within {
+  border-color: #ea580c;
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.12);
+}
+
+.searchable-dropdown-left-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 12px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.searchable-dropdown-prefix-label {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #475569;
+  background: #f1f5f9;
+  padding: 2px 7px;
+  border-radius: 5px;
+  margin-left: 8px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  border: 1px solid #e2e8f0;
+}
+
+.searchable-dropdown-input {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  padding: 0 48px 0 13px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 0;
+  border: none !important;
+  border-width: 0 !important;
+  border-radius: 0 !important;
+  outline: none !important;
+  background: transparent !important;
+  color: #303846;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  box-shadow: none !important;
+  appearance: none;
+}
+
+.searchable-dropdown-input:hover,
+.searchable-dropdown-input:focus,
+.searchable-dropdown-input:active {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.searchable-dropdown-input::placeholder {
+  color: #8a94a3;
+}
+
+.searchable-dropdown-clear {
+  flex-shrink: 0;
+  width: 30px;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  color: #9aa4b2;
+  font-size: 17px;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: none !important;
+  transition: color 0.15s ease;
+}
+
+.searchable-dropdown-clear:hover {
+  color: #4b5563;
+  background: transparent !important;
+}
+
+.searchable-dropdown-clear:focus {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.searchable-dropdown-arrow-button {
+  flex-shrink: 0;
+  width: 36px;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border: none !important;
+  border-left: none !important;
+  outline: none !important;
+  background: transparent !important;
+  color: #6b7a90;
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: none !important;
+  transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.searchable-dropdown-arrow-button:hover {
+  background: transparent !important;
+  color: #6b7a90;
+}
+
+.searchable-dropdown-arrow-button:focus,
+.searchable-dropdown-arrow-button:active {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.searchable-dropdown-arrow-button.open {
+  transform: rotate(180deg);
+}
+
+.searchable-dropdown.disabled .searchable-dropdown-input-wrapper {
+  background: #f5f7fa;
+  border-color: #d9dee6;
+  cursor: not-allowed;
+}
+
+.searchable-dropdown.disabled .searchable-dropdown-input {
+  color: #a7b0bc;
+  cursor: not-allowed;
+}
+
+.searchable-dropdown.disabled .searchable-dropdown-arrow-button {
+  color: #a7b0bc;
+  cursor: not-allowed;
+}
+
+.searchable-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #dce2ea;
+  border-radius: 9px;
+  box-shadow: 0 10px 25px rgba(35, 45, 60, 0.1);
+  z-index: 99999;
+}
+
+.searchable-dropdown-options {
+  scrollbar-width: thin;
+  scrollbar-color: #ffffff transparent;
+  height: auto;
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.searchable-dropdown-options::-webkit-scrollbar {
+  width: 5px;
+}
+
+.searchable-dropdown-options::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.searchable-dropdown-options::-webkit-scrollbar-thumb {
+  background: #ffffff;
+  border-radius: 9999px;
+  border: 1px solid rgba(226, 232, 240, 0.6);
+}
+
+.searchable-dropdown-option {
+  width: 100%;
+  height: 40px !important;
+  min-height: 40px !important;
+  max-height: 40px !important;
+  flex: 0 0 40px !important;
+  padding: 0 13px !important;
+  margin: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: none !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+  color: #374151 !important;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 40px;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: none !important;
+  transition: background 0.15s ease, color 0.15s ease;
+  box-sizing: border-box;
+}
+
+.searchable-dropdown-option span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.searchable-dropdown-option:hover {
+  background: #fff7ed !important;
+  color: #ea580c !important;
+}
+
+.searchable-dropdown-option.selected {
+  background: #fff7ed !important;
+  color: #ea580c !important;
+  font-weight: 600;
+}
+
+.searchable-dropdown-check {
+  display: none !important;
+}
+
+.searchable-dropdown-empty {
+  padding: 14px 12px;
+  color: #8a94a3;
+  font-size: 13px;
+  text-align: center;
+}
+
+.searchable-dropdown-clear-button {
+  position: absolute;
+  right: 34px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0;
+  margin: 0;
+  border: 0 !important;
+  background: transparent !important;
+  color: #8a94a6;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+  outline: none !important;
+  box-shadow: none !important;
+  appearance: none;
+}
+
+.searchable-dropdown-clear-button:hover,
+.searchable-dropdown-clear-button:focus,
+.searchable-dropdown-clear-button:active {
+  border: 0 !important;
+  background: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+}

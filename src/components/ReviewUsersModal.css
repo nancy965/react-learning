@@ -1,0 +1,589 @@
+/* =========================================================
+   ReviewUsersModal.css - Exact 1:1 Pixel-Perfect Replica of Pic 1
+   Modal: "Users to Review (86)"
+   ========================================================= */
+
+.review-users-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: rumOverlayFade 0.2s ease;
+}
+
+@keyframes rumOverlayFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.review-users-modal-content {
+  background: #ffffff;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 1140px;
+  max-height: 94vh;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25), 0 0 0 1px rgba(15, 23, 42, 0.05);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #0f172a;
+  animation: rumModalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.review-users-modal-content::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+@keyframes rumModalPop {
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ----------------- Header ----------------- */
+.rum-header {
+  padding: 18px 28px 14px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.rum-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.rum-header-icon-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #fff7ed;
+  border: 1px solid #ffedd5;
+  color: #ea580c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rum-header-text h2 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.25;
+}
+
+.rum-header-text p {
+  margin: 3px 0 0;
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.rum-header-close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.rum-header-close-btn:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+/* ----------------- 4 KPI Stat Cards ----------------- */
+.rum-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  padding: 0 28px 14px;
+}
+
+.rum-kpi-card {
+  padding: 12px 16px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+}
+
+.rum-kpi-card.users-review {
+  background: #fff1f2;
+  border: 1px solid #fee2e2;
+}
+
+.rum-kpi-card.roles-assigned {
+  background: #fff7ed;
+  border: 1px solid #ffedd5;
+}
+
+.rum-kpi-card.resolved {
+  background: #f0fdf4;
+  border: 1px solid #dcfce7;
+}
+
+.rum-kpi-card.pending-review {
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+}
+
+.rum-kpi-icon-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rum-kpi-card.users-review .rum-kpi-icon-circle {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+.rum-kpi-card.roles-assigned .rum-kpi-icon-circle {
+  background: #ffedd5;
+  color: #ea580c;
+}
+
+.rum-kpi-card.resolved .rum-kpi-icon-circle {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.rum-kpi-card.pending-review .rum-kpi-icon-circle {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.rum-kpi-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.rum-kpi-val {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.1;
+}
+
+.rum-kpi-label {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+/* ----------------- Controls & Filters Bar ----------------- */
+.rum-controls-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 28px 12px;
+  flex-wrap: wrap;
+}
+
+.rum-search-wrap {
+  flex: 1;
+  min-width: 240px;
+  height: 36px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.rum-search-icon {
+  position: absolute;
+  left: 12px;
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+.rum-search-input {
+  width: 100%;
+  height: 100%;
+  padding: 0 12px 0 34px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #0f172a;
+  background: #ffffff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  outline: none;
+}
+
+.rum-search-input::placeholder {
+  color: #94a3b8;
+}
+
+.rum-search-input:focus {
+  border-color: #ea580c;
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.12);
+}
+
+.rum-filter-dropdown {
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #334155;
+  font-size: 11.5px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+.rum-filter-dropdown:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.rum-export-btn {
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #334155;
+  font-size: 11.5px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.rum-export-btn:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #ea580c;
+}
+
+/* ----------------- Table Container ----------------- */
+.rum-table-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 28px;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE / Edge */
+}
+
+.rum-table-wrapper::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.rum-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  table-layout: fixed;
+}
+
+.rum-table th {
+  padding: 10px 12px;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #64748b;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-bottom: 1px solid #f1f5f9;
+  background: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  box-sizing: border-box;
+}
+
+.rum-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #f8fafc;
+  font-size: 11.5px;
+  color: #334155;
+  vertical-align: middle;
+  box-sizing: border-box;
+}
+
+.rum-table tbody tr {
+  transition: background 0.12s ease;
+}
+
+.rum-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+/* Checkbox */
+.rum-checkbox {
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+  border: 1px solid #cbd5e1;
+  accent-color: #ea580c;
+  cursor: pointer;
+}
+
+/* User Column */
+.rum-user-cell {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.rum-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10.5px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.rum-user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.rum-user-name {
+  font-weight: 600;
+  color: #0f172a;
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.rum-user-email {
+  font-size: 10.5px;
+  color: #64748b;
+}
+
+/* Issue Column */
+.rum-issue-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: #1e293b;
+  white-space: nowrap;
+}
+
+.rum-issue-icon {
+  width: 13px;
+  height: 13px;
+  color: #ef4444;
+  flex-shrink: 0;
+}
+
+/* Details Column */
+.rum-details-cell {
+  font-size: 11px;
+  color: #64748b;
+  line-height: 1.35;
+  max-width: 250px;
+}
+
+/* Priority Column */
+.rum-priority-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 10.5px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.rum-priority-badge.high {
+  background: #ffedd5;
+  color: #ea580c;
+}
+
+.rum-priority-badge.medium {
+  background: #fef9c3;
+  color: #ca8a04;
+}
+
+.rum-priority-badge.low {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+/* Added On Column */
+.rum-added-cell {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.rum-added-icon {
+  color: #94a3b8;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+.rum-added-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.rum-added-date {
+  font-size: 11px;
+  font-weight: 500;
+  color: #334155;
+  line-height: 1.2;
+}
+
+.rum-added-time {
+  font-size: 10px;
+  color: #94a3b8;
+}
+
+/* Actions Column */
+.rum-actions-cell {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.rum-assign-btn {
+  background: #ea580c;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+  white-space: nowrap;
+}
+
+.rum-assign-btn:hover {
+  background: #c2410c;
+}
+
+.rum-assign-btn:active {
+  transform: scale(0.98);
+}
+
+
+/* ----------------- Footer / Pagination ----------------- */
+.rum-footer {
+  padding: 12px 28px 16px;
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.rum-footer-count {
+  font-size: 11.5px;
+  color: #64748b;
+  font-weight: 400;
+}
+
+.rum-pagination {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.rum-page-btn {
+  min-width: 26px;
+  height: 26px;
+  padding: 0 5px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.rum-page-btn:hover:not(:disabled):not(.active) {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+.rum-page-btn.active {
+  background: #ea580c !important;
+  border-color: #ea580c !important;
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+.rum-page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.rum-page-dots {
+  font-size: 11px;
+  color: #94a3b8;
+  padding: 0 3px;
+}
+
+@media (max-width: 900px) {
+  .rum-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .rum-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+}

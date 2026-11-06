@@ -1,0 +1,725 @@
+/* TASK DETAILS PAGE STYLES - 1:1 MATCH WITH PICTURE 3 */
+
+.task-details-page {
+  width: 100%;
+  min-height: calc(100vh - 72px);
+  padding: 16px 36px 24px 36px;
+  background-color: #e2e8f0 !important;
+  color: #1e293b;
+  font-family: "Outfit", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  box-sizing: border-box;
+}
+
+.task-details-page.light-theme {
+  background-color: #e2e8f0 !important;
+}
+
+/* Top Back Navigation Link */
+.task-details-nav-row {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  text-align: left !important;
+  margin-bottom: 6px !important;
+}
+
+.task-details-back-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  background: transparent !important;
+  border: none !important;
+  color: #2563eb !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  font-family: inherit !important;
+  text-align: left !important;
+  transition: color 0.15s ease;
+}
+
+.task-details-back-link:hover {
+  color: #1d4ed8 !important;
+  text-decoration: underline !important;
+}
+
+/* Header Section */
+.task-details-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-end !important;
+  margin-bottom: 14px !important;
+  width: 100% !important;
+  text-align: left !important;
+}
+
+.task-details-header-left {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  text-align: left !important;
+}
+
+.task-details-breadcrumb-tag {
+  display: block !important;
+  margin: 0 0 3px 0 !important;
+  color: #3b82f6 !important;
+  font-size: 8px !important;
+  font-weight: 700 !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  text-align: left !important;
+  font-family: "Outfit", "Inter", sans-serif !important;
+  line-height: 1.2 !important;
+}
+
+.task-details-title {
+  margin: 0 !important;
+  font-size: 21px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  line-height: 1.25 !important;
+  font-family: "Inter", sans-serif !important;
+  text-align: left !important;
+  display: block !important;
+}
+
+.task-details-subtitle {
+  margin: 3px 0 0 0 !important;
+  font-size: 10.5px !important;
+  color: #64748b !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+  text-align: left !important;
+  display: block !important;
+}
+
+/* Header Actions */
+.task-details-header-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.task-details-edit-btn {
+  background: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  color: #334155 !important;
+  padding: 7px 18px !important;
+  border-radius: 8px !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  cursor: pointer !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+  transition: all 0.15s ease !important;
+}
+
+.task-details-edit-btn:hover {
+  background: #f8fafc !important;
+  border-color: #94a3b8 !important;
+  color: #0f172a !important;
+}
+
+.task-details-delete-btn {
+  background: #fef2f2 !important;
+  border: 1px solid #fecaca !important;
+  color: #dc2626 !important;
+  padding: 7px 18px !important;
+  border-radius: 8px !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  cursor: pointer !important;
+  box-shadow: 0 1px 2px rgba(220, 38, 38, 0.05) !important;
+  transition: all 0.15s ease !important;
+}
+
+.task-details-delete-btn:hover {
+  background: #fee2e2 !important;
+  border-color: #fca5a5 !important;
+  color: #b91c1c !important;
+}
+
+/* Main Task Summary Card */
+.task-details-summary-card {
+  background: radial-gradient(ellipse at 100% 50%, rgba(254, 215, 170, 0.35) 0%, rgba(255, 255, 255, 0) 70%), #ffffff;
+  border: 1px solid #edf2f7;
+  border-radius: 14px;
+  padding: 14px 24px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.task-summary-left {
+  display: flex;
+  align-items: center;
+}
+
+.task-avatar-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 800;
+  box-shadow: 0 3px 10px rgba(234, 88, 12, 0.22);
+  flex-shrink: 0;
+}
+
+.task-avatar-divider {
+  width: 1px;
+  height: 38px;
+  background: #e2e8f0;
+  margin: 0 18px;
+  flex-shrink: 0;
+}
+
+.task-main-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+}
+
+.task-main-name {
+  margin: 0;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  color: #0f172a;
+  font-family: "Inter", sans-serif;
+  line-height: 1.35;
+  text-align: left;
+}
+
+.task-assignee-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: "Outfit", "Inter", sans-serif;
+  margin-top: 2px;
+}
+
+.task-assignee-icon {
+  color: #64748b;
+}
+
+.task-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  border-radius: 16px;
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+.task-status-pill.status-active {
+  background: #dcfce7;
+  border: 1px solid #bbf7d0;
+  color: #16a34a;
+}
+
+.task-status-pill.status-inactive {
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+/* 4 KPI / Stat Cards Grid */
+.task-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 14px;
+  width: 100%;
+}
+
+.task-kpi-card {
+  background: #ffffff;
+  border: 1px solid #edf2f7;
+  border-radius: 12px;
+  padding: 12px 18px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.task-kpi-icon-wrap {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.task-kpi-icon-wrap.blue-kpi {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.task-kpi-icon-wrap.purple-kpi {
+  background: #f3e8ff;
+  color: #9333ea;
+}
+
+.task-kpi-icon-wrap.green-kpi {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.task-kpi-icon-wrap.slate-kpi {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.task-kpi-text-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+}
+
+.task-kpi-label {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+  font-family: "Outfit", "Inter", sans-serif;
+}
+
+.task-kpi-value {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #0f172a;
+  font-family: "Inter", sans-serif;
+  white-space: nowrap;
+}
+
+/* Section Cards (Personal Information & Others) */
+.task-section-card {
+  background: #ffffff;
+  border: 1px solid #edf2f7;
+  border-radius: 12px;
+  padding: 14px 24px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  margin-bottom: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.section-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.section-header-icon-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.section-header-icon-badge.blue-badge {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.section-header-icon-badge.orange-badge {
+  background: #fff7ed;
+  color: #ea580c;
+}
+
+.section-header-icon-badge.purple-badge {
+  background: #f3e8ff;
+  color: #9333ea;
+}
+
+.section-header-text {
+  text-align: left;
+}
+
+.section-header-text h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.3;
+  font-family: "Inter", sans-serif;
+  text-align: left;
+}
+
+.section-header-text p {
+  margin: 2px 0 0;
+  font-size: 11px;
+  color: #64748b;
+  line-height: 1.4;
+  font-family: "Outfit", "Inter", sans-serif;
+  text-align: left;
+}
+
+/* Personal Information Grid (6 Columns across row) */
+.personal-info-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px 16px;
+  align-items: start;
+}
+
+.info-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: left;
+}
+
+.field-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #64748b;
+  font-family: "Outfit", "Inter", sans-serif;
+  text-align: left;
+}
+
+.field-value {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+  font-family: "Inter", sans-serif;
+  word-break: break-word;
+  text-align: left;
+}
+
+.assigned-role-tag {
+  display: inline-block;
+  background: #eff6ff;
+  color: #2563eb;
+  padding: 3px 12px;
+  border-radius: 12px;
+  font-size: 11.5px;
+  font-weight: 600;
+  font-family: "Inter", sans-serif;
+}
+
+.status-inline-value {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.status-inline-value.is-active {
+  color: #16a34a;
+}
+
+.status-inline-value.is-inactive {
+  color: #dc2626;
+}
+
+.inline-dot {
+  font-size: 9px;
+}
+
+/* Bottom Row: Additional Information (Left) + Task Logs (Right) */
+.task-details-bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.task-additional-card {
+  background: radial-gradient(ellipse at 100% 100%, rgba(254, 215, 170, 0.4) 0%, rgba(255, 255, 255, 0) 70%), #ffffff;
+  margin-bottom: 0 !important;
+}
+
+.additional-info-row {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-top: 14px;
+}
+
+.additional-field-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 140px;
+  text-align: left;
+}
+
+.additional-divider {
+  width: 1px;
+  height: 32px;
+  background: #edf2f7;
+}
+
+/* Task Logs Card */
+.task-logs-card {
+  margin-bottom: 0 !important;
+}
+
+.logs-title-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.task-logs-count-badge {
+  background: #dbeafe;
+  color: #2563eb;
+  border-radius: 10px;
+  padding: 1px 7px;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: "Inter", sans-serif;
+}
+
+.task-logs-timeline-container {
+  margin-top: 14px;
+  position: relative;
+}
+
+.task-logs-empty {
+  margin: 0;
+  font-size: 12.5px;
+  color: #64748b;
+  font-family: "Outfit", "Inter", sans-serif;
+  text-align: left;
+}
+
+.task-logs-timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.timeline-connecting-line {
+  position: absolute;
+  left: 6px;
+  top: 14px;
+  bottom: 14px;
+  width: 2px;
+  background: #fed7aa;
+  z-index: 1;
+}
+
+.timeline-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  position: relative;
+  z-index: 2;
+}
+
+.timeline-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ea580c;
+  border: 2.5px solid #ffffff;
+  box-shadow: 0 0 0 2px rgba(234, 88, 12, 0.25);
+  flex-shrink: 0;
+  margin-top: 8px;
+}
+
+.timeline-card {
+  flex: 1;
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 8px;
+  padding: 8px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: left;
+}
+
+.timeline-message {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #1e293b;
+  font-family: "Inter", sans-serif;
+  line-height: 1.35;
+}
+
+.timeline-timestamp {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+  font-family: "Outfit", "Inter", sans-serif;
+}
+
+/* Loading & Error States */
+.task-details-loading-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 280px;
+}
+
+.task-details-error-card {
+  background: #ffffff;
+  border: 1px solid #edf2f7;
+  border-radius: 12px;
+  padding: 28px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.task-details-error-card h2 {
+  margin: 0 0 6px 0;
+  font-size: 17px;
+  color: #0f172a;
+}
+
+.task-details-error-card p {
+  margin: 0;
+  color: #ef4444;
+  font-size: 12.5px;
+}
+
+/* Dark Theme Support */
+.dark-theme.task-details-page {
+  background: #0b1329 !important;
+  color: #f1f5f9;
+}
+
+.dark-theme .task-details-title {
+  color: #f8fafc !important;
+}
+
+.dark-theme .task-details-subtitle {
+  color: #94a3b8 !important;
+}
+
+.dark-theme .task-details-summary-card,
+.dark-theme .task-kpi-card,
+.dark-theme .task-section-card,
+.dark-theme .task-details-error-card {
+  background-color: #111c38;
+  border-color: #1e293b;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.dark-theme .task-additional-card {
+  background: radial-gradient(ellipse at 100% 100%, rgba(234, 88, 12, 0.15) 0%, rgba(17, 28, 56, 1) 70%), #111c38;
+}
+
+.dark-theme .task-main-name,
+.dark-theme .section-header-text h3,
+.dark-theme .field-value,
+.dark-theme .task-kpi-value,
+.dark-theme .timeline-message {
+  color: #f8fafc;
+}
+
+.dark-theme .timeline-card {
+  background: #162447;
+  border-color: #1e293b;
+}
+
+.dark-theme .task-details-edit-btn {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  color: #f8fafc !important;
+}
+
+.dark-theme .task-avatar-divider,
+.dark-theme .additional-divider {
+  background-color: #1e293b;
+}
+
+.dark-theme .assigned-role-tag {
+  background-color: rgba(37, 99, 235, 0.18);
+  color: #60a5fa;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1100px) {
+  .personal-info-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .task-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .task-details-bottom-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .task-details-page {
+    padding: 14px 16px;
+  }
+
+  .personal-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .task-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .task-details-summary-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .task-summary-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .task-avatar-divider {
+    display: none;
+  }
+
+  .additional-info-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .additional-divider {
+    display: none;
+  }
+}

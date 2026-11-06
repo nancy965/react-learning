@@ -1,0 +1,639 @@
+/* Role Binding Modal - Compact, Fixed-Height (No Scrollbar, No Layout Shifts) */
+
+.binding-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.binding-modal-box {
+  background: #ffffff !important;
+  color-scheme: light !important;
+  color: #0f172a !important;
+  max-width: 860px !important;
+  width: 92% !important;
+  border-radius: 14px !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.22) !important;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  animation: bindingModalFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes bindingModalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.binding-modal-content {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+/* Header */
+.binding-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 22px 12px 22px;
+  background: #ffffff;
+  border-bottom: none;
+}
+
+.binding-header-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.binding-header-icon-wrap {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background-color: #fff7ed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ea580c;
+  flex-shrink: 0;
+}
+
+.binding-header-icon-wrap svg {
+  width: 20px;
+  height: 20px;
+}
+
+.binding-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.binding-header-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1.2;
+}
+
+.binding-role-badge {
+  background-color: #fff7ed;
+  color: #ea580c;
+  border: 1px solid #ffedd5;
+  padding: 2px 7px;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.binding-header-subtitle {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 400;
+}
+
+/* Close Button (top-right circular button) */
+.binding-close-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50% !important;
+  border: 1px solid #e2e8f0 !important;
+  background: #ffffff !important;
+  color: #64748b !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px !important;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.binding-close-btn:hover {
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+/* 4 KPI Cards */
+.binding-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding: 0 22px 12px 22px;
+}
+
+.binding-card {
+  padding: 8px 12px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.binding-card.blue {
+  background-color: #f0f7ff;
+}
+.binding-card.blue .binding-card-icon {
+  background-color: #dbeafe;
+  color: #2563eb;
+}
+
+.binding-card.green {
+  background-color: #f0fdf4;
+}
+.binding-card.green .binding-card-icon {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+
+.binding-card.red {
+  background-color: #fef2f2;
+}
+.binding-card.red .binding-card-icon {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.binding-card.purple {
+  background-color: #faf5ff;
+}
+.binding-card.purple .binding-card-icon {
+  background-color: #f3e8ff;
+  color: #9333ea;
+}
+
+.binding-card-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.binding-card-icon svg {
+  width: 17px;
+  height: 17px;
+}
+
+.binding-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.binding-card-label {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.binding-card-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+/* Search and Filters */
+.binding-controls {
+  padding: 0 22px 10px 22px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.binding-search {
+  flex: 1;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #e2e8f0;
+  border-radius: 7px;
+  padding: 0 11px;
+  background: #ffffff !important;
+  gap: 8px;
+}
+
+.binding-search svg {
+  width: 14px;
+  height: 14px;
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+
+.binding-search input {
+  flex: 1;
+  height: 100%;
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  color: #0f172a !important;
+  font-size: 12.5px !important;
+  font-family: inherit;
+  padding: 0 !important;
+}
+
+.binding-search input::placeholder {
+  color: #94a3b8 !important;
+}
+
+.binding-status-select {
+  height: 35px;
+  min-width: 120px;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 7px !important;
+  padding: 0 10px !important;
+  background: #ffffff !important;
+  color: #334155 !important;
+  font-size: 12.5px !important;
+  font-weight: 500;
+  outline: none !important;
+  cursor: pointer;
+  appearance: auto;
+}
+
+/* Users Table Container (No Scrollbar) */
+.binding-table-container {
+  padding: 0 22px;
+  overflow: hidden !important;
+}
+
+.binding-table-header {
+  display: grid;
+  grid-template-columns: 36px 1.7fr 2fr 1.3fr 1.1fr 1.6fr 36px;
+  align-items: center;
+  height: 34px;
+  padding: 0 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-bottom: none;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  box-sizing: border-box;
+}
+
+.table-header-cell {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.actions-header-cell {
+  text-align: right;
+}
+
+/* Fixed Table Body Height = Exactly 5 rows (5 * 40px = 200px) */
+/* This ensures popup size NEVER changes regardless of status dropdown selection */
+.binding-table-body {
+  height: 200px;
+  min-height: 200px;
+  max-height: 200px;
+  overflow: hidden !important;
+  border: 1px solid #e2e8f0;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* Table Row (Reduced spacing, 40px height) */
+.binding-table-row {
+  display: grid;
+  grid-template-columns: 36px 1.7fr 2fr 1.3fr 1.1fr 1.6fr 36px;
+  align-items: center;
+  height: 40px;
+  min-height: 40px;
+  max-height: 40px;
+  padding: 0 14px;
+  border-top: 1px solid #f1f5f9;
+  background: #ffffff;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  transition: background 0.12s ease;
+}
+
+.binding-table-row:first-child {
+  border-top: none;
+}
+
+.binding-table-row:hover {
+  background: #f8fafc;
+}
+
+.binding-user-index {
+  color: #64748b;
+  font-size: 11.5px;
+  font-weight: 500;
+}
+
+.binding-user-info-col {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.binding-user-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.binding-user-name {
+  font-weight: 600;
+  color: #0f172a;
+  font-size: 12.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.binding-user-email {
+  color: #64748b;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* User Type Pills */
+.binding-type-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  width: fit-content;
+}
+
+.binding-type-pill.employee-pill {
+  background-color: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #dbeafe;
+}
+
+.binding-type-pill.admin-pill {
+  background-color: #faf5ff;
+  color: #9333ea;
+  border: 1px solid #f3e8ff;
+}
+
+.binding-type-pill svg {
+  width: 11px;
+  height: 11px;
+}
+
+/* Status Pill */
+.binding-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  width: fit-content;
+}
+
+.binding-status-pill.active {
+  background-color: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+}
+
+.binding-status-pill.inactive {
+  background-color: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+.binding-status-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+
+.binding-status-pill.active .binding-status-dot {
+  background-color: #22c55e;
+}
+
+.binding-status-pill.inactive .binding-status-dot {
+  background-color: #ef4444;
+}
+
+/* Assigned On Column */
+.binding-assigned-on-col {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+.binding-assigned-on-col svg {
+  width: 14px;
+  height: 14px;
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+
+.binding-assigned-date {
+  font-size: 12px;
+  font-weight: 500;
+  color: #334155;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+/* Actions Column */
+.binding-actions-col {
+  text-align: right;
+}
+
+.binding-actions-btn {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid #d5e0ec;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.binding-actions-btn:hover {
+  background: #f8fafc;
+  color: #0f172a;
+  border-color: #cbd5e1;
+}
+
+.binding-actions-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Empty State: Centered within fixed 200px height so modal doesn't shrink */
+.binding-empty-state {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  font-size: 12.5px;
+  text-align: center;
+  padding: 16px;
+}
+
+/* Footer */
+.binding-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 22px 14px 22px;
+  border-top: 1px solid #f1f5f9;
+  margin-top: 8px;
+  background: #ffffff;
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+}
+
+.binding-showing-text {
+  font-size: 11.5px;
+  color: #64748b;
+  font-weight: 400;
+}
+
+.binding-pagination {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.binding-page-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 5px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #64748b;
+  font-size: 11.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.binding-page-btn.arrow {
+  color: #94a3b8;
+}
+
+.binding-page-btn.active {
+  background: #eff6ff;
+  color: #2563eb;
+  border-color: #bfdbfe;
+  font-weight: 600;
+}
+
+.binding-page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.binding-footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-binding-close {
+  height: 33px;
+  padding: 0 16px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #334155;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.btn-binding-close:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.btn-binding-assign {
+  height: 33px;
+  padding: 0 16px;
+  border: none;
+  background: #ea580c;
+  color: #ffffff;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 4px rgba(234, 88, 12, 0.2);
+  transition: all 0.12s ease;
+}
+
+.btn-binding-assign:hover {
+  background: #c2410c;
+  transform: translateY(-1px);
+}
+
+.btn-binding-assign:active {
+  transform: translateY(0);
+}
+
+.btn-binding-assign svg {
+  width: 13px;
+  height: 13px;
+}
