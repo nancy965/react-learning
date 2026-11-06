@@ -1,7 +1,7 @@
 import { useAuth } from "../context/AuthContext";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./createUser.css";
+import "./CreateUser.css";
 import { useTheme } from "../context/ThemeContext";
 import {
   createUser as createUserApi,
@@ -176,9 +176,7 @@ function CreateUser() {
       console.log("CREATE USER ERROR:", error);
 
       if (error.response) {
-        setError(
-          error.response.data?.message || "Something went wrong"
-        );
+        setError(error.response.data?.message || "Something went wrong");
       } else {
         setError("Something went wrong");
       }

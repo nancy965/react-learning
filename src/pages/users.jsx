@@ -1,4 +1,4 @@
-import "./Users.css";
+import "./users.css";
 import "./Tasks.css";
 import "./UserDetails.css";
 import "./ActivityLogs.css";
@@ -48,7 +48,9 @@ function Users() {
   const isGeneralAdmin =
     userRole === "general_admin" ||
     userRole === "super_admin" ||
-    String(loggedInUser?.role_name || loggedInUser?.roleName || "").toLowerCase().includes("general") ||
+    String(loggedInUser?.role_name || loggedInUser?.roleName || "")
+      .toLowerCase()
+      .includes("general") ||
     loggedInUser?.baseRole === "general_admin" ||
     loggedInUser?.email === "nency@gmail.com" ||
     String(loggedInUser?.name || "").toLowerCase() === "nency";
@@ -69,14 +71,10 @@ function Users() {
     hasPermission(["users.bulk_create", "users.create"]);
 
   const canEditUsers =
-    isGeneralAdmin ||
-    userRole === "admin" ||
-    hasPermission(["users.edit"]);
+    isGeneralAdmin || userRole === "admin" || hasPermission(["users.edit"]);
 
   const canDeleteUsers =
-    isGeneralAdmin ||
-    userRole === "admin" ||
-    hasPermission(["users.delete"]);
+    isGeneralAdmin || userRole === "admin" || hasPermission(["users.delete"]);
 
   useEffect(() => {
     const urlStatus = searchParams.get("status");
@@ -229,8 +227,6 @@ function Users() {
     return pages;
   };
 
-
-
   if (error) {
     return (
       <div className={`users-page ${theme}-theme`}>
@@ -342,10 +338,7 @@ function Users() {
     },
   ];
 
-  const maxUserOption = Math.max(
-    5,
-    Math.ceil((totalRecords || 0) / 5) * 5,
-  );
+  const maxUserOption = Math.max(5, Math.ceil((totalRecords || 0) / 5) * 5);
 
   const userPageSizeOptions = [];
 
@@ -416,9 +409,7 @@ function Users() {
           <button
             type="button"
             className="tasks-page-size-button"
-            onClick={() =>
-              setShowPageSizeDropdown((previous) => !previous)
-            }
+            onClick={() => setShowPageSizeDropdown((previous) => !previous)}
             aria-haspopup="listbox"
             aria-expanded={showPageSizeDropdown}
           >
@@ -456,9 +447,7 @@ function Users() {
         </div>
 
         <CustomSelect
-          value={
-            status === "admin" || status === "employee" ? "all" : status
-          }
+          value={status === "admin" || status === "employee" ? "all" : status}
           onChange={handleStatusChange}
           options={[
             { value: "all", label: "All Status" },
@@ -477,12 +466,9 @@ function Users() {
               }`}
               style={{
                 width: "auto",
-                background:
-                  status === "admin" ? "#edf5ff" : "#ffffff",
-                borderColor:
-                  status === "admin" ? "#b9cee6" : "#d5e0ec",
-                color:
-                  status === "admin" ? "#0d1f5c" : "#47617f",
+                background: status === "admin" ? "#edf5ff" : "#ffffff",
+                borderColor: status === "admin" ? "#b9cee6" : "#d5e0ec",
+                color: status === "admin" ? "#0d1f5c" : "#47617f",
               }}
               onClick={() => {
                 setStatus("admin");
@@ -498,12 +484,9 @@ function Users() {
               }`}
               style={{
                 width: "auto",
-                background:
-                  status === "employee" ? "#edf5ff" : "#ffffff",
-                borderColor:
-                  status === "employee" ? "#b9cee6" : "#d5e0ec",
-                color:
-                  status === "employee" ? "#0d1f5c" : "#47617f",
+                background: status === "employee" ? "#edf5ff" : "#ffffff",
+                borderColor: status === "employee" ? "#b9cee6" : "#d5e0ec",
+                color: status === "employee" ? "#0d1f5c" : "#47617f",
               }}
               onClick={() => {
                 setStatus("employee");
@@ -522,12 +505,9 @@ function Users() {
             }`}
             style={{
               width: "auto",
-              background:
-                status === "employee" ? "#edf5ff" : "#ffffff",
-              borderColor:
-                status === "employee" ? "#b9cee6" : "#d5e0ec",
-              color:
-                status === "employee" ? "#0d1f5c" : "#47617f",
+              background: status === "employee" ? "#edf5ff" : "#ffffff",
+              borderColor: status === "employee" ? "#b9cee6" : "#d5e0ec",
+              color: status === "employee" ? "#0d1f5c" : "#47617f",
             }}
             onClick={() => {
               setStatus("employee");
@@ -538,7 +518,10 @@ function Users() {
         )}
       </div>
 
-      <div className="users-table-container" style={{ marginTop: "20px", width: "100%" }}>
+      <div
+        className="users-table-container"
+        style={{ marginTop: "20px", width: "100%" }}
+      >
         <Table
           minWidth="100%"
           columns={columns}
@@ -550,14 +533,9 @@ function Users() {
               user={user}
               index={(currentPage - 1) * usersPerPage + index + 1}
               gridTemplate={gridTemplate}
-              refreshUsers={() =>
-                fetchUsers(currentPage, usersPerPage, false)
-              }
+              refreshUsers={() => fetchUsers(currentPage, usersPerPage, false)}
               isAdmin={
-                isGeneralAdmin ||
-                canViewUsers ||
-                canEditUsers ||
-                canDeleteUsers
+                isGeneralAdmin || canViewUsers || canEditUsers || canDeleteUsers
               }
               userRole={userRole}
               canViewUsers={canViewUsers}
@@ -579,9 +557,7 @@ function Users() {
             <button
               type="button"
               className="pagination-button pagination-arrow"
-              onClick={() =>
-                fetchUsers(1, usersPerPage, false)
-              }
+              onClick={() => fetchUsers(1, usersPerPage, false)}
               disabled={currentPage === 1 || loading}
               aria-label="First page"
               title="First page"
@@ -603,10 +579,7 @@ function Users() {
             {getPaginationPages().map((page, index) => {
               if (page === "...") {
                 return (
-                  <span
-                    key={`dots-${index}`}
-                    className="pagination-dots"
-                  >
+                  <span key={`dots-${index}`} className="pagination-dots">
                     ...
                   </span>
                 );
@@ -619,9 +592,7 @@ function Users() {
                   className={`pagination-number ${
                     currentPage === page ? "active" : ""
                   }`}
-                  onClick={() =>
-                    fetchUsers(page, usersPerPage, false)
-                  }
+                  onClick={() => fetchUsers(page, usersPerPage, false)}
                   disabled={loading}
                 >
                   {page}
@@ -643,9 +614,7 @@ function Users() {
             <button
               type="button"
               className="pagination-button pagination-arrow"
-              onClick={() =>
-                fetchUsers(totalPages, usersPerPage, false)
-              }
+              onClick={() => fetchUsers(totalPages, usersPerPage, false)}
               disabled={currentPage === totalPages || loading}
               aria-label="Last page"
               title="Last page"
