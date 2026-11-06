@@ -1,118 +1,193 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .home-page {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 30px;
-    background-image:
-        linear-gradient(
-            rgba(30, 0, 70, 0.55),
-            rgba(5, 0, 30, 0.55)
-        ),
-        url("../assets/laptop-bg.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    font-family: Arial, sans-serif;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  background: linear-gradient(135deg, #f0f5fa 0%, #f8fafc 45%, #ffffff 70%, #fdf6ee 100%);
+  position: relative;
+  overflow: hidden;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.home-waves-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.home-waves-svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .home-card {
-    width: 100%;
-    max-width: 550px;
-    padding: 55px 50px;
-    background: rgba(20, 10, 45, 0.88);
-    border: 1px solid rgba(139, 92, 246, 0.35);
-    border-radius: 18px;
-    box-shadow:0 20px 50px rgba(0, 0, 0, 0.35);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    text-align: center;
+  width: 100%;
+  max-width: 485px;
+  padding: 42px 46px 44px 46px;
+  background: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 22px;
+  box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.08), 0 4px 12px rgba(0, 0, 0, 0.03);
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.home-card h1 {
-    margin: 0;
-    color: #ffffff;
-    font-size: 42px;
-    font-weight: 700;
+/* Logo block */
+.home-logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
-.home-card p {
-    margin: 15px auto 35px;
-    max-width: 420px;
-    color: #c4b5fd;
-    font-size: 15px;
-    line-height: 1.6;
+.home-logo-img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  border-radius: 6px;
 }
 
+.home-logo-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.home-logo-title {
+  color: #0f172a;
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+}
+
+.home-logo-subtitle {
+  color: #64748b;
+  font-size: 11.5px;
+  font-weight: 500;
+  line-height: 1.2;
+  margin-top: 2px;
+}
+
+/* Orange accent divider line */
+.home-divider {
+  width: 44px;
+  height: 2.5px;
+  background: #ea580c;
+  border-radius: 2px;
+  margin: 12px auto 22px auto;
+}
+
+/* Title & Subtitle */
+.home-title {
+  margin: 0 0 12px 0;
+  color: #0f172a;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.6px;
+  line-height: 1.2;
+}
+
+.home-subtitle {
+  margin: 0 auto 30px auto;
+  max-width: 380px;
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.55;
+  font-weight: 400;
+}
+
+/* Buttons */
 .home-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
 }
 
-.home-button {
-    min-width: 150px;
-    padding: 14px 25px;
-    border: none;
-    border-radius: 10px;
-    background: linear-gradient(
-        135deg,
-        #7c3aed,
-        #4f46e5
-    );
-    color: #ffffff;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow:
-        0 7px 16px rgba(79, 70, 229, 0.30);
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+.home-btn {
+  min-width: 135px;
+  height: 44px;
+  padding: 0 24px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  outline: none;
 }
 
-.home-button:hover {
-    transform: translateY(-2px);
-    box-shadow:
-        0 10px 22px rgba(124, 58, 237, 0.40);
+/* Login Button: Orange */
+.home-btn-login {
+  background: #ea580c;
+  border: none;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.28);
 }
 
-.home-button:active {
-    transform: translateY(0);
+.home-btn-login:hover {
+  background: #c2410c;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(234, 88, 12, 0.38);
 }
 
-.register-home-button {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(196, 181, 253, 0.35);
-    color: #ddd6fe;
-    box-shadow: none;
+.home-btn-login:active {
+  transform: translateY(0);
 }
 
-.register-home-button:hover {
-    background: rgba(124, 58, 237, 0.20);
-    box-shadow:
-        0 8px 18px rgba(124, 58, 237, 0.25);
+/* Register Button: White with dark border */
+.home-btn-register {
+  background: #ffffff;
+  border: 1.5px solid #0f172a;
+  color: #0f172a;
 }
 
-/* Mobile */
-@media (max-width: 500px) {
-    .home-page {
-        padding: 18px;
-    }
-    .home-card {
-        padding: 40px 25px;
-    }
-    .home-card h1 {
-        font-size: 32px;
-    }
-    .home-buttons {
-        flex-direction: column;
-    }
-    .home-button {
-        width: 100%;
-    }
+.home-btn-register:hover {
+  background: #f8fafc;
+  border-color: #334155;
+  color: #0f172a;
+  transform: translateY(-1px);
+}
+
+.home-btn-register:active {
+  transform: translateY(0);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 540px) {
+  .home-card {
+    padding: 32px 24px 34px 24px;
+    border-radius: 18px;
+  }
+  .home-title {
+    font-size: 28px;
+  }
+  .home-buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+  .home-btn {
+    width: 100%;
+  }
 }
