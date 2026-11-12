@@ -90,6 +90,35 @@
 
 .leave-year-select-wrap {
   position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.leave-year-select-wrap .custom-select-container {
+  min-width: 120px;
+}
+
+.leave-year-select-wrap .custom-select-trigger {
+  height: 38px;
+  min-height: 38px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  padding: 0 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #0f172a;
+  background-color: #ffffff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.leave-year-select-wrap .custom-select-trigger:hover:not(.disabled) {
+  border-color: #cbd5e1;
+}
+
+.leave-year-select-wrap .custom-select-trigger:focus,
+.leave-year-select-wrap .custom-select-trigger:focus-within {
+  border-color: #ea580c;
+  box-shadow: 0 0 0 2px rgba(234, 88, 12, 0.15);
 }
 
 .leave-year-select {
@@ -476,7 +505,7 @@
   border-radius: 16px;
   padding: 24px 28px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
-  min-height: 440px;
+  min-height: auto;
 }
 
 .leave-filter-search-row {
@@ -1254,9 +1283,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 4px 4px;
-  margin-top: 8px;
-  border-top: 1px solid #f8fafc;
+  padding: 14px 4px 6px;
+  margin-top: 14px;
+  background: transparent;
+  border-top: none;
+  width: 100%;
 }
 
 .leave-table-count-text {
@@ -2294,94 +2325,339 @@
   color: #0f172a;
 }
 
-/* Decision Modal */
+/* Decision Modal (Exact Match to Reference UI) */
 .decision-modal-card {
   background: #ffffff;
-  border-radius: 16px;
+  border-radius: 20px;
   width: 100%;
-  max-width: 540px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.16);
+  max-width: 530px;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.22);
   overflow: hidden;
   animation: scaleUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.decision-modal-header {
-  padding: 20px 24px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid #f1f5f9;
+  flex-direction: column;
 }
 
-.decision-modal-header.approve {
-  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
-  color: #065f46;
+/* Modal Header */
+.decision-modal-header {
+  position: relative;
+  padding: 20px 24px 18px 24px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-bottom: 1px solid #ffedd5;
+  background: linear-gradient(180deg, #fffaf5 0%, #fff7ed 60%, #ffedd5 100%);
 }
 
 .decision-modal-header.reject {
-  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
-  color: #991b1b;
+  border-bottom: 1px solid #fee2e2;
+  background: linear-gradient(180deg, #fff5f5 0%, #fef2f2 60%, #fee2e2 100%);
 }
 
-.decision-modal-title-box {
+.decision-modal-header-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  z-index: 2;
+}
+
+.decision-modal-status-badge {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(234, 88, 12, 0.25);
 }
 
-.decision-modal-title-box h3 {
+.decision-modal-status-badge.approve {
+  background-color: #f97316;
+  color: #ffffff;
+}
+
+.decision-modal-status-badge.reject {
+  background-color: #ef4444;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.25);
+}
+
+.decision-modal-title-text h3 {
   margin: 0;
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.2px;
 }
 
+.decision-modal-title-text p {
+  margin: 3px 0 0 0;
+  font-size: 13px;
+  color: #64748b;
+  font-weight: 400;
+}
+
+.decision-modal-header-right {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  z-index: 2;
+}
+
+.decision-header-illustration {
+  margin-top: -8px;
+  margin-right: 4px;
+  pointer-events: none;
+}
+
+.decision-modal-header .leave-modal-close {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  margin-top: -4px;
+}
+
+.decision-modal-header .leave-modal-close:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #0f172a;
+}
+
+/* Modal Body */
 .decision-modal-body {
-  padding: 24px;
+  padding: 22px 24px 12px 24px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 14px;
+  background-color: #ffffff;
 }
 
-.decision-req-preview {
-  background-color: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 16px;
+/* 1. Employee Card */
+.decision-emp-card {
+  background: #ffffff;
+  border: 1px solid #fed7aa;
+  border-radius: 14px;
+  padding: 12px 16px;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.decision-emp-info-left {
+  display: flex;
+  align-items: center;
   gap: 12px;
 }
 
-.decision-preview-row {
+.decision-emp-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fed7aa;
+  color: #ea580c;
+  font-size: 20px;
+  font-weight: 700;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  font-size: 13.5px;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-.decision-preview-row .label {
+.decision-emp-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.decision-emp-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+.decision-emp-email {
+  font-size: 12.5px;
+  color: #64748b;
+}
+
+.decision-emp-code-pill {
+  display: inline-block;
+  background: #fff7ed;
+  color: #ea580c;
+  border: 1px solid #fed7aa;
+  border-radius: 6px;
+  padding: 1.5px 7px;
+  font-size: 11px;
+  font-weight: 600;
+  width: fit-content;
+  margin-top: 3px;
+  letter-spacing: 0.2px;
+}
+
+.decision-emp-type-pill {
+  background: #ffedd5;
+  color: #c2410c;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+/* 2. Duration & Total Duration Grid */
+.decision-duration-box {
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.decision-duration-col {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.decision-duration-icon {
+  color: #ea580c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.decision-duration-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.decision-duration-label {
+  font-size: 11.5px;
   color: #64748b;
   font-weight: 500;
 }
 
-.decision-preview-row .val {
+.decision-duration-val {
+  font-size: 13.5px;
   color: #0f172a;
-  font-weight: 600;
+  font-weight: 700;
 }
 
-.decision-preview-reason {
-  border-top: 1px dashed #cbd5e1;
-  padding-top: 10px;
-  font-size: 13px;
-  color: #334155;
+.decision-duration-divider {
+  width: 1px;
+  height: 36px;
+  background-color: #e2e8f0;
+  margin: 0 14px;
+}
+
+/* 3. Reason Box */
+.decision-reason-box {
+  background: #fffaf5;
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.decision-reason-icon {
+  color: #ea580c;
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.decision-reason-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.decision-reason-label {
+  font-size: 11.5px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.decision-reason-val {
+  font-size: 13.5px;
+  color: #1e293b;
+  font-weight: 500;
+  word-break: break-word;
+}
+
+/* 4. Info Notice Banner */
+.decision-info-banner {
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12.5px;
   line-height: 1.45;
+}
+
+.decision-info-banner.approve {
+  background: #eff6ff;
+  color: #1e293b;
+}
+
+.decision-info-banner.approve svg {
+  color: #0284c7;
+  flex-shrink: 0;
+}
+
+.decision-info-banner.reject {
+  background: #fef2f2;
+  color: #1e293b;
+}
+
+.decision-info-banner.reject svg {
+  color: #ef4444;
+  flex-shrink: 0;
+}
+
+.decision-info-banner strong {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* 5. Form Group & Textarea */
+.decision-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.decision-form-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
 }
 
 .decision-remarks-textarea {
   width: 100%;
   padding: 12px 14px;
   border: 1px solid #cbd5e1;
-  border-radius: 8px;
+  border-radius: 10px;
   font-family: inherit;
   font-size: 13.5px;
   color: #1e293b;
@@ -2389,62 +2665,93 @@
   background-color: #ffffff !important;
   outline: none;
   resize: vertical;
-  min-height: 80px;
+  min-height: 76px;
   box-sizing: border-box;
+  transition: all 0.15s ease;
+}
+
+.decision-remarks-textarea::placeholder {
+  color: #94a3b8;
+  font-size: 13px;
 }
 
 .decision-remarks-textarea:focus {
-  border-color: #ea580c;
-  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.15);
+  border-color: #f97316;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
 }
 
+/* Modal Footer */
 .decision-modal-footer {
-  padding: 16px 24px;
-  border-top: 1px solid #f1f5f9;
-  background-color: #f8fafc;
+  padding: 16px 24px 22px 24px;
+  background-color: #ffffff;
   display: flex;
-  justify-content: flex-end;
-  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-cancel {
+  background-color: #ffffff;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+  padding: 9px 26px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-width: 110px;
+}
+
+.btn-cancel:hover:not(:disabled) {
+  background-color: #f8fafc;
+  border-color: #94a3b8;
 }
 
 .btn-confirm-approve {
-  background-color: #10b981;
+  background-color: #ea580c;
   color: #ffffff;
   border: none;
-  padding: 10px 20px;
+  padding: 9px 24px;
   border-radius: 8px;
   font-weight: 600;
   font-size: 13.5px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  gap: 8px;
   transition: all 0.15s ease;
+  box-shadow: 0 2px 6px rgba(234, 88, 12, 0.2);
+  min-width: 170px;
 }
 
 .btn-confirm-approve:hover:not(:disabled) {
-  background-color: #059669;
-  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.25);
+  background-color: #c2410c;
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.35);
 }
 
 .btn-confirm-reject {
-  background-color: #ef4444;
+  background-color: #dc2626;
   color: #ffffff;
   border: none;
-  padding: 10px 20px;
+  padding: 9px 24px;
   border-radius: 8px;
   font-weight: 600;
   font-size: 13.5px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  gap: 8px;
   transition: all 0.15s ease;
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.2);
+  min-width: 170px;
 }
 
 .btn-confirm-reject:hover:not(:disabled) {
-  background-color: #dc2626;
-  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.25);
+  background-color: #b91c1c;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.35);
 }
 
 
@@ -5759,4 +6066,143 @@
 .admin-empty-apply-btn:hover {
   background: #c2410c;
   transform: translateY(-1px);
+}
+
+
+/* ======================================================================
+   UPCOMING COMPANY HOLIDAY COUNTDOWN BANNER & HEADER PILL
+   ====================================================================== */
+.holiday-countdown-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: linear-gradient(135deg, #fffbf5 0%, #fff7ed 55%, #ffedd5 100%);
+  border: 1px solid #fed7aa;
+  border-left: 4px solid #f97316;
+  border-radius: 12px;
+  padding: 11px 18px;
+  margin-bottom: 22px;
+  box-shadow: 0 1px 3px rgba(249, 115, 22, 0.06), 0 2px 6px rgba(0, 0, 0, 0.02);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.holiday-countdown-banner:hover {
+  transform: translateY(-1px);
+  border-color: #fdba74;
+  background: linear-gradient(135deg, #ffffff 0%, #fff7ed 50%, #fed7aa 100%);
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.12);
+}
+
+.holiday-countdown-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.holiday-countdown-icon {
+  font-size: 19px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.06));
+}
+
+.holiday-countdown-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  color: #7c2d12;
+  flex-wrap: wrap;
+}
+
+.holiday-countdown-label {
+  font-weight: 600;
+  color: #9a3412;
+}
+
+.holiday-countdown-name {
+  font-weight: 700;
+  color: #7c2d12;
+  letter-spacing: -0.01em;
+}
+
+.holiday-countdown-days-badge {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+  color: #ffffff;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 2px 9px;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(234, 88, 12, 0.25);
+  letter-spacing: 0.01em;
+}
+
+.holiday-countdown-sep {
+  color: #fdba74;
+  font-weight: 600;
+}
+
+.holiday-countdown-date {
+  font-weight: 500;
+  color: #9a3412;
+}
+
+.holiday-countdown-right {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.holiday-countdown-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #ea580c;
+  background-color: #ffffff;
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 1px solid #fed7aa;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  transition: all 0.15s ease;
+}
+
+.holiday-countdown-banner:hover .holiday-countdown-link {
+  background-color: #f97316;
+  border-color: #ea580c;
+  color: #ffffff;
+}
+
+.leave-holiday-header-pill {
+  display: inline-flex;
+  align-items: center;
+  background: #ea580c;
+  color: #ffffff;
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 1.5px 7px;
+  border-radius: 10px;
+  margin-left: 5px;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 768px) {
+  .holiday-countdown-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+  }
+  .holiday-countdown-right {
+    align-self: flex-end;
+  }
 }

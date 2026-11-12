@@ -43,6 +43,7 @@ import {
   Layers,
   Building2,
   PartyPopper,
+  Plane,
 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import SuccessToast from "../components/SuccessToast";
@@ -272,10 +273,14 @@ function LeaveManagement() {
     }
   }, [isGeneralAdmin, location.pathname, navigate]);
 
-  // Common State
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  // Common State (Ensure valid year 2026 or 2027)
+  const [selectedYear, setSelectedYear] = useState(() => {
+    const y = new Date().getFullYear();
+    return y === 2027 ? 2027 : 2026;
+  });
   const [leaveTypes, setLeaveTypes] = useState([]);
   const [companyHolidays, setCompanyHolidays] = useState([]);
+  const [allCompanyHolidays, setAllCompanyHolidays] = useState([]);
   const [toastMessage, setToastMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [refreshing, setRefreshing] = useState(false);
@@ -396,16 +401,17 @@ function LeaveManagement() {
 
   const parseHolidayDateParts = (dateVal) => {
     if (!dateVal) return { day: "01", month: "Jan", year: "2026" };
-    if (typeof dateVal === "string" && dateVal.includes("-")) {
-      const parts = dateVal.split("T")[0].split("-");
+    const raw = String(dateVal).trim();
+    const shortMonths = [
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+    if (raw.length === 10 && !raw.includes("T")) {
+      const parts = raw.split("-");
       if (parts.length === 3) {
         const year = parts[0];
         const monthIdx = parseInt(parts[1], 10) - 1;
         const day = parts[2].padStart(2, "0");
-        const shortMonths = [
-          "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-        ];
         return {
           day,
           month: shortMonths[monthIdx] || "Jan",
@@ -414,11 +420,17 @@ function LeaveManagement() {
       }
     }
     const d = new Date(dateVal);
-    if (isNaN(d.getTime())) return { day: "01", month: "Jan", year: "2026" };
+    if (!isNaN(d.getTime())) {
+      return {
+        day: String(d.getDate()).padStart(2, "0"),
+        month: shortMonths[d.getMonth()] || "Jan",
+        year: String(d.getFullYear()),
+      };
+    }
     return {
-      day: String(d.getDate()).padStart(2, "0"),
-      month: d.toLocaleDateString("en-US", { month: "short" }),
-      year: String(d.getFullYear()),
+      day: "01",
+      month: "Jan",
+      year: "2026",
     };
   };
 
@@ -466,6 +478,71 @@ function LeaveManagement() {
   }, [companyHolidays, holidayTypeFilter, holidaySearch]);
 
   // Helper icon for leave type
+  // Dynamic calculation for Nearest Upcoming Company Holiday Countdown
+  const upcomingHolidayCountdown = useMemo(() => {
+    if (!companyHolidays || companyHolidays.length === 0) return null;
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const upcomingList = companyHolidays
+      .map((hol) => {
+        if (!hol || !hol.holiday_date) return null;
+        let targetDate = null;
+        const raw = String(hol.holiday_date).trim();
+        if (raw.length === 10 && !raw.includes("T")) {
+          const [y, m, d] = raw.split("-").map(Number);
+          targetDate = new Date(y, m - 1, d);
+        } else {
+          const d = new Date(hol.holiday_date);
+          if (!isNaN(d.getTime())) {
+            targetDate = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+          }
+        }
+        if (!targetDate || isNaN(targetDate.getTime())) return null;
+        targetDate.setHours(0, 0, 0, 0);
+
+        const diffMs = targetDate.getTime() - today.getTime();
+        const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
+
+        return {
+          ...hol,
+          targetDate,
+          diffDays,
+        };
+      })
+      .filter((h) => h !== null && h.diffDays >= 0)
+      .sort((a, b) => a.diffDays - b.diffDays);
+
+    if (upcomingList.length === 0) return null;
+
+    const nextHol = upcomingList[0];
+    let relativeText = "";
+    if (nextHol.diffDays === 0) {
+      relativeText = "Today";
+    } else if (nextHol.diffDays === 1) {
+      relativeText = "in 1 day";
+    } else {
+      relativeText = `in ${nextHol.diffDays} days`;
+    }
+
+    const formattedDate = nextHol.targetDate.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+
+    return {
+      id: nextHol.id,
+      name: nextHol.name,
+      diffDays: nextHol.diffDays,
+      relativeText,
+      formattedDate,
+      isCompany: isCompanyHoliday(nextHol),
+      description: nextHol.description,
+    };
+  }, [companyHolidays]);
+
   const getLeaveIcon = (code) => {
     switch (code) {
       case "PAID":
@@ -536,6 +613,12 @@ function LeaveManagement() {
         }
         if (reqsRes?.success) setMyRequests(reqsRes.data || []);
         if (holsRes?.success) setCompanyHolidays(holsRes.data || []);
+        // Fetch all active company holidays (both 2026 and 2027) for leave date validation
+        getCompanyHolidays("all")
+          .then((allRes) => {
+            if (allRes?.success) setAllCompanyHolidays(allRes.data || []);
+          })
+          .catch(() => {});
 
         if (isAdmin) {
           const statsRes = results[4];
@@ -822,6 +905,22 @@ function LeaveManagement() {
     }
   };
 
+  // Map of all company holidays for quick O(1) lookup and datepicker disabling
+  const holidayDateMap = useMemo(() => {
+    const map = {};
+    const source = (allCompanyHolidays && allCompanyHolidays.length > 0)
+      ? allCompanyHolidays
+      : (companyHolidays || []);
+    source.forEach((h) => {
+      if (!h.holiday_date) return;
+      const raw = String(h.holiday_date).trim().slice(0, 10);
+      map[raw] = h.name;
+    });
+    return map;
+  }, [allCompanyHolidays, companyHolidays]);
+
+  const holidayDatesList = useMemo(() => Object.keys(holidayDateMap), [holidayDateMap]);
+
   // Live calculation of working days in Apply Modal
   useEffect(() => {
     const sDate = applyFormData.startDate;
@@ -832,6 +931,34 @@ function LeaveManagement() {
     if (!sDate) {
       setCalcPreview(null);
       setCalcError("");
+      return;
+    }
+
+    // Explicit check: Prohibit applying leave on company holidays
+    const startHol = holidayDateMap[sDate];
+    const endHol = eDate ? holidayDateMap[eDate] : null;
+
+    if (sDate === eDate && startHol) {
+      setCalcPreview(null);
+      setCalcError(
+        `Cannot apply leave on ${sDate}: It is already a company holiday (${startHol}). Leaves cannot be applied on holidays.`
+      );
+      return;
+    }
+
+    if (startHol) {
+      setCalcPreview(null);
+      setCalcError(
+        `Leave cannot start on a company holiday (${startHol} on ${sDate}). Please select a working day.`
+      );
+      return;
+    }
+
+    if (endHol) {
+      setCalcPreview(null);
+      setCalcError(
+        `Leave cannot end on a company holiday (${endHol} on ${eDate}). Please select a working day.`
+      );
       return;
     }
 
@@ -865,7 +992,7 @@ function LeaveManagement() {
     }, 200);
 
     return () => clearTimeout(timer);
-  }, [applyFormData.startDate, applyFormData.endDate, isMoreThanOneDay]);
+  }, [applyFormData.startDate, applyFormData.endDate, isMoreThanOneDay, holidayDateMap]);
 
   const currentSelectedBalance = useMemo(() => {
     if (!applyFormData.leaveTypeId) return null;
@@ -975,6 +1102,27 @@ function LeaveManagement() {
       setCalcError("Please select a date.");
       return;
     }
+    // Prohibit applying leave on holidays
+    const submitStartHol = holidayDateMap[effectiveStartDate];
+    const submitEndHol = holidayDateMap[effectiveEndDate];
+    if (effectiveStartDate === effectiveEndDate && submitStartHol) {
+      setCalcError(
+        `Cannot apply leave on ${effectiveStartDate}: It is already a company holiday (${submitStartHol}).`
+      );
+      return;
+    }
+    if (submitStartHol) {
+      setCalcError(
+        `Leave cannot start on a company holiday (${submitStartHol} on ${effectiveStartDate}). Please select a working day.`
+      );
+      return;
+    }
+    if (submitEndHol) {
+      setCalcError(
+        `Leave cannot end on a company holiday (${submitEndHol} on ${effectiveEndDate}). Please select a working day.`
+      );
+      return;
+    }
     if (applyFormData.endDate && effectiveStartDate > applyFormData.endDate) {
       setCalcError("Start date cannot be after end date.");
       return;
@@ -1040,7 +1188,7 @@ function LeaveManagement() {
   const handleOpenDecision = (req, type) => {
     setDecisionCandidate(req);
     setDecisionType(type);
-    setDecisionRemarks(type === "Approved" ? "Approved" : "");
+    setDecisionRemarks("");
     setDecisionError("");
   };
 
@@ -1364,8 +1512,21 @@ function LeaveManagement() {
       // Matching holidays (timezone-safe YYYY-MM-DD match)
       const matchedHolidays = (calendarData.holidays || []).filter((h) => {
         if (!h.holiday_date) return false;
+        let hDate = "";
         const raw = String(h.holiday_date).trim();
-        const hDate = raw.match(/^(\d{4}-\d{2}-\d{2})/)?.[1] || "";
+        if (raw.length === 10 && !raw.includes("T")) {
+          hDate = raw;
+        } else {
+          const d = new Date(h.holiday_date);
+          if (!isNaN(d.getTime())) {
+            const y = d.getFullYear();
+            const m = String(d.getMonth() + 1).padStart(2, "0");
+            const day = String(d.getDate()).padStart(2, "0");
+            hDate = `${y}-${m}-${day}`;
+          } else {
+            hDate = raw.match(/^(\d{4}-\d{2}-\d{2})/)?.[1] || "";
+          }
+        }
         return hDate === dateStr;
       });
 
@@ -1518,16 +1679,22 @@ function LeaveManagement() {
         </div>
 
         <div className="leave-header-actions">
-          {/* Year Selector */}
+          {/* Year Selector (Uses CustomSelect matching Picture 2 UI) */}
           <div className="leave-year-select-wrap">
-            <select
+            <CustomSelect
               value={selectedYear}
-              onChange={(e) => setSelectedYear(parseInt(e.target.value, 10))}
-              className="leave-year-select"
-            >
-              <option value={2026}>Year 2026</option>
-              <option value={2025}>Year 2025</option>
-            </select>
+              onChange={(val) => {
+                const nextYear = Number(typeof val === "object" ? val?.value || val?.target?.value : val);
+                if (nextYear) setSelectedYear(nextYear);
+              }}
+              options={[
+                { value: 2026, label: "Year 2026" },
+                { value: 2027, label: "Year 2027" },
+              ]}
+              minWidth="120px"
+              isClearable={false}
+              searchable={false}
+            />
           </div>
 
           {/* Company Holidays Button */}
@@ -1539,6 +1706,11 @@ function LeaveManagement() {
           >
             <Calendar size={15} />
             <span>Company Holidays</span>
+            {upcomingHolidayCountdown && (
+              <span className="leave-holiday-header-pill">
+                {upcomingHolidayCountdown.relativeText}
+              </span>
+            )}
           </button>
 
           {/* Refresh Button */}
@@ -1568,6 +1740,43 @@ function LeaveManagement() {
           )}
         </div>
       </div>
+
+      {/* ======================================================================
+          UPCOMING COMPANY HOLIDAY COUNTDOWN BANNER (All Views)
+          ====================================================================== */}
+      {upcomingHolidayCountdown && (
+        <div
+          className="holiday-countdown-banner"
+          onClick={() => setShowHolidaysModal(true)}
+          role="button"
+          tabIndex={0}
+          title="Click to view all company holidays"
+        >
+          <div className="holiday-countdown-left">
+            <span className="holiday-countdown-icon">🎉</span>
+            <div className="holiday-countdown-text">
+              <span className="holiday-countdown-label">Next Holiday:</span>
+              <strong className="holiday-countdown-name">
+                {upcomingHolidayCountdown.name}
+              </strong>
+              <span className="holiday-countdown-days-badge">
+                ({upcomingHolidayCountdown.relativeText})
+              </span>
+              <span className="holiday-countdown-sep">—</span>
+              <span className="holiday-countdown-date">
+                {upcomingHolidayCountdown.formattedDate}
+              </span>
+            </div>
+          </div>
+
+          <div className="holiday-countdown-right">
+            <span className="holiday-countdown-link">
+              <span>View Holidays</span>
+              <ChevronRight size={14} />
+            </span>
+          </div>
+        </div>
+      )}
 
       {/* ======================================================================
           VIEW 1: MY LEAVES (STEP 2 - Matches Pic 1)
@@ -2175,102 +2384,106 @@ function LeaveManagement() {
                     </tbody>
                   </table>
                 </div>
-                <div className="leave-table-footer">
-                  <span className="leave-table-count-text">
-                    Showing{" "}
-                    {filteredRequests.length === 0
-                      ? 0
-                      : (currentPage - 1) * pageSize + 1}{" "}
-                    to{" "}
-                    {Math.min(currentPage * pageSize, filteredRequests.length)}{" "}
-                    of {filteredRequests.length} leave
-                    {filteredRequests.length !== 1 ? "s" : ""}
-                  </span>
-
-                  <div className="leave-pagination-controls">
-                    <button
-                      type="button"
-                      className="pagination-button pagination-arrow"
-                      onClick={() => setCurrentPage(1)}
-                      disabled={currentPage <= 1}
-                      aria-label="First page"
-                      title="First page"
-                    >
-                      «
-                    </button>
-                    <button
-                      type="button"
-                      className="pagination-button pagination-arrow"
-                      onClick={() =>
-                        setCurrentPage((prev) => Math.max(1, prev - 1))
-                      }
-                      disabled={currentPage <= 1}
-                      aria-label="Previous page"
-                      title="Previous page"
-                    >
-                      ‹
-                    </button>
-
-                    {getPaginationPages(currentPage, totalPages).map(
-                      (p, index) => {
-                        if (p === "...") {
-                          return (
-                            <span
-                              key={`dots-${index}`}
-                              className="pagination-dots"
-                            >
-                              ...
-                            </span>
-                          );
-                        }
-                        return (
-                          <button
-                            key={p}
-                            type="button"
-                            className={`pagination-number ${
-                              currentPage === p ? "active" : ""
-                            }`}
-                            onClick={() => setCurrentPage(p)}
-                            aria-label={`Page ${p}`}
-                            aria-current={
-                              currentPage === p ? "page" : undefined
-                            }
-                          >
-                            {p}
-                          </button>
-                        );
-                      },
-                    )}
-
-                    <button
-                      type="button"
-                      className="pagination-button pagination-arrow"
-                      onClick={() =>
-                        setCurrentPage((prev) =>
-                          Math.min(totalPages, prev + 1),
-                        )
-                      }
-                      disabled={currentPage >= totalPages}
-                      aria-label="Next page"
-                      title="Next page"
-                    >
-                      ›
-                    </button>
-                    <button
-                      type="button"
-                      className="pagination-button pagination-arrow"
-                      onClick={() => setCurrentPage(totalPages)}
-                      disabled={currentPage >= totalPages}
-                      aria-label="Last page"
-                      title="Last page"
-                    >
-                      »
-                    </button>
-                  </div>
-                </div>
               </>
             )}
           </div>
+
+          {/* Table Footer with Pagination & Count OUTSIDE the container - Matching Picture 2 */}
+          {filteredRequests.length > 0 && (
+            <div className="leave-table-footer">
+              <span className="leave-table-count-text">
+                Showing{" "}
+                {filteredRequests.length === 0
+                  ? 0
+                  : (currentPage - 1) * pageSize + 1}{" "}
+                to{" "}
+                {Math.min(currentPage * pageSize, filteredRequests.length)}{" "}
+                of {filteredRequests.length} leave
+                {filteredRequests.length !== 1 ? "s" : ""}
+              </span>
+
+              <div className="leave-pagination-controls">
+                <button
+                  type="button"
+                  className="pagination-button pagination-arrow"
+                  onClick={() => setCurrentPage(1)}
+                  disabled={currentPage <= 1}
+                  aria-label="First page"
+                  title="First page"
+                >
+                  «
+                </button>
+                <button
+                  type="button"
+                  className="pagination-button pagination-arrow"
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(1, prev - 1))
+                  }
+                  disabled={currentPage <= 1}
+                  aria-label="Previous page"
+                  title="Previous page"
+                >
+                  ‹
+                </button>
+
+                {getPaginationPages(currentPage, totalPages).map(
+                  (p, index) => {
+                    if (p === "...") {
+                      return (
+                        <span
+                          key={`dots-${index}`}
+                          className="pagination-dots"
+                        >
+                          ...
+                        </span>
+                      );
+                    }
+                    return (
+                      <button
+                        key={p}
+                        type="button"
+                        className={`pagination-number ${
+                          currentPage === p ? "active" : ""
+                        }`}
+                        onClick={() => setCurrentPage(p)}
+                        aria-label={`Page ${p}`}
+                        aria-current={
+                          currentPage === p ? "page" : undefined
+                        }
+                      >
+                        {p}
+                      </button>
+                    );
+                  },
+                )}
+
+                <button
+                  type="button"
+                  className="pagination-button pagination-arrow"
+                  onClick={() =>
+                    setCurrentPage((prev) =>
+                      Math.min(totalPages, prev + 1),
+                    )
+                  }
+                  disabled={currentPage >= totalPages}
+                  aria-label="Next page"
+                  title="Next page"
+                >
+                  ›
+                </button>
+                <button
+                  type="button"
+                  className="pagination-button pagination-arrow"
+                  onClick={() => setCurrentPage(totalPages)}
+                  disabled={currentPage >= totalPages}
+                  aria-label="Last page"
+                  title="Last page"
+                >
+                  »
+                </button>
+              </div>
+            </div>
+          )}
         </>
       )}
 
@@ -4122,6 +4335,8 @@ function LeaveManagement() {
                         value={applyFormData.startDate}
                         allowFutureYears={true}
                         min={todayDateStr}
+                        disabledDates={holidayDatesList}
+                        holidayMap={holidayDateMap}
                         placeholder="dd-mm-yyyy"
                         onChange={(e) => {
                           const val = e?.target?.value || "";
@@ -4168,6 +4383,8 @@ function LeaveManagement() {
                         value={applyFormData.startDate}
                         allowFutureYears={true}
                         min={todayDateStr}
+                        disabledDates={holidayDatesList}
+                        holidayMap={holidayDateMap}
                         placeholder="dd-mm-yyyy"
                         onChange={(e) => {
                           const val = e?.target?.value || "";
@@ -4196,6 +4413,8 @@ function LeaveManagement() {
                             value={applyFormData.endDate}
                             allowFutureYears={true}
                             min={minForToDate}
+                            disabledDates={holidayDatesList}
+                            holidayMap={holidayDateMap}
                             placeholder="dd-mm-yyyy"
                             onChange={(e) => {
                               const val = e?.target?.value || "";
@@ -4312,7 +4531,9 @@ function LeaveManagement() {
                       applySubmitting ||
                       calcLoading ||
                       isBalanceExceeded ||
-                      (calcPreview && calcPreview.workingDays === 0)
+                      (calcPreview && calcPreview.workingDays === 0) ||
+                      !!holidayDateMap[applyFormData.startDate] ||
+                      (isMoreThanOneDay && !!holidayDateMap[applyFormData.endDate])
                     }
                   >
                     {applySubmitting ? (
@@ -4739,30 +4960,252 @@ function LeaveManagement() {
       {decisionCandidate && (
         <div className="leave-modal-overlay">
           <div className="decision-modal-card">
+            {/* Modal Header */}
             <div
               className={`decision-modal-header ${decisionType === "Approved" ? "approve" : "reject"}`}
             >
-              <div className="decision-modal-title-box">
-                {decisionType === "Approved" ? (
-                  <CheckCircle2 size={22} />
-                ) : (
-                  <XCircle size={22} />
-                )}
-                <h3>
-                  {decisionType === "Approved"
-                    ? "Approve Leave Request"
-                    : "Reject Leave Request"}
-                </h3>
+              <div className="decision-modal-header-left">
+                <div
+                  className={`decision-modal-status-badge ${decisionType === "Approved" ? "approve" : "reject"}`}
+                >
+                  {decisionType === "Approved" ? (
+                    <Check size={18} strokeWidth={3} />
+                  ) : (
+                    <X size={18} strokeWidth={3} />
+                  )}
+                </div>
+                <div className="decision-modal-title-text">
+                  <h3>
+                    {decisionType === "Approved"
+                      ? "Approve Leave Request"
+                      : "Reject Leave Request"}
+                  </h3>
+                  <p>Review the leave details and take an action.</p>
+                </div>
               </div>
-              <button
-                type="button"
-                className="leave-modal-close"
-                onClick={() => setDecisionCandidate(null)}
-              >
-                <X size={18} />
-              </button>
+
+              {/* Decorative Calendar Illustration & Close Button */}
+              <div className="decision-modal-header-right">
+                <svg
+                  width="84"
+                  height="62"
+                  viewBox="0 0 84 62"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="decision-header-illustration"
+                >
+                  <ellipse
+                    cx="46"
+                    cy="52"
+                    rx="34"
+                    ry="7"
+                    fill="#fed7aa"
+                    opacity="0.4"
+                  />
+                  {/* Leaves */}
+                  <path
+                    d="M22 22C18 16 12 18 10 24C15 27 21 26 22 22Z"
+                    fill="#a7f3d0"
+                    opacity="0.9"
+                  />
+                  <path
+                    d="M16 16C13 11 8 13 7 18C11 20 16 19 16 16Z"
+                    fill="#86efac"
+                    opacity="0.8"
+                  />
+                  <path
+                    d="M26 17C24 12 19 12 17 16C20 19 24 19 26 17Z"
+                    fill="#bbf7d0"
+                    opacity="0.9"
+                  />
+
+                  {/* Calendar Paper Card */}
+                  <rect
+                    x="20"
+                    y="12"
+                    width="44"
+                    height="40"
+                    rx="8"
+                    fill="#ffffff"
+                    stroke="#fdba74"
+                    strokeWidth="1.2"
+                  />
+                  {/* Calendar Top strip */}
+                  <path
+                    d="M20 19C20 15.134 23.134 12 27 12H57C60.866 12 64 15.134 64 19V21H20V19Z"
+                    fill="#fff7ed"
+                  />
+                  <line
+                    x1="20"
+                    y1="21"
+                    x2="64"
+                    y2="21"
+                    stroke="#fed7aa"
+                    strokeWidth="1"
+                  />
+
+                  {/* 4 Binder Rings */}
+                  <rect
+                    x="25"
+                    y="8"
+                    width="3"
+                    height="7"
+                    rx="1.5"
+                    fill="#ea580c"
+                  />
+                  <rect
+                    x="35"
+                    y="8"
+                    width="3"
+                    height="7"
+                    rx="1.5"
+                    fill="#ea580c"
+                  />
+                  <rect
+                    x="45"
+                    y="8"
+                    width="3"
+                    height="7"
+                    rx="1.5"
+                    fill="#ea580c"
+                  />
+                  <rect
+                    x="55"
+                    y="8"
+                    width="3"
+                    height="7"
+                    rx="1.5"
+                    fill="#ea580c"
+                  />
+
+                  {/* Calendar Grid Dots */}
+                  <rect
+                    x="26"
+                    y="27"
+                    width="5.5"
+                    height="4"
+                    rx="1"
+                    fill="#fed7aa"
+                  />
+                  <rect
+                    x="35"
+                    y="27"
+                    width="5.5"
+                    height="4"
+                    rx="1"
+                    fill="#ffedd5"
+                  />
+                  <rect
+                    x="44"
+                    y="27"
+                    width="5.5"
+                    height="4"
+                    rx="1"
+                    fill="#fed7aa"
+                  />
+                  <rect
+                    x="53"
+                    y="27"
+                    width="5.5"
+                    height="4"
+                    rx="1"
+                    fill="#ffedd5"
+                  />
+
+                  <rect
+                    x="26"
+                    y="34"
+                    width="5.5"
+                    height="4"
+                    rx="1"
+                    fill="#ffedd5"
+                  />
+                  <rect
+                    x="35"
+                    y="34"
+                    width="5.5"
+                    height="4"
+                    rx="1"
+                    fill="#fed7aa"
+                  />
+                  <rect
+                    x="44"
+                    y="34"
+                    width="5.5"
+                    height="4"
+                    rx="1"
+                    fill="#ffedd5"
+                  />
+
+                  <rect
+                    x="26"
+                    y="41"
+                    width="5.5"
+                    height="4"
+                    rx="1"
+                    fill="#fed7aa"
+                  />
+                  <rect
+                    x="35"
+                    y="41"
+                    width="5.5"
+                    height="4"
+                    rx="1"
+                    fill="#ffedd5"
+                  />
+
+                  {/* Circular Badge on Calendar */}
+                  {decisionType === "Approved" ? (
+                    <g>
+                      <circle
+                        cx="62"
+                        cy="42"
+                        r="9.5"
+                        fill="#f97316"
+                        stroke="#ffffff"
+                        strokeWidth="2"
+                      />
+                      <path
+                        d="M59 42L61 44L65.5 39.5"
+                        stroke="#ffffff"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </g>
+                  ) : (
+                    <g>
+                      <circle
+                        cx="62"
+                        cy="42"
+                        r="9.5"
+                        fill="#ef4444"
+                        stroke="#ffffff"
+                        strokeWidth="2"
+                      />
+                      <path
+                        d="M59 39L65 45M65 39L59 45"
+                        stroke="#ffffff"
+                        strokeWidth="1.8"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </g>
+                  )}
+                </svg>
+
+                <button
+                  type="button"
+                  className="leave-modal-close"
+                  onClick={() => setDecisionCandidate(null)}
+                  title="Close"
+                >
+                  <X size={18} />
+                </button>
+              </div>
             </div>
 
+            {/* Modal Body */}
             <div className="decision-modal-body">
               {decisionError && (
                 <div className="leave-form-error-banner">
@@ -4771,51 +5214,112 @@ function LeaveManagement() {
                 </div>
               )}
 
-              <div className="decision-req-preview">
-                <div className="decision-preview-row">
-                  <span className="label">Employee</span>
-                  <span className="val">
-                    {decisionCandidate.employee_name} (
-                    {decisionCandidate.employee_email})
-                  </span>
+              {/* 1. Employee Identity Card */}
+              <div className="decision-emp-card">
+                <div className="decision-emp-info-left">
+                  <div className="decision-emp-avatar">
+                    {(decisionCandidate.employee_name || "A")
+                      .charAt(0)
+                      .toUpperCase()}
+                  </div>
+                  <div className="decision-emp-meta">
+                    <div className="decision-emp-name">
+                      {decisionCandidate.employee_name}
+                    </div>
+                    <div className="decision-emp-email">
+                      {decisionCandidate.employee_email}
+                    </div>
+                    <div className="decision-emp-code-pill">
+                      {decisionCandidate.request_code}
+                    </div>
+                  </div>
                 </div>
-                <div className="decision-preview-row">
-                  <span className="label">Request Code</span>
-                  <span className="val">{decisionCandidate.request_code}</span>
-                </div>
-                <div className="decision-preview-row">
-                  <span className="label">Leave Type</span>
-                  <span className="val">
-                    {decisionCandidate.leave_type_name}
-                  </span>
-                </div>
-                <div className="decision-preview-row">
-                  <span className="label">Duration</span>
-                  <span className="val">
-                    {formatDateDisplay(decisionCandidate.start_date)} →{" "}
-                    {formatDateDisplay(decisionCandidate.end_date)} (
-                    <strong>
-                      {decisionCandidate.total_days} Working Day(s)
-                    </strong>
-                    )
-                  </span>
-                </div>
-                <div className="decision-preview-reason">
-                  <strong>Reason:</strong> {decisionCandidate.reason}
+
+                <div className="decision-emp-type-pill">
+                  <Plane size={13} strokeWidth={2.4} />
+                  <span>{decisionCandidate.leave_type_name}</span>
                 </div>
               </div>
 
-              <div className="form-tip-info">
-                <Info size={16} />
+              {/* 2. Duration & Total Duration Grid */}
+              <div className="decision-duration-box">
+                <div className="decision-duration-col">
+                  <div className="decision-duration-icon">
+                    <Calendar size={18} strokeWidth={2} />
+                  </div>
+                  <div className="decision-duration-text">
+                    <span className="decision-duration-label">Duration</span>
+                    <span className="decision-duration-val">
+                      {formatDateDisplay(decisionCandidate.start_date)} –{" "}
+                      {formatDateDisplay(decisionCandidate.end_date)}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="decision-duration-divider" />
+
+                <div className="decision-duration-col">
+                  <div className="decision-duration-icon">
+                    <Clock size={18} strokeWidth={2} />
+                  </div>
+                  <div className="decision-duration-text">
+                    <span className="decision-duration-label">
+                      Total Duration
+                    </span>
+                    <span className="decision-duration-val">
+                      {parseFloat(decisionCandidate.total_days).toFixed(1)}{" "}
+                      Working Day(s)
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 3. Reason Box */}
+              <div className="decision-reason-box">
+                <div className="decision-reason-icon">
+                  <FileText size={18} strokeWidth={2} />
+                </div>
+                <div className="decision-reason-text">
+                  <span className="decision-reason-label">Reason</span>
+                  <span className="decision-reason-val">
+                    {decisionCandidate.reason || "—"}
+                  </span>
+                </div>
+              </div>
+
+              {/* 4. Info Notice Banner */}
+              <div
+                className={`decision-info-banner ${decisionType === "Approved" ? "approve" : "reject"}`}
+              >
+                <Info size={18} strokeWidth={2.2} />
                 <span>
-                  {decisionType === "Approved"
-                    ? `Approving will deduct ${decisionCandidate.total_days} day(s) from ${decisionCandidate.employee_name}'s balance and record the audit ledger.`
-                    : `Rejecting will restore ${decisionCandidate.total_days} day(s) back to ${decisionCandidate.employee_name}'s available balance.`}
+                  {decisionType === "Approved" ? (
+                    <>
+                      Approving will deduct{" "}
+                      <strong>
+                        {parseFloat(decisionCandidate.total_days).toFixed(1)}{" "}
+                        day(s)
+                      </strong>{" "}
+                      from {decisionCandidate.employee_name}'s balance and
+                      record the audit ledger.
+                    </>
+                  ) : (
+                    <>
+                      Rejecting will restore{" "}
+                      <strong>
+                        {parseFloat(decisionCandidate.total_days).toFixed(1)}{" "}
+                        day(s)
+                      </strong>{" "}
+                      back to {decisionCandidate.employee_name}'s available
+                      balance.
+                    </>
+                  )}
                 </span>
               </div>
 
-              <div className="form-group">
-                <label className="form-label">
+              {/* 5. Approval Comments / Rejection Reason */}
+              <div className="decision-form-group">
+                <label className="decision-form-label">
                   {decisionType === "Approved"
                     ? "Approval Comments (Optional)"
                     : "Rejection Reason (Required)"}{" "}
@@ -4827,16 +5331,13 @@ function LeaveManagement() {
                   rows={3}
                   value={decisionRemarks}
                   onChange={(e) => setDecisionRemarks(e.target.value)}
-                  placeholder={
-                    decisionType === "Approved"
-                      ? "Add any notes or well wishes (e.g., Approved, have a good vacation)..."
-                      : "Explain clearly why this request cannot be approved..."
-                  }
+                  placeholder="Type your comments here..."
                   className="decision-remarks-textarea"
                 />
               </div>
             </div>
 
+            {/* Modal Footer */}
             <div className="decision-modal-footer">
               <button
                 type="button"
@@ -4853,7 +5354,7 @@ function LeaveManagement() {
                   onClick={handleSubmitDecision}
                   disabled={decisionSubmitting}
                 >
-                  <Check size={16} />
+                  <Check size={16} strokeWidth={2.6} />
                   <span>
                     {decisionSubmitting ? "Approving..." : "Confirm & Approve"}
                   </span>
@@ -4865,7 +5366,7 @@ function LeaveManagement() {
                   onClick={handleSubmitDecision}
                   disabled={decisionSubmitting || !decisionRemarks.trim()}
                 >
-                  <X size={16} />
+                  <X size={16} strokeWidth={2.6} />
                   <span>
                     {decisionSubmitting ? "Rejecting..." : "Confirm & Reject"}
                   </span>

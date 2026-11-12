@@ -4,7 +4,7 @@ import { API_URL } from "../config/axios.util";
 import { useNavigate } from "react-router-dom";
 import SuccessToast from "../components/SuccessToast";
 import "./Login.css";
-import loginBanner from "../assets/login-banner.png";
+import LoginAnimationBanner from "../components/LoginAnimationBanner";
 import logo from "../assets/logo.jpg";
 import { useAuth } from "../context/AuthContext";
 import { Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
@@ -96,11 +96,7 @@ function Login() {
       />
 
       <div className="login-banner-container">
-        <img
-          src={loginBanner}
-          alt="EMS Dashboard"
-          className="login-banner-image"
-        />
+        <LoginAnimationBanner />
       </div>
 
       <div className="login-right-panel">

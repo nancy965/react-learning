@@ -321,6 +321,31 @@
   white-space: pre-wrap;
 }
 
+/* Centered & Compact Leave Notification Email Card */
+.email-view-body .leave-email-wrapper {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100% !important;
+  margin: 12px auto 20px auto !important;
+  white-space: normal !important;
+}
+
+.email-view-body .leave-email-card {
+  margin: 0 auto !important;
+  max-width: 500px !important;
+  width: 100% !important;
+  text-align: left !important;
+  white-space: normal !important;
+}
+
+.email-view-body center {
+  display: flex !important;
+  justify-content: center !important;
+  width: 100% !important;
+  white-space: normal !important;
+}
+
 .email-view-body p {
   margin: 0 0 12px 0;
 }

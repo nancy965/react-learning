@@ -296,29 +296,36 @@ function MainLayout() {
       const notifs = response.notifications || [];
       setNotifications(notifs);
 
-      // Detect incoming new emails in real time
+      // Detect incoming new emails or leave decisions in real time
       if (knownNotifIdsRef.current) {
-        const newUnreadEmails = notifs.filter(
+        const newUnreadItems = notifs.filter(
           (n) =>
             !n.is_read &&
-            (n.type === "email" || (n.title || "").toLowerCase().includes("email")) &&
+            (n.type === "email" ||
+              n.type === "leave_approved" ||
+              n.type === "leave_rejected" ||
+              (n.title || "").toLowerCase().includes("email") ||
+              (n.title || "").toLowerCase().includes("leave")) &&
             !knownNotifIdsRef.current.has(n.id)
         );
 
-        if (newUnreadEmails.length > 0) {
-          const newest = newUnreadEmails[0];
-          newUnreadEmails.forEach((n) => knownNotifIdsRef.current.add(n.id));
+        if (newUnreadItems.length > 0) {
+          const newest = newUnreadItems[0];
+          newUnreadItems.forEach((n) => knownNotifIdsRef.current.add(n.id));
 
-          // Notify EmailCenter view to auto-refresh inbox
-          window.dispatchEvent(
-            new CustomEvent("new-email-received", { detail: newest })
-          );
+          // If email, notify EmailCenter view to auto-refresh inbox
+          if (newest.type === "email" || (newest.title || "").toLowerCase().includes("email")) {
+            window.dispatchEvent(
+              new CustomEvent("new-email-received", { detail: newest })
+            );
+          }
 
           // Show floating toast
           setEmailToast({
             id: newest.id,
             title: newest.title,
             message: newest.message,
+            type: newest.type,
           });
         } else {
           notifs.forEach((n) => knownNotifIdsRef.current.add(n.id));
@@ -339,6 +346,13 @@ function MainLayout() {
 
     // Load notifications once when page loads
     loadNotifications();
+
+    // Background poll every 15s for instant real-time notification updates
+    const pollInterval = setInterval(() => {
+      loadNotifications();
+    }, 15000);
+
+    return () => clearInterval(pollInterval);
   }, [user?.role, token]);
 
   // Auto-dismiss email toast after 6 seconds
@@ -647,7 +661,12 @@ function MainLayout() {
   ).length;
 
   const getNotificationRoute = (notification) => {
-    switch (notification.type) {
+    switch (notification?.type) {
+      case "leave_approved":
+      case "leave_rejected":
+      case "leave_request":
+        return "/leaves";
+
       case "email":
       case "email_received":
       case "new_email":
@@ -825,6 +844,8 @@ function MainLayout() {
       type.includes("task") ||
       type.includes("chat") ||
       type.includes("email") ||
+      type.includes("leave") ||
+      title.includes("leave") ||
       title.includes("email") ||
       title.includes("system") ||
       title.includes("task") ||
@@ -864,6 +885,32 @@ function MainLayout() {
     const type = (notification.type || "").toLowerCase();
     const title = (notification.title || "").toLowerCase();
     const msg = (notification.message || "").toLowerCase();
+
+    if (type.includes("leave") || title.includes("leave")) {
+      const isApproved = type.includes("approved") || title.includes("approved");
+      const isRejected = type.includes("rejected") || title.includes("rejected");
+      return (
+        <div className={`notif-avatar ${isApproved ? "notif-avatar-green" : isRejected ? "notif-avatar-red" : "notif-avatar-blue"}`}>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke={isApproved ? "#16a34a" : isRejected ? "#dc2626" : "#2563eb"}
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+            {isApproved && <path d="m9 16 2 2 4-4" />}
+            {isRejected && <path d="m15 14-6 6m0-6 6 6" />}
+          </svg>
+        </div>
+      );
+    }
 
     if (type.includes("email") || title.includes("email")) {
       return (
@@ -1859,8 +1906,9 @@ function MainLayout() {
             cursor: "pointer",
           }}
           onClick={() => {
+            const dest = getNotificationRoute(emailToast);
             setEmailToast(null);
-            navigate("/emails");
+            navigate(dest);
           }}
         >
           <div

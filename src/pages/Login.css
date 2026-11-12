@@ -9,12 +9,11 @@
   width: 100%;
   min-height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2%;
-  padding: 0 2%;
+  margin: 0;
+  padding: 0;
   background: #ffffff;
   font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  overflow-x: hidden;
 }
 
 /* =========================
@@ -22,17 +21,10 @@
 ========================= */
 .login-banner-container {
   flex: 1;
-  max-width: 62%;
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.login-banner-image {
-  width: 100%;
-  height: auto;
-  max-height: 96vh;
-  object-fit: contain;
+  position: relative;
+  overflow: hidden;
 }
 
 /* =========================
@@ -40,10 +32,12 @@
 ========================= */
 .login-right-panel {
   flex: 1;
-  max-width: 450px;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 40px 32px;
+  background: #ffffff;
 }
 
 .login-card {

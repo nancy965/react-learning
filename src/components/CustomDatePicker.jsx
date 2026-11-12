@@ -164,6 +164,8 @@ export default function CustomDatePicker({
   allowFutureYears = false,
   initiallyOpen = false,
   inline = false,
+  disabledDates = [],
+  holidayMap = {},
 }) {
   const [isOpen, setIsOpen] = useState(() => !!(initiallyOpen || autoFocus));
 
@@ -423,10 +425,18 @@ export default function CustomDatePicker({
         today.month === viewMonth &&
         today.day === day;
 
+      const isHoliday = Boolean(
+        (Array.isArray(disabledDates) && disabledDates.includes(dateStr)) ||
+        (holidayMap && holidayMap[dateStr])
+      );
+      const holidayName = holidayMap && holidayMap[dateStr] ? holidayMap[dateStr] : "";
+
       const minDateOnly = min ? String(min).slice(0, 10) : "";
       const maxDateOnly = max ? String(max).slice(0, 10) : "";
       const isDisabled = Boolean(
-        (minDateOnly && dateStr < minDateOnly) || (maxDateOnly && dateStr > maxDateOnly)
+        (minDateOnly && dateStr < minDateOnly) || 
+        (maxDateOnly && dateStr > maxDateOnly) ||
+        isHoliday
       );
 
       cells.push({
@@ -436,12 +446,14 @@ export default function CustomDatePicker({
         isSelected,
         isToday,
         isDisabled,
+        isHoliday,
+        holidayName,
         key: `day-${day}`,
       });
     }
 
     return cells;
-  }, [viewYear, viewMonth, parsedValue, today, min, max]);
+  }, [viewYear, viewMonth, parsedValue, today, min, max, disabledDates, holidayMap]);
 
   // Time selection states for showTime mode
   const [timeHours, setTimeHours] = useState(() => {
@@ -803,6 +815,7 @@ export default function CustomDatePicker({
             if (cell.isSelected) cellClasses += " selected";
             else if (cell.isToday) cellClasses += " today";
             if (cell.isDisabled) cellClasses += " disabled";
+            if (cell.isHoliday) cellClasses += " holiday-disabled";
 
             return (
               <button
@@ -811,6 +824,7 @@ export default function CustomDatePicker({
                 className={cellClasses}
                 onClick={() => handleSelectDay(cell.dateStr, cell.isDisabled)}
                 disabled={cell.isDisabled}
+                title={cell.holidayName ? `Company Holiday: ${cell.holidayName}` : undefined}
               >
                 {cell.day}
               </button>
@@ -1161,6 +1175,7 @@ export default function CustomDatePicker({
                 if (cell.isSelected) cellClasses += " selected";
                 else if (cell.isToday) cellClasses += " today";
                 if (cell.isDisabled) cellClasses += " disabled";
+                if (cell.isHoliday) cellClasses += " holiday-disabled";
 
                 return (
                   <button
@@ -1169,6 +1184,7 @@ export default function CustomDatePicker({
                     className={cellClasses}
                     onClick={() => handleSelectDay(cell.dateStr, cell.isDisabled)}
                     disabled={cell.isDisabled}
+                    title={cell.holidayName ? `Company Holiday: ${cell.holidayName}` : undefined}
                   >
                     {cell.day}
                   </button>
