@@ -84,6 +84,130 @@ const MONTH_NAMES = [
 
 const WEEKDAY_NAMES = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
+// Premium harmonious theme helper for leave categories (Matching Image 1)
+const getLeaveCategoryTheme = (leave) => {
+  const code = String(leave?.leave_type_code || leave?.code || "").toUpperCase();
+  const name = String(leave?.leave_type_name || leave?.name || "").toUpperCase();
+  const rawColor = leave?.leave_type_color || leave?.color;
+
+  // Paid Leave (PL) -> Mint pastel green matching Image 1
+  if (code.includes("PAID") || code === "PL" || name.includes("PAID")) {
+    return {
+      pillBg: "#dcfce7",
+      color: "#16a34a",
+      avatarBg: "#529b6e",
+      nameColor: "#0f172a",
+      badgeBg: "#40916c",
+      badgeText: "#ffffff",
+      iconColor: "#2d6a4f",
+      gradient: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
+      lightBg: "#ecfdf5",
+      border: "#a7f3d0",
+      text: "#065f46",
+    };
+  }
+  // Sick Leave (SL) -> Warm Peach pastel matching Image 1
+  if (code.includes("SICK") || code === "SL" || name.includes("SICK")) {
+    return {
+      pillBg: "#ffedd5",
+      color: "#ea580c",
+      avatarBg: "#ea580c",
+      nameColor: "#0f172a",
+      badgeBg: "#fed7aa",
+      badgeText: "#c2410c",
+      iconColor: "#c2410c",
+      gradient: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
+      lightBg: "#fffbeb",
+      border: "#fde68a",
+      text: "#92400e",
+    };
+  }
+  // Casual Leave (CL) -> Royal Violet pastel
+  if (code.includes("CASUAL") || code === "CL" || name.includes("CASUAL")) {
+    return {
+      pillBg: "#f3e8ff",
+      color: "#7c3aed",
+      avatarBg: "#8b5cf6",
+      nameColor: "#0f172a",
+      badgeBg: "#7c3aed",
+      badgeText: "#ffffff",
+      iconColor: "#7c3aed",
+      gradient: "linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)",
+      lightBg: "#f5f3ff",
+      border: "#ddd6fe",
+      text: "#5b21b6",
+    };
+  }
+  // Leave Without Pay (LWP) -> Steel Slate pastel
+  if (
+    code.includes("UNPAID") ||
+    code === "LWP" ||
+    name.includes("UNPAID") ||
+    name.includes("WITHOUT PAY")
+  ) {
+    return {
+      pillBg: "#f1f5f9",
+      color: "#475569",
+      avatarBg: "#64748b",
+      nameColor: "#0f172a",
+      badgeBg: "#475569",
+      badgeText: "#ffffff",
+      iconColor: "#475569",
+      gradient: "linear-gradient(135deg, #64748b 0%, #475569 100%)",
+      lightBg: "#f8fafc",
+      border: "#cbd5e1",
+      text: "#334155",
+    };
+  }
+
+  // Intercept any legacy raw blue (#2563eb) or raw red (#ef4444 / #dc2626)
+  if (rawColor === "#2563eb") {
+    return {
+      pillBg: "#dcfce7",
+      color: "#16a34a",
+      avatarBg: "#529b6e",
+      nameColor: "#0f172a",
+      badgeBg: "#40916c",
+      badgeText: "#ffffff",
+      iconColor: "#2d6a4f",
+      gradient: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
+      lightBg: "#ecfdf5",
+      border: "#a7f3d0",
+      text: "#065f46",
+    };
+  }
+  if (rawColor === "#ef4444" || rawColor === "#dc2626") {
+    return {
+      pillBg: "#ffedd5",
+      color: "#ea580c",
+      avatarBg: "#ea580c",
+      nameColor: "#0f172a",
+      badgeBg: "#fed7aa",
+      badgeText: "#c2410c",
+      iconColor: "#c2410c",
+      gradient: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
+      lightBg: "#fffbeb",
+      border: "#fde68a",
+      text: "#92400e",
+    };
+  }
+
+  const safeColor = rawColor || "#059669";
+  return {
+    pillBg: "#f1f5f9",
+    color: safeColor,
+    avatarBg: safeColor,
+    nameColor: "#0f172a",
+    badgeBg: safeColor,
+    badgeText: "#ffffff",
+    iconColor: safeColor,
+    gradient: `linear-gradient(135deg, ${safeColor} 0%, ${safeColor} 100%)`,
+    lightBg: `${safeColor}15`,
+    border: `${safeColor}40`,
+    text: safeColor,
+  };
+};
+
 function LeaveManagement() {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -540,6 +664,32 @@ function LeaveManagement() {
     return transactions.filter(isCurrentUserTransaction);
   }, [isGeneralAdmin, transactions, isCurrentUserTransaction]);
 
+  // Clean employee display name resolver for audit ledger
+  const getTransactionEmployeeName = useCallback(
+    (tx) => {
+      if (!tx) return "—";
+      const raw = tx.employee_name || "";
+      const isUUID =
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+          raw,
+        );
+      if (raw && !isUUID) return raw;
+
+      const matched = usersList.find(
+        (u) =>
+          String(u.id) === String(tx.employee_id) ||
+          String(u.register_id) === String(tx.employee_id) ||
+          (u.email &&
+            tx.employee_email &&
+            u.email.toLowerCase() === tx.employee_email.toLowerCase()),
+      );
+      if (matched?.name) return matched.name;
+      if (tx.employee_email) return tx.employee_email.split("@")[0];
+      return raw || tx.employee_id || "Employee";
+    },
+    [usersList],
+  );
+
   // Filtered users list excluding General Admin
   const filteredUsersList = useMemo(() => {
     return usersList.filter((u) => {
@@ -719,8 +869,14 @@ function LeaveManagement() {
 
   const currentSelectedBalance = useMemo(() => {
     if (!applyFormData.leaveTypeId) return null;
-    return leaveBalances.find(
-      (b) => String(b.leave_type_id) === String(applyFormData.leaveTypeId),
+    const target = String(applyFormData.leaveTypeId).trim();
+    return (
+      leaveBalances.find(
+        (b) =>
+          String(b.leave_type_id ?? "") === target ||
+          String(b.leaveTypeId ?? "") === target ||
+          String(b.id ?? "") === target,
+      ) || null
     );
   }, [leaveBalances, applyFormData.leaveTypeId]);
 
@@ -780,7 +936,15 @@ function LeaveManagement() {
     if (isGeneralAdmin) return;
     resetApplyForm();
     setShowApplyModal(true);
-  }, [resetApplyForm, isGeneralAdmin]);
+    getMyLeaveBalances(selectedYear)
+      .then((res) => {
+        if (res?.success) {
+          setLeaveBalances(res.data?.balances || []);
+          setBalanceSummary(res.data?.summary || null);
+        }
+      })
+      .catch((e) => console.error("Failed to refresh leave balances:", e));
+  }, [resetApplyForm, isGeneralAdmin, selectedYear]);
 
   useEffect(() => {
     if (!showApplyModal) {
@@ -1324,7 +1488,7 @@ function LeaveManagement() {
             {mainView === "admin_approvals" ? (
               <ShieldCheck size={22} color="#0284c7" />
             ) : (
-              <CalendarDays size={22} color="#2563eb" />
+              <CalendarDays size={22} color="#ea580c" />
             )}
           </div>
           <div>
@@ -1921,23 +2085,27 @@ function LeaveManagement() {
                               </span>
                             </td>
                             <td className="td-type">
-                              <span
-                                className="leave-type-pill"
-                                style={{
-                                  backgroundColor: `${req.leave_type_color}15`,
-                                  color: req.leave_type_color || "#2563eb",
-                                  borderColor: `${req.leave_type_color}40`,
-                                }}
-                              >
-                                <span
-                                  className="pill-dot"
-                                  style={{
-                                    backgroundColor:
-                                      req.leave_type_color || "#2563eb",
-                                  }}
-                                />
-                                {req.leave_type_name}
-                              </span>
+                              {(() => {
+                                const reqTheme = getLeaveCategoryTheme(req);
+                                return (
+                                  <span
+                                    className="leave-type-pill"
+                                    style={{
+                                      backgroundColor: reqTheme.lightBg,
+                                      color: reqTheme.color,
+                                      borderColor: reqTheme.border,
+                                    }}
+                                  >
+                                    <span
+                                      className="pill-dot"
+                                      style={{
+                                        backgroundColor: reqTheme.color,
+                                      }}
+                                    />
+                                    {req.leave_type_name}
+                                  </span>
+                                );
+                              })()}
                             </td>
                             <td className="td-dates">
                               <div className="leave-date-span">
@@ -2553,11 +2721,11 @@ function LeaveManagement() {
                           </div>
                         ))}
 
-                        {/* Leave Range Bars (Image 1 Range Pattern) */}
+                        {/* Leave Range Bars (Matching Image 1 Pixel-for-Pixel) */}
                         {(() => {
                           const sortedLeaves = [...(cell.leaves || [])].sort((a, b) => {
                             if (a.employee_id !== b.employee_id) {
-                              return (a.employee_id || 0) - (b.employee_id || 0);
+                              return String(a.employee_id || "").localeCompare(String(b.employee_id || ""));
                             }
                             return (a.id || 0) - (b.id || 0);
                           });
@@ -2577,80 +2745,91 @@ function LeaveManagement() {
                             const isStart = cDate === sDate;
                             const isEnd = cDate === eDate;
                             const isMiddle = cDate > sDate && cDate < eDate;
-                            const isRowStart = cell.dayOfWeek === 0; // Monday
-                            const isRowEnd = cell.dayOfWeek === 6; // Sunday
 
-                            let rangeClass = "is-single";
-                            if (isSingleDay) {
-                              rangeClass = "is-single";
-                            } else if (isStart) {
-                              rangeClass = "is-range-start";
-                              if (isRowEnd) rangeClass += " is-row-end";
-                            } else if (isEnd) {
-                              rangeClass = "is-range-end";
-                              if (isRowStart) rangeClass += " is-row-start";
-                            } else if (isMiddle) {
-                              rangeClass = "is-range-middle";
-                              if (isRowStart) rangeClass += " is-row-start";
-                              if (isRowEnd) rangeClass += " is-row-end";
-                            }
-
+                            const theme = getLeaveCategoryTheme(l);
                             const initials = l.employee_name
-                              ? l.employee_name
-                                  .split(" ")
-                                  .map((n) => n[0])
-                                  .slice(0, 2)
-                                  .join("")
-                                  .toUpperCase()
-                              : "EM";
+                              ? l.employee_name.trim().charAt(0).toUpperCase()
+                              : "E";
 
-                            const typeCode =
-                              l.leave_type_code ||
-                              (l.leave_type_name?.includes("(")
-                                ? l.leave_type_name.match(/\(([^)]+)\)/)?.[1]
-                                : l.leave_type_name?.slice(0, 2).toUpperCase()) ||
-                              "LV";
-
-                            const leaveColor = l.leave_type_color || "#2563eb";
+                            let typeCode = l.leave_type_code || "";
+                            if (
+                              typeCode === "PL" ||
+                              l.leave_type_name?.toUpperCase().includes("PAID")
+                            ) {
+                              typeCode = "PAID";
+                            } else if (
+                              typeCode === "SL" ||
+                              l.leave_type_name?.toUpperCase().includes("SICK")
+                            ) {
+                              typeCode = "SICK";
+                            } else if (
+                              typeCode === "CL" ||
+                              l.leave_type_name?.toUpperCase().includes("CASUAL")
+                            ) {
+                              typeCode = "CASUAL";
+                            } else if (
+                              typeCode === "UNPAID" ||
+                              typeCode === "LWP"
+                            ) {
+                              typeCode = "LWP";
+                            } else {
+                              typeCode =
+                                typeCode.slice(0, 4).toUpperCase() || "LEAVE";
+                            }
 
                             return (
                               <div
                                 key={`${l.id}-${cell.dayNumber}`}
-                                className={`cal-leave-range-bar ${rangeClass}`}
+                                className="cal-leave-range-bar"
                                 style={{
-                                  backgroundColor: leaveColor,
+                                  backgroundColor: theme.pillBg,
                                 }}
                                 title={`${l.employee_name} (${l.leave_type_name}): ${formatDateDisplay(l.start_date)} - ${formatDateDisplay(l.end_date)} (${l.total_days} days)`}
                                 onClick={() => setSelectedRequestForDetail(l)}
                               >
-                                {(isStart || isSingleDay || (isMiddle && isRowStart) || (isEnd && isRowStart)) && (
-                                  <span className="cal-leave-pill-avatar">
-                                    {initials}
-                                  </span>
-                                )}
+                                <span
+                                  className="cal-leave-pill-avatar"
+                                  style={{ backgroundColor: theme.avatarBg }}
+                                >
+                                  {initials}
+                                </span>
 
-                                <span className="cal-leave-pill-name">
+                                <span
+                                  className="cal-leave-pill-name"
+                                  style={{ color: theme.nameColor }}
+                                >
                                   {l.employee_name}
                                 </span>
 
                                 {(isStart || isSingleDay) && (
-                                  <span className="cal-leave-pill-type-code">
+                                  <span
+                                    className="cal-leave-pill-type-code"
+                                    style={{
+                                      backgroundColor: theme.badgeBg,
+                                      color: theme.badgeText,
+                                    }}
+                                  >
                                     {typeCode}
                                   </span>
                                 )}
 
-                                {isMiddle && !isRowEnd && (
-                                  <span className="cal-leave-range-connector-arrow">
-                                    →
+                                {isMiddle && (
+                                  <span className="cal-leave-pill-icon-right">
+                                    <ArrowRight
+                                      size={16}
+                                      strokeWidth={2.2}
+                                      color={theme.iconColor}
+                                    />
                                   </span>
                                 )}
 
                                 {isEnd && !isSingleDay && (
-                                  <span
-                                    className="cal-leave-range-end-accent"
-                                    title={`Ends on ${formatDateDisplay(l.end_date)}`}
-                                  >
-                                    <span className="cal-leave-range-end-ring" />
+                                  <span className="cal-leave-pill-icon-right">
+                                    <CheckCircle2
+                                      size={17}
+                                      strokeWidth={2.2}
+                                      color={theme.iconColor}
+                                    />
                                   </span>
                                 )}
                               </div>
@@ -2733,12 +2912,13 @@ function LeaveManagement() {
                                   const isEnd = dateStr === e;
                                   const tRangeClass = isSingle ? "is-single" : isStart ? "is-range-start" : isEnd ? "is-range-end" : "is-range-middle";
 
+                                  const tTheme = getLeaveCategoryTheme(match);
                                   return (
                                     <div
                                       className={`timeline-leave-block ${tRangeClass}`}
                                       style={{
-                                        backgroundColor:
-                                          match.leave_type_color || "#2563eb",
+                                        background: tTheme.gradient,
+                                        color: "#ffffff",
                                       }}
                                       title={`${match.employee_name || emp.name} (${match.leave_type_name}): ${match.reason || ""}`}
                                       onClick={() =>
@@ -2760,41 +2940,41 @@ function LeaveManagement() {
               </div>
             )}
 
-            {/* Color Legend Strip (Matching Picture 1) */}
+            {/* Color Legend Strip (Executive Palette) */}
             <div className="team-cal-legend-strip">
               <span className="cal-legend-title">Legend:</span>
               <div className="cal-legend-item">
                 <span
                   className="cal-legend-color-box"
-                  style={{ backgroundColor: "#2563eb" }}
+                  style={{ background: "linear-gradient(135deg, #10b981 0%, #059669 100%)" }}
                 />
                 <span>Paid Leave (PL)</span>
               </div>
               <div className="cal-legend-item">
                 <span
                   className="cal-legend-color-box"
-                  style={{ backgroundColor: "#dc2626" }}
+                  style={{ background: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)" }}
                 />
                 <span>Sick Leave (SL)</span>
               </div>
               <div className="cal-legend-item">
                 <span
                   className="cal-legend-color-box"
-                  style={{ backgroundColor: "#ea580c" }}
+                  style={{ background: "linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)" }}
                 />
                 <span>Casual Leave (CL)</span>
               </div>
               <div className="cal-legend-item">
                 <span
                   className="cal-legend-color-box"
-                  style={{ backgroundColor: "#475569" }}
+                  style={{ background: "linear-gradient(135deg, #64748b 0%, #475569 100%)" }}
                 />
                 <span>Leave Without Pay (LWP)</span>
               </div>
               <div className="cal-legend-item">
                 <span
                   className="cal-legend-color-box"
-                  style={{ backgroundColor: "#c084fc" }}
+                  style={{ background: "linear-gradient(135deg, #c084fc 0%, #9333ea 100%)" }}
                 />
                 <span>Company Holiday</span>
               </div>
@@ -2914,19 +3094,25 @@ function LeaveManagement() {
                         </td>
                         <td>
                           <span className="font-semibold text-primary">
-                            {tx.employee_name || tx.employee_id}
+                            {getTransactionEmployeeName(tx)}
                           </span>
                         </td>
                         <td>
-                          <span
-                            className="leave-type-pill"
-                            style={{
-                              backgroundColor: `${tx.leave_type_color}15`,
-                              color: tx.leave_type_color || "#2563eb",
-                            }}
-                          >
-                            {tx.leave_type_name}
-                          </span>
+                          {(() => {
+                            const txTheme = getLeaveCategoryTheme(tx);
+                            return (
+                              <span
+                                className="leave-type-pill"
+                                style={{
+                                  backgroundColor: txTheme.lightBg,
+                                  color: txTheme.color,
+                                  borderColor: txTheme.border,
+                                }}
+                              >
+                                {tx.leave_type_name}
+                              </span>
+                            );
+                          })()}
                         </td>
                         <td>
                           <span className={`ledger-type-badge ${typeClass}`}>
@@ -3362,23 +3548,27 @@ function LeaveManagement() {
                           </td>
 
                           <td>
-                            <span
-                              className="leave-type-pill"
-                              style={{
-                                backgroundColor: `${req.leave_type_color}15`,
-                                color: req.leave_type_color || "#2563eb",
-                                borderColor: `${req.leave_type_color}40`,
-                              }}
-                            >
-                              <span
-                                className="pill-dot"
-                                style={{
-                                  backgroundColor:
-                                    req.leave_type_color || "#2563eb",
-                                }}
-                              />
-                              {req.leave_type_name}
-                            </span>
+                            {(() => {
+                              const reqTheme = getLeaveCategoryTheme(req);
+                              return (
+                                <span
+                                  className="leave-type-pill"
+                                  style={{
+                                    backgroundColor: reqTheme.lightBg,
+                                    color: reqTheme.color,
+                                    borderColor: reqTheme.border,
+                                  }}
+                                >
+                                  <span
+                                    className="pill-dot"
+                                    style={{
+                                      backgroundColor: reqTheme.color,
+                                    }}
+                                  />
+                                  {req.leave_type_name}
+                                </span>
+                              );
+                            })()}
                           </td>
 
                           <td>
@@ -3913,7 +4103,9 @@ function LeaveManagement() {
                         Remaining Balance
                       </span>
                       <span className="apply-balance-number">
-                        {currentSelectedBalance?.available_days ?? 0} day(s)
+                        {currentSelectedBalance != null
+                          ? `${parseFloat(currentSelectedBalance.available_days ?? 0)} days`
+                          : "0 days"}
                       </span>
                     </div>
                   </div>
@@ -4420,7 +4612,7 @@ function LeaveManagement() {
                 {/* Row 1: Employee & Leave Category */}
                 <div className="detail-info-cell">
                   <div className="detail-cell-icon-badge employee-badge">
-                    <User size={18} color="#2563eb" />
+                    <User size={18} color="#ea580c" />
                   </div>
                   <div className="detail-cell-content">
                     <span className="detail-cell-lbl">Employee</span>
